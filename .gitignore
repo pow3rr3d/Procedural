@@ -1,6 +1,6 @@
 # Ignore database files for this repository
 # Those files are your files, they don't need to be pushed
-docker/database/data/
+/docker/database/data
 .idea/
-docker/logs/
+/docker/logs
 

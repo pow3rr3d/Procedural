@@ -43,6 +43,11 @@ class Step
      */
     private $process;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $weight;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +109,18 @@ class Step
     public function setProcess(?Process $process): self
     {
         $this->process = $process;
+
+        return $this;
+    }
+
+    public function getWeight(): ?int
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(int $weight): self
+    {
+        $this->weight = $weight;
 
         return $this;
     }

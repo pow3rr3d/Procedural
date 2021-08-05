@@ -4,11 +4,12 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -40,7 +41,7 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Role;
+    private $Roles;
 
     public function getId(): ?int
     {
@@ -95,15 +96,32 @@ class User
         return $this;
     }
 
-    public function getRole(): ?string
+    public function getRoles(): ?array
     {
-        return $this->Role;
+        return [$this->Roles];
     }
 
-    public function setRole(string $Role): self
+    public function setRoles(string $roles): self
     {
-        $this->Role = $Role;
+        $this->Roles = $roles;
 
         return $this;
     }
+
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    public function getUsername()
+    {
+        return $this->Name . ' ' . $this->Surname;
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
 }

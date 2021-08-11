@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Process index{% endblock %}
+
+{% block body %}
+<section class="wrapper">
+    <div class="button-div">
+        <a class="btn-top" href="{{ path('process_new') }}">Create new</a>
+    </div>
+    <table class="table table-responsive table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for process in processes %}
+            <tr>
+                <td>{{ process.id }}</td>
+                <td>{{ process.Name }}</td>
+                <td>{{ process.Description }}</td>
+                <td>{{ process.CreatedAt ? process.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ process.UpdatedAt ? process.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('process_show', {'id': process.id}) }}"><i class="far fa-eye"></i></a>
+                    <a href="{{ path('process_edit', {'id': process.id}) }}"><i class="fas fa-pen"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

@@ -44,12 +44,6 @@ class Process
      */
     private $UpdatedAt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=State::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $State;
-
     public function __construct()
     {
         $this->Steps = new ArrayCollection();
@@ -134,18 +128,6 @@ class Process
     public function setUpdatedAt(?\DateTimeImmutable $UpdatedAt): self
     {
         $this->UpdatedAt = $UpdatedAt;
-
-        return $this;
-    }
-
-    public function getState(): ?State
-    {
-        return $this->State;
-    }
-
-    public function setState(?State $State): self
-    {
-        $this->State = $State;
 
         return $this;
     }

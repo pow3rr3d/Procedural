@@ -51,6 +51,16 @@ class CompanyProcess
      */
     private $IsFinished;
 
+    /**
+     * @return mixed
+     */
+
+    /**
+     * @ORM\ManyToOne(targetEntity=State::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $State;
+
     public function __construct()
     {
         $this->companyProcessSteps = new ArrayCollection();
@@ -150,4 +160,18 @@ class CompanyProcess
 
         return $this;
     }
+
+    public function getState()
+    {
+        return $this->State;
+    }
+
+    /**
+     * @param mixed $State
+     */
+    public function setState($State): void
+    {
+        $this->State = $State;
+    }
+
 }

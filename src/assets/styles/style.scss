@@ -205,14 +205,14 @@ hr {
 
 ul.top-menu > li > .logout {
 	color: #f2f2f2;
-	font-size: 12px;
+	font-size: 16px;
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border: 1px solid #64c3c2 !important;
 	padding: 5px 15px;
 	margin-right: 15px;
 	background: #4ECDC4;
-	margin-top: 15px;
+	margin-top: 10px;
 }
 
 
@@ -278,6 +278,7 @@ ul.sidebar-menu {
 
 #sidebar > ul > li > ul.sub {
     display: none;
+
 }
 
 #sidebar > ul > li.active > ul.sub, #sidebar > ul > li > ul.sub > li > a {
@@ -418,11 +419,12 @@ ul.sidebar-menu li a.active i {
 }
 
 a.logo {
-    font-size: 24px;
+    font-size: 20px;
     color: #f2f2f2;
     float: left;
     margin-top: 15px;
     text-transform: uppercase;
+    text-decoration: none;
 }
 
 a.logo b {
@@ -432,6 +434,7 @@ a.logo b {
 a.logo:hover, a.logo:focus {
     text-decoration: none;
     outline: none;
+    color: #4ECDC4 !important;
 }
 
 a.logo span {
@@ -465,6 +468,8 @@ ul.top-menu > li > a {
     border:1px solid #666666 !important;
     padding: 2px 6px;
     margin-right: 15px;
+    right: 20px;
+    position: absolute;
 }
 
 ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {

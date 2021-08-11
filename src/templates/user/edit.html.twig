@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+    <section class="wrapper">
+        <div class="button-div">
+            <a class="btn-top" href="{{ path('user_index') }}">back to list</a>
+            {% if user.id is not same as app.user.id %}
+                {{ include('user/_delete_form.html.twig') }}
+                {{ include('user/_modal_delete.html.twig') }}
+            {% endif %}
+        </div>
+        {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+    </section>
+{% endblock %}

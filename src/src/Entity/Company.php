@@ -25,7 +25,7 @@ class Company
     private $Name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Contact::class, mappedBy="company")
+     * @ORM\OneToMany(targetEntity=Contact::class, mappedBy="company", cascade={"persist"}, orphanRemoval=true)
      */
     private $Contacts;
 

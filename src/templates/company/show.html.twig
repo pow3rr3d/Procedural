@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Company{% endblock %}
+
+{% block body %}
+    <section class="wrapper">
+        <div class="button-div">
+            <a class="btn-top" href="{{ path('company_edit', {'id': company.id}) }}">edit</a>
+            <a class="btn-top" href="{{ path('company_index') }}">back to list</a>
+        </div>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ company.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ company.Name }}</td>
+            </tr>
+            <tr>
+                <th>Contacts</th>
+                <td>
+                    <ul>
+                        {% for contact in company.contacts %}
+                            <li>
+                                <b>Name:</b> {{ contact.Name|upper }} {{ contact.Surname|capitalize }}<br>
+                                <b>Email:</b> {{ contact.Email }}<br>
+                                <b>Mobile:</b> {{ contact.Mobile }}<br>
+                                <b>Tel:</b> {{ contact.Tel }}<br>
+                                <br>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="button-div">
+            {{ include('company/_delete_form.html.twig') }}
+            {{ include('company/_modal_delete.html.twig') }}
+        </div>
+
+    </section>
+{% endblock %}

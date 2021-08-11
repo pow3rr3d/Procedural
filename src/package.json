@@ -14,12 +14,14 @@
   "private": true,
   "scripts": {
     "dev-server": "encore dev-server --port 8181",
-    "dev-server-hot": "encore dev-server --hot --public http://localhost:8181/ --host 0.0.0.0",
+    "dev-server-hot": "encore dev-server --hot true --public http://localhost:8181/ --host 0.0.0.0",
     "dev": "encore dev",
     "watch": "encore dev --watch",
     "build": "encore production --progress"
   },
   "dependencies": {
+    "@a2lix/symfony-collection": "^0.4.0",
+    "js-cookie": "^3.0.0",
     "node-sass": "^6.0.1",
     "sass-loader": "^12.1.0"
   }

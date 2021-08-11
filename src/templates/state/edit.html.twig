@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit State{% endblock %}
+
+{% block body %}
+    <section class="wrapper">
+        <div class="button-div">
+            <a class="btn-top" href="{{ path('state_index') }}">back to list</a>
+                {{ include('state/_delete_form.html.twig') }}
+                {{ include('state/_modal_delete.html.twig') }}
+        </div>
+        {{ include('state/_form.html.twig', {'button_label': 'Update'}) }}
+    </section>
+
+{% endblock %}

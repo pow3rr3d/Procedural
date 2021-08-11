@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New State{% endblock %}
+
+{% block body %}
+    <section class="wrapper">
+        <div class="button-div">
+            <a class="btn-top" href="{{ path('state_index') }}">back to list</a>
+        </div>
+
+        {% for flashMessage in app.session.flashbag.get('string') %}
+
+            <b style="color: red">{{ flashMessage }}</b>
+
+        {% endfor %}
+
+        {{ include('state/_form.html.twig') }}
+    </section>
+
+{% endblock %}

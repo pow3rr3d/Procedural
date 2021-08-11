@@ -1,0 +1,25 @@
+<div class="modal fade" id="modal_delete{{ state.id }}" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Are you sure you want to delete this state?
+            </div>
+            <div class="modal-body">
+                <p class="text-left">#<b>{{ state.id }}</b></p>
+                <p class="text-left"><b>{{ state.Name }}</b></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn cancel-btn btn-default" data-dismiss="modal">Cancel</button>
+                <form method="post" action="{{ path("state_delete", {id: state.id}) }}"
+                      style="display: inline-block">
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" name="_token" data-toggle="modal"
+                           data-target="#confirm-submit{{ state.id }}"
+                           value="{{ csrf_token('delete' ~ state.id) }}">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

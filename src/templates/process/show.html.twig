@@ -30,6 +30,21 @@
                 <th>UpdatedAt</th>
                 <td>{{ process.UpdatedAt ? process.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
+            <tr>
+                <th>Steps</th>
+                <td>
+                    <ul>
+                    {% for step in process.steps %}
+                        <li>
+                        <b>{{ step.Title }}</b><br>
+                        {{ step.Description }}<br><br>
+                        {{ step.IsRequired ? "Required" : "Not Required"}}<br>
+                        </li>
+                        <br>
+                    {% endfor %}
+                    </ul>
+                </td>
+            </tr>
         </tbody>
     </table>
     <div class="button-div">

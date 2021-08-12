@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Process;
+use App\Form\ProcessType;
 use App\Form\StepType;
 use App\Repository\ProcessRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,6 +35,7 @@ class ProcessController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $process->setCreatedAt(new \DateTimeImmutable());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($process);
             $entityManager->flush();
@@ -62,10 +64,11 @@ class ProcessController extends AbstractController
      */
     public function edit(Request $request, Process $process): Response
     {
-        $form = $this->createForm(StepType::class, $process);
+        $form = $this->createForm(ProcessType::class, $process);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $process->setUpdatedAt(new \DateTimeImmutable());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('process_index', [], Response::HTTP_SEE_OTHER);

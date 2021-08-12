@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Process;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,22 +15,22 @@ class ProcessType extends AbstractType
     {
         $builder
             ->add('Name')
-            ->add('Description')
-            ->add('CreatedAt')
-            ->add('UpdatedAt')
-            ->add('State')
-            ->add('Step', CollectionType::class, [
+            ->add('Description', TextareaType::class, [
+                "attr" => [
+                    "maxlength" => "255"
+                ]
+            ])
+            ->add('Steps', CollectionType::class, [
                 'entry_type' => StepType::class,
                 'entry_options' => [
                     'label' => false,
                     'attr' => [
-                        'class' => 'contacts',
+                        'class' => 'form-panel',
                     ],
                 ],
                 'allow_add' => true,
                 'allow_delete' => true,
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

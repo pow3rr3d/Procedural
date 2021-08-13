@@ -18,6 +18,7 @@ class StateFixtures extends Fixture implements OrderedFixtureInterface
 
         $state2 = new State();
         $state2->setName("Terminé");
+        $state2->setIsFinalState(true);
 
         $states = [
             $state1,

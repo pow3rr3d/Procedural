@@ -50,7 +50,7 @@ class AllProcessController extends AbstractController
             return $this->redirectToRoute('allprocess_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('company/new.html.twig', [
+        return $this->renderForm('companyprocess/new.html.twig', [
             'companyProcess' => $companyProcess,
             'form' => $form,
         ]);

@@ -30,7 +30,7 @@ class Process
     private $Description;
 
     /**
-     * @ORM\OneToMany(targetEntity=Step::class, mappedBy="process")
+     * @ORM\OneToMany(targetEntity=Step::class, mappedBy="process", cascade={"persist"})
      */
     private $Steps;
 

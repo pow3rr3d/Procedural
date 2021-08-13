@@ -19,7 +19,7 @@ class CompanyType extends AbstractType
                 'entry_options' => [
                     'label' => false,
                     'attr' => [
-                        'class' => 'contacts',
+                        'class' => 'form-panel',
                     ],
                 ],
                 'allow_add' => true,

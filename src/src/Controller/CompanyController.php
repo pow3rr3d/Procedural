@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Company;
 use App\Form\CompanyProcessType;
+use App\Form\CompanyType;
 use App\Repository\CompanyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +32,7 @@ class CompanyController extends AbstractController
     public function new(Request $request): Response
     {
         $company = new Company();
-        $form = $this->createForm(CompanyProcessType::class, $company);
+        $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -68,7 +69,7 @@ class CompanyController extends AbstractController
      */
     public function edit(Request $request, Company $company): Response
     {
-        $form = $this->createForm(CompanyProcessType::class, $company);
+        $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

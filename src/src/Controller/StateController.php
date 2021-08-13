@@ -35,6 +35,9 @@ class StateController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if($form->get("IsFinalState") === false){
+                $state->setIsFinalState(null);
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($state);
             $entityManager->flush();
@@ -67,6 +70,9 @@ class StateController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if($form->get("IsFinalState") === false){
+                $state->setIsFinalState(null);
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('state_index', [], Response::HTTP_SEE_OTHER);

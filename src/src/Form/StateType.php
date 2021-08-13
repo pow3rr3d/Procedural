@@ -13,6 +13,7 @@ class StateType extends AbstractType
     {
         $builder
             ->add('Name')
+            ->add('IsFinalState')
         ;
     }
 

@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Company Process{% endblock %}
+
+{% block body %}
+    <section class="wrapper">
+        <div class="button-div">
+            <a class="btn-top" href="{{ path('companyprocess_edit', {'id': companyProcess.id}) }}">edit</a>
+            <a class="btn-top" href="{{ path('allprocess_index') }}">back to list</a>
+        </div>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>#</th>
+                <td>{{ companyProcess.id }}</td>
+            </tr>
+            <tr>
+                <th>Process</th>
+                <td>
+                    {{ companyProcess.process.Name }}<br>
+                    {{ companyProcess.process.Description }}<br>
+                </td>
+            </tr>
+            <tr>
+                <th>Company</th>
+                <td>
+                    {{ companyProcess.company.Name }}<br><br>
+                </td>
+            </tr>
+            <tr>
+                <th>Contacts</th>
+                <td>
+                    <ul>
+                        {% for contact in companyProcess.company.contacts %}
+                            <li>
+                                <p>
+                                    <b>Name:</b> {{ contact.Name|upper }} {{ contact.Surname|capitalize }}<br>
+                                    <b>Email:</b> {{ contact.Email }}<br>
+                                    <b>Mobile:</b> {{ contact.Mobile }}<br>
+                                    <b>Tel:</b> {{ contact.Tel }}<br>
+                                </p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>State</th>
+                <td>{{ companyProcess.company.Name }}</td>
+            </tr>
+            <tr>
+                <th>Advancement</th>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                             style="width: {{ (companyProcess.companyProcessSteps|length / companyProcess.process.Steps|length * 100) | round(2, "floor") }}%"
+                             aria-valuenow="{{ (companyProcess.companyProcessSteps|length / companyProcess.process.Steps|length * 100) | round(2, "floor") }}"
+                             aria-valuemin="0"
+                             aria-valuemax="100">{{ (companyProcess.companyProcessSteps|length / companyProcess.process.Steps|length * 100) | round(2, "floor") }}
+                            %
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>Created At</th>
+                <td>{{ companyProcess.CreatedAt ? companyProcess.CreatedAt|date('d-m-Y H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated At</th>
+                <td>{{ companyProcess.UpdatedAt ? companyProcess.UpdatedAt|date('d-m-Y H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Steps</th>
+                <td>
+                    {% for step in companyProcess.Process.Steps %}
+                        <b>{{ step.Title }}</b><br>
+                        <p>{{ step.Description }}</p>
+                        This field is {{ step.IsRequired ? "required" : "not required" }}<br>
+                        {% for cps in companyProcess.companyProcessSteps %}
+                            {% if step.id is same as cps.step.id %}
+                                Validated By {{ cps.ValidatedBy.Name }} {{ cps.ValidatedBy.Surname }}<br>
+                                Validated At {{ cps.ValidatedAt ? cps.ValidatedAt|date('d-m-Y H:i:s') : '' }}
+                            {% endif %}
+                        {% endfor %}
+                        <br><br>
+                    {% endfor %}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="button-div">
+            {# {{ include('company/_delete_form.html.twig') }} #}
+            {# {{ include('company/_modal_delete.html.twig') }} #}
+        </div>
+
+    </section>
+{% endblock %}

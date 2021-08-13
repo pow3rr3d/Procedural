@@ -3,35 +3,37 @@
 {% block title %}State index{% endblock %}
 
 {% block body %}
-<section class="wrapper">
-    <div class="button-div">
-        <a class="btn-top" href="{{ path('state_new') }}">Create new</a>
-    </div>
-    <table class="table table-responsive table-hover">
-        <thead>
+    <section class="wrapper">
+        <div class="button-div">
+            <a class="btn-top" href="{{ path('state_new') }}">Create new</a>
+        </div>
+        <table class="table table-responsive table-hover">
+            <thead>
             <tr>
                 <th>#</th>
                 <th>Name</th>
                 <th>actions</th>
+                <th>Is Final State</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for state in states %}
-            <tr>
-                <td>{{ state.id }}</td>
-                <td>{{ state.Name }}</td>
-                <td>
-                    <a href="{{ path('state_show', {'id': state.id}) }}"><i class="far fa-eye"></i></a>
-                    <a href="{{ path('state_edit', {'id': state.id}) }}"><i class="fas fa-pen"></i></a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for state in states %}
+                <tr>
+                    <td>{{ state.id }}</td>
+                    <td>{{ state.Name }}</td>
+                    <td>{{ state.IsfinalState ? "True" : "False" }}</td>
+                    <td>
+                        <a href="{{ path('state_show', {'id': state.id}) }}"><i class="far fa-eye"></i></a>
+                        <a href="{{ path('state_edit', {'id': state.id}) }}"><i class="fas fa-pen"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-</section>
+    </section>
 {% endblock %}

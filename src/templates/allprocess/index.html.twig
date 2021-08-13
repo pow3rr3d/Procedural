@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All Processes{% endblock %}
+
+{% block body %}
+    <section class="wrapper">
+        <div class="button-div">
+            <a class="btn-top" href="{{ path('companyprocess_new') }}">Create new</a>
+        </div>
+        <table class="table table-responsive table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Process</th>
+                <th>Company</th>
+                <th>State</th>
+                <th>Advancement</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for process in processes %}
+                {% if process.IsFinished is not same as true %}
+                <tr>
+                    <td>{{ process.id }}</td>
+                    <td><a href="{{ path('process_show', {'id': process.process.id}) }}">{{ process.process.Name }}</a></td>
+                    <td><a href="{{ path('company_show', {'id': process.company.id}) }}">{{ process.Company.Name }}</a></td>
+                    <td>{{ process.State.Name }}</td>
+                    <td>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                                 style="width: {{ (process.companyProcessSteps|length / process.process.Steps|length * 100) | round(2, "floor") }}%"
+                                 aria-valuenow="{{ (process.companyProcessSteps|length / process.process.Steps|length * 100) | round(2, "floor") }}"
+                                 aria-valuemin="0" aria-valuemax="100">{{ (process.companyProcessSteps|length / process.process.Steps|length * 100) | round(2, "floor") }}%</div>
+                        </div>
+                    </td>
+                    <td>{{ process.CreatedAt ? process.CreatedAt|date('d-m-Y H:i:s') : '' }}</td>
+                    <td>{{ process.UpdatedAt ? process.UpdatedAt|date('d-m-Y H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('companyprocess_show', {'id': process.id}) }}"><i class="far fa-eye"></i></a>
+                        <a href="{{ path('companyprocess_edit', {'id': process.id}) }}"><i class="fas fa-pen"></i></a>
+                    </td>
+                </tr>
+                {% endif %}
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}

@@ -32,7 +32,8 @@ import './sortable';
 import './menu';
 
 
-
+//Console.log Style
+console.log('%c Welcome to Procedural v0.0.1', 'color:#4ECDC4; background: #222; font-size: 40px; text-align: center; padding: 20px')
 
 
 

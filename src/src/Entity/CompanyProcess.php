@@ -52,14 +52,16 @@ class CompanyProcess
     private $IsFinished;
 
     /**
-     * @return mixed
-     */
-
-    /**
      * @ORM\ManyToOne(targetEntity=State::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $State;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $IsSoftDeleted;
+
 
     public function __construct()
     {
@@ -161,6 +163,9 @@ class CompanyProcess
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getState()
     {
         return $this->State;
@@ -172,6 +177,22 @@ class CompanyProcess
     public function setState($State): void
     {
         $this->State = $State;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsSoftDeleted()
+    {
+        return $this->IsSoftDeleted;
+    }
+
+    /**
+     * @param mixed $IsSoftDeleted
+     */
+    public function setIsSoftDeleted($IsSoftDeleted): void
+    {
+        $this->IsSoftDeleted = $IsSoftDeleted;
     }
 
 }

@@ -18,6 +18,8 @@ class AllProcessController extends AbstractController
 {
     /**
      * @Route("/allprocess", name="allprocess_index", methods={"GET"})
+     * @param CompanyProcessRepository $companyProcess
+     * @return Response
      */
     public function index(CompanyProcessRepository $companyProcess): Response
     {
@@ -28,6 +30,8 @@ class AllProcessController extends AbstractController
 
     /**
      * @Route("/companyprocess/new", name="companyprocess_new", methods={"GET", "POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -54,6 +58,8 @@ class AllProcessController extends AbstractController
 
     /**
      * @Route("/companyprocess/{id}", name="companyprocess_show", methods={"GET"})
+     * @param CompanyProcess $companyProcess
+     * @return Response
      */
     public function show(CompanyProcess $companyProcess): Response
     {
@@ -63,7 +69,10 @@ class AllProcessController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="companyprocess_edit", methods={"GET", "POST"})
+     * @Route("/companyprocess/edit/{id}", name="companyprocess_edit", methods={"GET", "POST"})
+     * @param Request $request
+     * @param CompanyProcess $companyProcess
+     * @return Response
      */
     public function edit(Request $request, CompanyProcess $companyProcess): Response
     {
@@ -87,7 +96,6 @@ class AllProcessController extends AbstractController
             ]);
 
         }
-
 
 
         $form = $this->createForm(CompanyProcessStepsType::class, $nextStep);
@@ -129,5 +137,49 @@ class AllProcessController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/companyprocess/delete/{id}", name="companyprocess_delete", methods={"POST", "DELETE"})
+     * @param Request $request
+     * @param CompanyProcess $companyProcess
+     * @return Response
+     */
+    public function delete(Request $request, CompanyProcess $companyProcess): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        if ($this->isCsrfTokenValid('delete' . $companyProcess->getId(), $request->request->get('_token'))) {
+            if ($this->getUser()->getRoles()['0'] === "ROLE_ADMIN") {
+                if ($companyProcess->getIsSoftDeleted() === true) {
+                    $companyProcessSteps = $entityManager->getRepository(CompanyProcessStep::class)->findBy(["CompanyProcess" => $companyProcess]);
+                    foreach ($companyProcessSteps as $companyProcessStep) {
+                        $entityManager->remove($companyProcessStep);
+                    }
+                    $entityManager->remove($companyProcess);
+                } else {
+                    $companyProcess->setIsSoftDeleted(true);
+                }
+            } else {
+                $companyProcess->setIsSoftDeleted(true);
+            }
+        }
+
+        $entityManager->flush();
+        return $this->redirectToRoute('allprocess_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/companyprocess/restore/{id}", name="companyprocess_rollback", methods={"GET"})
+     * @param CompanyProcess $companyProcess
+     * @return Response
+     */
+    public function rollback(CompanyProcess $companyProcess): Response
+    {
+        if ($this->getUser()->getRoles()['0'] === "ROLE_ADMIN") {
+            $entityManager = $this->getDoctrine()->getManager();
+            $companyProcess->setIsSoftDeleted(false);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('allprocess_index', [], Response::HTTP_SEE_OTHER);
+    }
 
 }

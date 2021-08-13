@@ -90,8 +90,16 @@
             </tbody>
         </table>
         <div class="button-div">
-            {# {{ include('company/_delete_form.html.twig') }} #}
-            {# {{ include('company/_modal_delete.html.twig') }} #}
+            {% if companyProcess.IsSoftDeleted is not same as true %}
+                {{ include('companyprocess/_delete_form.html.twig') }}
+                {{ include('companyprocess/_modal_delete.html.twig') }}
+            {% else %}
+                <a class="btn-top" href="{{ path('companyprocess_rollback', {'id': companyProcess.id}) }}">Restore</a>
+                {% if app.user.roles['0'] is same as "ROLE_ADMIN" %}
+                    {{ include('companyprocess/_delete_form.html.twig') }}
+                    {{ include('companyprocess/_modal_delete.html.twig') }}
+                {% endif %}
+            {% endif %}
         </div>
 
     </section>

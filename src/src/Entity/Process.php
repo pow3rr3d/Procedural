@@ -31,6 +31,7 @@ class Process
 
     /**
      * @ORM\OneToMany(targetEntity=Step::class, mappedBy="process", cascade={"persist"})
+     * @ORM\OrderBy({"weight" = "ASC"})
      */
     private $Steps;
 

@@ -68,6 +68,9 @@ class ProcessController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($form->getData()->getSteps() as $step){
+                $step->setProcess($process);
+            }
             $process->setUpdatedAt(new \DateTimeImmutable());
             $this->getDoctrine()->getManager()->flush();
 

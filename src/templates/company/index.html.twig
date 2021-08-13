@@ -3,35 +3,47 @@
 {% block title %}Company index{% endblock %}
 
 {% block body %}
-<section class="wrapper">
-    <div class="button-div">
-        <a class="btn-top" href="{{ path('company_new') }}">Create new</a>
-    </div>
-    <table class="table table-responsive table-hover">
-        <thead>
+    <section class="wrapper">
+        <div class="button-div">
+            <a class="btn-top" href="{{ path('company_new') }}">Create new</a>
+        </div>
+
+        {% for message in app.flashes('alert') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% for message in app.flashes('sucess') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <table class="table table-responsive table-hover">
+            <thead>
             <tr>
                 <th>#</th>
                 <th>Name</th>
                 <th>actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for company in companies %}
-            <tr>
-                <td>{{ company.id }}</td>
-                <td>{{ company.Name }}</td>
-                <td>
-                    <a href="{{ path('company_show', {'id': company.id}) }}"><i class="far fa-eye"></i></a>
-                    <a href="{{ path('company_edit', {'id': company.id}) }}"><i class="fas fa-pen"></i></a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</section>
+            </thead>
+            <tbody>
+            {% for company in companies %}
+                <tr>
+                    <td>{{ company.id }}</td>
+                    <td>{{ company.Name }}</td>
+                    <td>
+                        <a href="{{ path('company_show', {'id': company.id}) }}"><i class="far fa-eye"></i></a>
+                        <a href="{{ path('company_edit', {'id': company.id}) }}"><i class="fas fa-pen"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
 
 {% endblock %}

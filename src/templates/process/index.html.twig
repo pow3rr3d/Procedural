@@ -7,6 +7,18 @@
     <div class="button-div">
         <a class="btn-top" href="{{ path('process_new') }}">Create new</a>
     </div>
+
+    {% for message in app.flashes('alert') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('sucess') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <table class="table table-responsive table-hover">
         <thead>
             <tr>

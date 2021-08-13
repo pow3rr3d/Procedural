@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\State;
 use App\Form\StateType;
 use App\Repository\StateRepository;
+use Doctrine\DBAL\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,6 +43,11 @@ class StateController extends AbstractController
             $entityManager->persist($state);
             $entityManager->flush();
 
+            $this->addFlash(
+                'sucess',
+                'State created with success'
+            );
+
             return $this->redirectToRoute('state_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -75,6 +81,12 @@ class StateController extends AbstractController
             }
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash(
+                'sucess',
+                'State updated with success'
+            );
+
+
             return $this->redirectToRoute('state_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -90,9 +102,18 @@ class StateController extends AbstractController
     public function delete(Request $request, State $state): Response
     {
         if ($this->isCsrfTokenValid('delete'.$state->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($state);
-            $entityManager->flush();
+            try{
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($state);
+                $entityManager->flush();
+                $this->addFlash(
+                    'sucess',
+                    'State deleted with success'
+                );
+            }
+            catch (Exception $exception){
+                $this->addFlash('alert', $exception->getMessage());
+            }
         }
 
         return $this->redirectToRoute('state_index', [], Response::HTTP_SEE_OTHER);

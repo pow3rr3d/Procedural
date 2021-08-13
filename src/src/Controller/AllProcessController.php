@@ -47,6 +47,10 @@ class AllProcessController extends AbstractController
             $entityManager->persist($companyProcess);
             $entityManager->flush();
 
+            $this->addFlash(
+                'sucess',
+                'Process created with success'
+            );
             return $this->redirectToRoute('allprocess_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -77,6 +81,10 @@ class AllProcessController extends AbstractController
     public function edit(Request $request, CompanyProcess $companyProcess): Response
     {
         if ($companyProcess->getState()->getIsFinalState() === true) {
+            $this->addFlash(
+                'sucess',
+                'Process already finished'
+            );
             return $this->redirectToRoute("allprocess_index");
         }
         $Steps = $companyProcess->getCompanyProcessSteps();
@@ -105,9 +113,24 @@ class AllProcessController extends AbstractController
 
             $return = $form->get("Step")->getData();
 
-            if (count($companyProcess->getCompanyProcessSteps())) {
+            if (count($companyProcess->getCompanyProcessSteps())+1 === count($companyProcess->getProcess()->getSteps())) {
+                $companyProcess->setUpdatedAt(new \DateTimeImmutable());
+                $companyProcessStep = new CompanyProcessStep();
+                $companyProcessStep
+                    ->setCompanyProcess($companyProcess)
+                    ->setStep($nextStep)
+                    ->setValidatedAt(new \DateTimeImmutable())
+                    ->setValidatedBy($this->getUser());
+
                 $companyProcess->setIsFinished(true);
                 $companyProcess->setState($this->getDoctrine()->getManager()->getRepository(State::class)->findOneBy(["IsFinalState" => true]));
+                $this->getDoctrine()->getManager()->persist($companyProcess);
+                $this->getDoctrine()->getManager()->persist($companyProcessStep);
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash(
+                    'sucess',
+                    'Process fishined with success'
+                );
                 return $this->redirectToRoute("allprocess_index");
             }
 
@@ -154,11 +177,23 @@ class AllProcessController extends AbstractController
                         $entityManager->remove($companyProcessStep);
                     }
                     $entityManager->remove($companyProcess);
+                    $this->addFlash(
+                        'sucess',
+                        'Process deleted with success'
+                    );
                 } else {
                     $companyProcess->setIsSoftDeleted(true);
+                    $this->addFlash(
+                        'sucess',
+                        'Process soft-deleted with success'
+                    );
                 }
             } else {
                 $companyProcess->setIsSoftDeleted(true);
+                $this->addFlash(
+                    'sucess',
+                    'Process soft-deleted with success'
+                );
             }
         }
 
@@ -177,6 +212,11 @@ class AllProcessController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $companyProcess->setIsSoftDeleted(false);
             $entityManager->flush();
+
+            $this->addFlash(
+                'sucess',
+                'Process restore with success'
+            );
         }
 
         return $this->redirectToRoute('allprocess_index', [], Response::HTTP_SEE_OTHER);

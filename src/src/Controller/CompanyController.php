@@ -6,6 +6,7 @@ use App\Entity\Company;
 use App\Form\CompanyProcessType;
 use App\Form\CompanyType;
 use App\Repository\CompanyRepository;
+use Doctrine\DBAL\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,6 +46,11 @@ class CompanyController extends AbstractController
             $entityManager->persist($company);
             $entityManager->flush();
 
+            $this->addFlash(
+                'sucess',
+                'Company created with success'
+            );
+
             return $this->redirectToRoute('company_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -80,6 +86,11 @@ class CompanyController extends AbstractController
             }
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash(
+                'sucess',
+                'Company updated with success'
+            );
+
             return $this->redirectToRoute('company_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -95,9 +106,19 @@ class CompanyController extends AbstractController
     public function delete(Request $request, Company $company): Response
     {
         if ($this->isCsrfTokenValid('delete'.$company->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($company);
-            $entityManager->flush();
+            try{
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($company);
+                $entityManager->flush();
+                $this->addFlash(
+                    'sucess',
+                    'Company updated with success'
+                );
+            }
+            catch (Exception $exception){
+                $this->addFlash('alert', $exception->getMessage());
+            }
+
         }
 
         return $this->redirectToRoute('company_index', [], Response::HTTP_SEE_OTHER);

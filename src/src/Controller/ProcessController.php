@@ -6,6 +6,7 @@ use App\Entity\Process;
 use App\Form\ProcessType;
 use App\Form\StepType;
 use App\Repository\ProcessRepository;
+use Doctrine\DBAL\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,14 +32,19 @@ class ProcessController extends AbstractController
     public function new(Request $request): Response
     {
         $process = new Process();
-        $form = $this->createForm(StepType::class, $process);
+        $form = $this->createForm(ProcessType::class, $process);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $process->setCreatedAt(new \DateTimeImmutable());
             $entityManager = $this->getDoctrine()->getManager();
+            $process->setCreatedAt(new \DateTimeImmutable());
             $entityManager->persist($process);
             $entityManager->flush();
+
+            $this->addFlash(
+                'sucess',
+                'Process created with success'
+            );
 
             return $this->redirectToRoute('process_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -74,6 +80,11 @@ class ProcessController extends AbstractController
             $process->setUpdatedAt(new \DateTimeImmutable());
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash(
+                'sucess',
+                'Process updated with success'
+            );
+
             return $this->redirectToRoute('process_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -89,9 +100,23 @@ class ProcessController extends AbstractController
     public function delete(Request $request, Process $process): Response
     {
         if ($this->isCsrfTokenValid('delete' . $process->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($process);
-            $entityManager->flush();
+            try{
+                $entityManager = $this->getDoctrine()->getManager();
+                $steps= $process->getSteps();
+                foreach ($steps as $step){
+                    $entityManager->remove($step);
+                }
+                $entityManager->remove($process);
+                $entityManager->flush();
+                $this->addFlash(
+                    'sucess',
+                    'Process deleted with success'
+                );
+            }
+            catch (Exception $exception){
+                $this->addFlash('alert', $exception->getMessage());
+            }
+
         }
 
         return $this->redirectToRoute('process_index', [], Response::HTTP_SEE_OTHER);

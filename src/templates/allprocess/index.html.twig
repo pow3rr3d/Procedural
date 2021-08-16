@@ -22,18 +22,21 @@
         <table class="table table-responsive table-hover">
             <thead>
             <tr>
-                <th>#</th>
+                <th{% if pagination.isSorted('s.id') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(pagination, '#', 's.id') }}</th>
                 <th>Process</th>
                 <th>Company</th>
-                <th>State</th>
+               <th>State</th>
                 <th>Advancement</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
+                <th{% if pagination.isSorted('s.CreatedAt') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(pagination, 'Created At', 's.CreatedAt') }}</th>
+                <th{% if pagination.isSorted('s.UpdatedAt') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(pagination, 'Updated At', 's.UpdatedAt') }}</th>
                 <th>actions</th>
             </tr>
             </thead>
             <tbody>
-            {% for process in processes %}
+            {% for process in pagination %}
                 {% if process.IsSoftDeleted is not same as true %}
                 <tr>
                     <td>{{ process.id }}</td>
@@ -86,5 +89,8 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation button-div">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </section>
 {% endblock %}

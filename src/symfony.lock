@@ -108,6 +108,12 @@
     "giggsey/locale": {
         "version": "1.9"
     },
+    "knplabs/knp-components": {
+        "version": "v3.1.0"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.6.0"
+    },
     "laminas/laminas-code": {
         "version": "3.5.0"
     },
@@ -565,6 +571,9 @@
     },
     "twig/extra-bundle": {
         "version": "v3.1.1"
+    },
+    "twig/string-extra": {
+        "version": "v3.3.1"
     },
     "twig/twig": {
         "version": "v3.1.1"

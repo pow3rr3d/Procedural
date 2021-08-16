@@ -9,6 +9,7 @@ use App\Entity\Step;
 use App\Form\CompanyProcessStepsType;
 use App\Form\CompanyProcessType;
 use App\Repository\CompanyProcessRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,10 +22,17 @@ class AllProcessController extends AbstractController
      * @param CompanyProcessRepository $companyProcess
      * @return Response
      */
-    public function index(CompanyProcessRepository $companyProcess): Response
+    public function index(CompanyProcessRepository $companyProcess, PaginatorInterface $paginator, Request $request): Response
     {
+        $search = new CompanyProcess();
+        $pagination = $paginator->paginate(
+            $this->getDoctrine()->getManager()->getRepository(CompanyProcess::class)->getAllQuery($search),
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
+
         return $this->render('allprocess/index.html.twig', [
-            'processes' => $companyProcess->findAll(),
+            'pagination' => $pagination,
         ]);
     }
 

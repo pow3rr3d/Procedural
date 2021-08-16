@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Company;
-use App\Form\CompanyProcessType;
 use App\Form\CompanyType;
 use App\Repository\CompanyRepository;
 use Doctrine\DBAL\Exception;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,10 +20,17 @@ class CompanyController extends AbstractController
     /**
      * @Route("/", name="company_index", methods={"GET"})
      */
-    public function index(CompanyRepository $companyRepository): Response
+    public function index(CompanyRepository $companyRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $search = new Company();
+        $pagination = $paginator->paginate(
+            $this->getDoctrine()->getManager()->getRepository(Company::class)->getAllQuery($search),
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
+
         return $this->render('company/index.html.twig', [
-            'companies' => $companyRepository->findAll(),
+            'pagination' => $pagination,
         ]);
     }
 

@@ -187,3 +187,12 @@ form {
     }
   }
 }
+
+.page-item{
+  &.active {
+    .page-link {
+      background-color: #4ecdc4 !important;
+      border-color: #4ecdc4 !important;;
+    }
+  }
+}

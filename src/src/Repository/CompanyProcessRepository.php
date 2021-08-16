@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Company;
 use App\Entity\CompanyProcess;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,6 +18,22 @@ class CompanyProcessRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, CompanyProcess::class);
+    }
+
+
+    public function getAllQuery(CompanyProcess $search): \Doctrine\ORM\Query
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        if ($search->getCompany() !== null) {
+            $qb
+                ->andWhere($qb->expr()->like('s.name' , ':name'))
+                ->orWhere($qb->expr()->like('s.id' , ':name'))
+                ->orWhere($qb->expr()->like('s.company.name' , ':name'))
+                ->setParameter('name', '%'.$search->getCompany().'%');
+        }
+
+        return $qb->getQuery();
     }
 
     // /**

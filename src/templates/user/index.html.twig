@@ -24,16 +24,21 @@
         <table class="table table-responsive table-hover">
             <thead>
             <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Email</th>
-                <th>Roles</th>
+                <th{% if pagination.isSorted('s.id') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(pagination, '#', 's.id') }}</th>
+                <th{% if pagination.isSorted('s.Name') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(pagination, 'Name', 's.Name') }}</th>
+                <th{% if pagination.isSorted('s.Surname') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(pagination, 'Surname', 's.Surname') }}</th>
+                <th{% if pagination.isSorted('s.Email') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(pagination, 'Email', 's.Email') }}</th>
+                <th{% if pagination.isSorted('s.Roles') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(pagination, 'Roles', 's.Roles') }}</th>
                 <th>actions</th>
             </tr>
             </thead>
             <tbody>
-            {% for user in users %}
+            {% for user in pagination %}
                 <tr>
                     <td>{{ user.id }}</td>
                     <td>{{ user.Name }}</td>
@@ -43,6 +48,7 @@
                     <td>
                         <a href="{{ path('user_show', {'id': user.id}) }}"><i class="far fa-eye"></i></a>
                         <a href="{{ path('user_edit', {'id': user.id}) }}"><i class="fas fa-pen"></i></a>
+                        <a href="/dashboard/?_switch_user={{ user.Email }}"><i class="fas fa-sign-in-alt"></i></a>
                     </td>
                 </tr>
             {% else %}
@@ -52,5 +58,8 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation button-div">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </section>
 {% endblock %}

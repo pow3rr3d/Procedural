@@ -7,6 +7,7 @@ use App\Form\ProcessType;
 use App\Form\StepType;
 use App\Repository\ProcessRepository;
 use Doctrine\DBAL\Exception;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,10 +21,17 @@ class ProcessController extends AbstractController
     /**
      * @Route("/", name="process_index", methods={"GET"})
      */
-    public function index(ProcessRepository $processRepository): Response
+    public function index(ProcessRepository $processRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $search = new Process();
+        $pagination = $paginator->paginate(
+            $this->getDoctrine()->getManager()->getRepository(Process::class)->getAllQuery($search),
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
+
         return $this->render('process/index.html.twig', [
-            'processes' => $processRepository->findAll(),
+            'pagination' => $pagination,
         ]);
     }
     /**

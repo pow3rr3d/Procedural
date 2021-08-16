@@ -23,14 +23,17 @@
         <table class="table table-responsive table-hover">
             <thead>
             <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Is Final State</th>
+                <th{% if pagination.isSorted('s.id') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(pagination, '#', 's.id') }}</th>
+                <th{% if pagination.isSorted('s.Name') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(pagination, 'Name', 's.Name') }}</th>
+                <th{% if pagination.isSorted('s.IsFinalState') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(pagination, 'Is Final State', 's.IsFinalState') }}</th>
                 <th>actions</th>
             </tr>
             </thead>
             <tbody>
-            {% for state in states %}
+            {% for state in pagination  %}
                 <tr>
                     <td>{{ state.id }}</td>
                     <td>{{ state.Name }}</td>
@@ -47,6 +50,8 @@
             {% endfor %}
             </tbody>
         </table>
-
+        <div class="navigation button-div">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </section>
 {% endblock %}

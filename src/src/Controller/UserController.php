@@ -6,6 +6,8 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Exception;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,10 +21,18 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="user_index", methods={"GET"})
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $search = new User();
+        $pagination = $paginator->paginate(
+            $this->getDoctrine()->getManager()->getRepository(User::class)->getAllQuery($search),
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
+
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'pagination' => $pagination,
+
         ]);
     }
 
@@ -118,5 +128,35 @@ class UserController extends AbstractController
 
 
         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/admin/{id}", name="user_admin", methods={"PUT"})
+     * @param Request $request
+     * @param User $user
+     * @return Response
+     */
+    public function setAdmin(Request $request, User $user, EntityManagerInterface $em)
+    {
+        if ($this->isCsrfTokenValid('update' . $user->getId(), $request->request->get('_token'))) {
+            $user->setRoles("ROLE_ADMIN");
+            $em->flush();
+        }
+        return $this->redirectToRoute('user_show', ["id" => $user->getId()]);
+    }
+
+    /**
+     * @Route("/user/{id}", name="user_user", methods={"PUT"})
+     * @param Request $request
+     * @param User $user
+     * @return Response
+     */
+    public function setUser(Request $request, User $user, EntityManagerInterface $em)
+    {
+        if ($this->isCsrfTokenValid('update' . $user->getId(), $request->request->get('_token'))) {
+            $user->setRoles("ROLE_USER");
+            $em->flush();
+        }
+        return $this->redirectToRoute('user_show', ["id" => $user->getId()]);
     }
 }

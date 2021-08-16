@@ -1,0 +1,28 @@
+<div class="modal fade" id="modal_user{{ user.id }}" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Make this user as User Role?
+            </div>
+            <div class="modal-body">
+                <p class="text-left ">Are you sure you want to make the following user as User?</p>
+
+                <p class="text-left">Name: <b>{{ user.name }}</b></p>
+                <p class="text-left">Surname: <b>{{ user.surname }}</b></p>
+                <p class="text-left">email: <b>{{ user.email }}</b></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                <form method="post" action="{{ path("user_user", {id: user.id}) }}"
+                      style="display: inline-block">
+                    <input type="hidden" name="_method" value="put">
+                    <input type="hidden" name="_token" data-toggle="modal"
+                           data-bs-target="#confirm-submit{{ user.id }}"
+                           value="{{ csrf_token('update' ~ user.id) }}">
+                    <button class="btn btn-danger role-btn">Make User</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

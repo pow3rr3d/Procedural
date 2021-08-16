@@ -20,6 +20,8 @@ class AllProcessController extends AbstractController
     /**
      * @Route("/allprocess", name="allprocess_index", methods={"GET"})
      * @param CompanyProcessRepository $companyProcess
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
     public function index(CompanyProcessRepository $companyProcess, PaginatorInterface $paginator, Request $request): Response

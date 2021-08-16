@@ -34,9 +34,9 @@
                     <br>
                     <input type="password" name="password" id="inputPassword" placeholder="Password" class="form-control" autocomplete="current-password" required>
                     <div id="forgetPass">
-                        <a data-toggle="modal" href="#myModal"> Forgot Password?</a>
+                        <a data-toggle="modal" href="{{ path('app_forgot_password_request') }}"> Forgot Password?</a>
                     </div>
-                    <button class="btn btn-theme btn-block" href="index.html" type="submit">SIGN IN</button>
+                    <button class="btn btn-theme btn-block" type="submit">SIGN IN</button>
                     <hr>
 
                     <div class="registration">

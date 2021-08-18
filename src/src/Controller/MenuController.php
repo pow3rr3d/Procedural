@@ -21,7 +21,7 @@ class MenuController
         foreach ($companyProcesses as $companyProcess){
             $states[$companyProcess->getState()->getId()]['1'] += 1;
         }
-dump($states);
+
         return $states;
 
 

@@ -10,7 +10,7 @@
     top: 80px;
     left: 210px;
 
-    &.col-11{
+    &.col-11 {
       left: 50px;
     }
 
@@ -171,28 +171,38 @@ form {
   margin-bottom: 80px;
 }
 
-.redtr{
+.redtr {
   background-color: rgba(255, 0, 0, 0.3);
   color: red;
 
-  &:hover{
-   color: black !important;
+  &:hover {
+    color: black !important;
   }
 
-  a{
+  a {
     color: red;
 
-    &:hover{
+    &:hover {
       color: black !important;
     }
   }
 }
 
-.page-item{
+.page-item {
   &.active {
     .page-link {
       background-color: #4ecdc4 !important;
       border-color: #4ecdc4 !important;;
     }
   }
+}
+
+.dashboardIndex {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: flex !important;
+  flex-wrap: wrap;
+  margin-top: calc(var(--bs-gutter-y) * -1);
+  margin-right: calc(var(--bs-gutter-x) * -.5);
+  width: 100%;
 }

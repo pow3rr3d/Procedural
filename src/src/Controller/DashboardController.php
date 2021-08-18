@@ -10,19 +10,24 @@ use App\Entity\Process;
 use App\Entity\State;
 use App\Entity\Step;
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
+
 class DashboardController extends AbstractController
 {
     private $charts;
-
     private $colors;
+    private $em;
+    private $states;
 
-    public function __construct()
+    public function __construct( EntityManagerInterface $em)
     {
+        $this->em = $em;
+        $this->states = MenuController::renderMenu($this->em);
         $this->charts = [];
         $this->colors = [
             '#4ecdc4',
@@ -56,7 +61,9 @@ class DashboardController extends AbstractController
         $this->ByUserStats($chartBuilder);
         $this->AverageTime($chartBuilder);
 
+
         return $this->render("dashboard/index.html.twig", [
+            'states' => $this->states,
             'charts' => $this->charts,
         ]);
     }

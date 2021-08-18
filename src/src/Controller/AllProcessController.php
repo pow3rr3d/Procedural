@@ -9,6 +9,7 @@ use App\Entity\Step;
 use App\Form\CompanyProcessStepsType;
 use App\Form\CompanyProcessType;
 use App\Repository\CompanyProcessRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AllProcessController extends AbstractController
 {
+    private $em;
+    private $states;
+
+    public function __construct( EntityManagerInterface $em)
+    {
+        $this->em = $em;
+        $this->states = MenuController::renderMenu($this->em);
+//        'states' => $this->states,
+    }
+
     /**
      * @Route("/allprocess", name="allprocess_index", methods={"GET"})
      * @param CompanyProcessRepository $companyProcess
@@ -34,6 +45,7 @@ class AllProcessController extends AbstractController
         );
 
         return $this->render('allprocess/index.html.twig', [
+            'states' => $this->states,
             'pagination' => $pagination,
         ]);
     }
@@ -65,6 +77,7 @@ class AllProcessController extends AbstractController
         }
 
         return $this->renderForm('companyprocess/new.html.twig', [
+            'states' => $this->states,
             'companyProcess' => $companyProcess,
             'form' => $form,
         ]);
@@ -78,6 +91,7 @@ class AllProcessController extends AbstractController
     public function show(CompanyProcess $companyProcess): Response
     {
         return $this->render('companyprocess/show.html.twig', [
+            'states' => $this->states,
             'companyProcess' => $companyProcess,
         ]);
     }
@@ -158,6 +172,7 @@ class AllProcessController extends AbstractController
 
 
                 return $this->redirectToRoute('companyprocess_edit', [
+                    'states' => $this->states,
                     'id' => $companyProcess->getId()
                 ]);
             }
@@ -165,6 +180,7 @@ class AllProcessController extends AbstractController
         }
 
         return $this->renderForm('companyprocess/edit.html.twig', [
+            'states' => $this->states,
             'companyProcess' => $companyProcess,
             'form' => $form,
         ]);

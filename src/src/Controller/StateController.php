@@ -6,6 +6,7 @@ use App\Entity\State;
 use App\Form\StateType;
 use App\Repository\StateRepository;
 use Doctrine\DBAL\Exception;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class StateController extends AbstractController
 {
+    private $em;
+    private $states;
+
+    public function __construct( EntityManagerInterface $em)
+    {
+        $this->em = $em;
+        $this->states = MenuController::renderMenu($this->em);
+//        'states' => $this->states,
+    }
+
     /**
      * @Route("/", name="state_index", methods={"GET"})
      */
@@ -31,6 +42,7 @@ class StateController extends AbstractController
         );
 
         return $this->render('state/index.html.twig', [
+            'states' => $this->states,
             'pagination' => $pagination,
         ]);
     }
@@ -61,6 +73,7 @@ class StateController extends AbstractController
         }
 
         return $this->renderForm('state/new.html.twig', [
+            'states' => $this->states,
             'state' => $state,
             'form' => $form,
         ]);
@@ -72,6 +85,7 @@ class StateController extends AbstractController
     public function show(State $state): Response
     {
         return $this->render('state/show.html.twig', [
+            'states' => $this->states,
             'state' => $state,
         ]);
     }
@@ -100,6 +114,7 @@ class StateController extends AbstractController
         }
 
         return $this->renderForm('state/edit.html.twig', [
+            'states' => $this->states,
             'state' => $state,
             'form' => $form,
         ]);

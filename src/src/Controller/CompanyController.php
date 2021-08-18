@@ -6,6 +6,7 @@ use App\Entity\Company;
 use App\Form\CompanyType;
 use App\Repository\CompanyRepository;
 use Doctrine\DBAL\Exception;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,17 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CompanyController extends AbstractController
 {
+    private $em;
+    private $states;
+
+    public function __construct( EntityManagerInterface $em)
+    {
+        $this->em = $em;
+        $this->states = MenuController::renderMenu($this->em);
+//        'states' => $this->states,
+    }
+
+
     /**
      * @Route("/", name="company_index", methods={"GET"})
      */
@@ -30,6 +42,7 @@ class CompanyController extends AbstractController
         );
 
         return $this->render('company/index.html.twig', [
+            'states' => $this->states,
             'pagination' => $pagination,
         ]);
     }
@@ -62,6 +75,7 @@ class CompanyController extends AbstractController
         }
 
         return $this->renderForm('company/new.html.twig', [
+            'states' => $this->states,
             'company' => $company,
             'form' => $form,
         ]);
@@ -73,6 +87,7 @@ class CompanyController extends AbstractController
     public function show(Company $company): Response
     {
         return $this->render('company/show.html.twig', [
+            'states' => $this->states,
             'company' => $company,
         ]);
     }
@@ -102,6 +117,7 @@ class CompanyController extends AbstractController
         }
 
         return $this->renderForm('company/edit.html.twig', [
+            'states' => $this->states,
             'company' => $company,
             'form' => $form,
         ]);

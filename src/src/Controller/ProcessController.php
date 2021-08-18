@@ -7,6 +7,7 @@ use App\Form\ProcessType;
 use App\Form\StepType;
 use App\Repository\ProcessRepository;
 use Doctrine\DBAL\Exception;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProcessController extends AbstractController
 {
+    private $em;
+    private $states;
+
+    public function __construct( EntityManagerInterface $em)
+    {
+        $this->em = $em;
+        $this->states = MenuController::renderMenu($this->em);
+//        'states' => $this->states,
+    }
+
     /**
      * @Route("/", name="process_index", methods={"GET"})
      */
@@ -31,6 +42,7 @@ class ProcessController extends AbstractController
         );
 
         return $this->render('process/index.html.twig', [
+            'states' => $this->states,
             'pagination' => $pagination,
         ]);
     }
@@ -46,6 +58,11 @@ class ProcessController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $process->setCreatedAt(new \DateTimeImmutable());
+            $steps = $process->getSteps();
+            foreach ($steps as $step)
+            {
+                $step->setProcess($process);
+            }
             $entityManager->persist($process);
             $entityManager->flush();
 
@@ -58,6 +75,7 @@ class ProcessController extends AbstractController
         }
 
         return $this->renderForm('process/new.html.twig', [
+            'states' => $this->states,
             'process' => $process,
             'form' => $form,
         ]);
@@ -69,6 +87,7 @@ class ProcessController extends AbstractController
     public function show(Process $process): Response
     {
         return $this->render('process/show.html.twig', [
+            'states' => $this->states,
             'process' => $process,
         ]);
     }
@@ -97,6 +116,7 @@ class ProcessController extends AbstractController
         }
 
         return $this->renderForm('process/edit.html.twig', [
+            'states' => $this->states,
             'process' => $process,
             'form' => $form,
         ]);

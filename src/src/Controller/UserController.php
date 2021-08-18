@@ -19,6 +19,16 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserController extends AbstractController
 {
+    private $em;
+    private $states;
+
+    public function __construct( EntityManagerInterface $em)
+    {
+        $this->em = $em;
+        $this->states = MenuController::renderMenu($this->em);
+//        'states' => $this->states,
+    }
+
     /**
      * @Route("/", name="user_index", methods={"GET"})
      */
@@ -32,6 +42,7 @@ class UserController extends AbstractController
         );
 
         return $this->render('user/index.html.twig', [
+            'states' => $this->states,
             'pagination' => $pagination,
 
         ]);
@@ -69,6 +80,7 @@ class UserController extends AbstractController
         }
 
         return $this->renderForm('user/new.html.twig', [
+            'states' => $this->states,
             'user' => $user,
             'form' => $form,
         ]);
@@ -80,6 +92,7 @@ class UserController extends AbstractController
     public function show(User $user): Response
     {
         return $this->render('user/show.html.twig', [
+            'states' => $this->states,
             'user' => $user,
         ]);
     }
@@ -104,6 +117,7 @@ class UserController extends AbstractController
         }
 
         return $this->renderForm('user/edit.html.twig', [
+            'states' => $this->states,
             'user' => $user,
             'form' => $form,
         ]);

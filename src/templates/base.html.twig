@@ -52,9 +52,11 @@
                     </a>
                     <ul class="sub">
                         <li><a href="/allprocess">All States </a></li>
-                        <li><a href="#">State #1</a></li>
-                        <li><a href="#">State #2</a></li>
-                        <li><a href="#">...</a></li>
+                        {% for state in states %}
+                            <li>
+                                <a href={{ state['2'] }}>{{ state['0'] }} ({{ state['1'] }})</a>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </li>
                 {% for role in app.user.Roles %}

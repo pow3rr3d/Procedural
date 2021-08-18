@@ -30,6 +30,7 @@ class CompanyProcessRepository extends ServiceEntityRepository
                 ->andWhere($qb->expr()->like('s.name' , ':name'))
                 ->orWhere($qb->expr()->like('s.id' , ':name'))
                 ->orWhere($qb->expr()->like('s.company.name' , ':name'))
+                ->orWhere($qb->expr()->like('s.state.name' , ':name'))
                 ->setParameter('name', '%'.$search->getCompany().'%');
         }
 

@@ -25,13 +25,22 @@ class CompanyProcessRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('s');
 
+
         if ($search->getCompany() !== null) {
             $qb
-                ->andWhere($qb->expr()->like('s.name' , ':name'))
-                ->orWhere($qb->expr()->like('s.id' , ':name'))
-                ->orWhere($qb->expr()->like('s.company.name' , ':name'))
-                ->orWhere($qb->expr()->like('s.state.name' , ':name'))
-                ->setParameter('name', '%'.$search->getCompany().'%');
+                ->orWhere($qb->expr()->eq('s.Company', ':company'))
+                ->setParameter('company', $search->getCompany());
+
+        }
+        if ($search->getProcess() !== null) {
+            $qb
+                ->orWhere($qb->expr()->eq('s.Process', ':process'))
+                ->setParameter('process', $search->getProcess());
+        }
+        if ($search->getState() !== null) {
+            $qb
+                ->orWhere($qb->expr()->eq('s.State' , ':state'))
+                ->setParameter('state', $search->getState());
         }
 
         return $qb->getQuery();

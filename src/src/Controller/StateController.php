@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\State;
+use App\Form\StateSearchType;
 use App\Form\StateType;
 use App\Repository\StateRepository;
 use Doctrine\DBAL\Exception;
@@ -30,11 +31,14 @@ class StateController extends AbstractController
     }
 
     /**
-     * @Route("/", name="state_index", methods={"GET"})
+     * @Route("/", name="state_index", methods={"GET", "POST"})
      */
     public function index(StateRepository $stateRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $search = new State();
+        $form = $this->createForm(StateSearchType::class, $search);
+        $form->handleRequest($request);
+
         $pagination = $paginator->paginate(
             $this->getDoctrine()->getManager()->getRepository(State::class)->getAllQuery($search),
             $request->query->getInt('page', 1), /*page number*/
@@ -42,6 +46,7 @@ class StateController extends AbstractController
         );
 
         return $this->render('state/index.html.twig', [
+            'form' => $form->createView(),
             'states' => $this->states,
             'pagination' => $pagination,
         ]);

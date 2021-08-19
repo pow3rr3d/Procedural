@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\StateSearchType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Exception;
@@ -30,11 +31,14 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/", name="user_index", methods={"GET"})
+     * @Route("/", name="user_index", methods={"GET", "POST"})
      */
     public function index(UserRepository $userRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $search = new User();
+        $form = $this->createForm(StateSearchType::class, $search);
+        $form->handleRequest($request);
+
         $pagination = $paginator->paginate(
             $this->getDoctrine()->getManager()->getRepository(User::class)->getAllQuery($search),
             $request->query->getInt('page', 1), /*page number*/
@@ -42,6 +46,7 @@ class UserController extends AbstractController
         );
 
         return $this->render('user/index.html.twig', [
+            'form' => $form->createView(),
             'states' => $this->states,
             'pagination' => $pagination,
 

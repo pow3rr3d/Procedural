@@ -5,8 +5,22 @@
 {% block body %}
     <section class="wrapper">
         <div class="button-div">
+            <a class="btn-top custom-search-btn" href="#"><i class="fas fa-search"></i></a>
             <a class="btn-top" href="{{ path('user_new') }}">Create new</a>
         </div>
+
+        {{ form_start(form, {'attr': {'class': 'hidden'}}) }}
+        <div class="d-flex flex-row justify-content-start form-control">
+
+            <div class="p-2">
+                {{ form_widget(form.Name) }}
+            </div>
+            <div class="p-2">
+                <button class="btn btn-outline-secondary" type="submit" id="button-search">Search</button>
+            </div>
+
+        </div>
+        {{ form_end(form) }}
 
         {% for message in app.flashes('sucess') %}
             <div class="alert alert-success">

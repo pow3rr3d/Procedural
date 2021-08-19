@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Process;
+use App\Form\ProcessSearchType;
 use App\Form\ProcessType;
 use App\Form\StepType;
 use App\Repository\ProcessRepository;
@@ -30,11 +31,14 @@ class ProcessController extends AbstractController
     }
 
     /**
-     * @Route("/", name="process_index", methods={"GET"})
+     * @Route("/", name="process_index", methods={"GET", "POST"})
      */
     public function index(ProcessRepository $processRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $search = new Process();
+        $form = $this->createForm(ProcessSearchType::class, $search);
+        $form->handleRequest($request);
+
         $pagination = $paginator->paginate(
             $this->getDoctrine()->getManager()->getRepository(Process::class)->getAllQuery($search),
             $request->query->getInt('page', 1), /*page number*/
@@ -42,6 +46,7 @@ class ProcessController extends AbstractController
         );
 
         return $this->render('process/index.html.twig', [
+            'form' => $form->createView(),
             'states' => $this->states,
             'pagination' => $pagination,
         ]);

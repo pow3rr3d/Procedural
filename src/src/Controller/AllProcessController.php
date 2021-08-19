@@ -6,8 +6,9 @@ use App\Entity\CompanyProcess;
 use App\Entity\CompanyProcessStep;
 use App\Entity\State;
 use App\Entity\Step;
+use App\Form\CompanyProcessSearchType;
 use App\Form\CompanyProcessStepsType;
-use App\Form\CompanyProcessType;
+use App\Form\ProcessSearchType;
 use App\Repository\CompanyProcessRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -21,7 +22,7 @@ class AllProcessController extends AbstractController
     private $em;
     private $states;
 
-    public function __construct( EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
         $this->states = MenuController::renderMenu($this->em);
@@ -29,7 +30,7 @@ class AllProcessController extends AbstractController
     }
 
     /**
-     * @Route("/allprocess", name="allprocess_index", methods={"GET"})
+     * @Route("/allprocess/", name="allprocess_index", methods={"GET", "POST"})
      * @param CompanyProcessRepository $companyProcess
      * @param PaginatorInterface $paginator
      * @param Request $request
@@ -38,6 +39,9 @@ class AllProcessController extends AbstractController
     public function index(CompanyProcessRepository $companyProcess, PaginatorInterface $paginator, Request $request): Response
     {
         $search = new CompanyProcess();
+        $form = $this->createForm(CompanyProcessSearchType::class, $search);
+        $form->handleRequest($request);
+
         $pagination = $paginator->paginate(
             $this->getDoctrine()->getManager()->getRepository(CompanyProcess::class)->getAllQuery($search),
             $request->query->getInt('page', 1), /*page number*/
@@ -45,10 +49,42 @@ class AllProcessController extends AbstractController
         );
 
         return $this->render('allprocess/index.html.twig', [
+            'form' => $form->createView(),
             'states' => $this->states,
             'pagination' => $pagination,
         ]);
     }
+
+    /**
+     * @Route("/allprocess/{slug}", name="allprocess_slug", methods={"GET", "POST"})
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @param string $slug
+     * @return Response
+     */
+    public function slug(PaginatorInterface $paginator, Request $request, string $slug): Response
+    {
+        $search = new CompanyProcess();
+        $form = $this->createForm(CompanyProcessSearchType::class, $search);
+        $form->handleRequest($request);
+
+        $id = preg_replace("([^0-9]*)", "", $slug);
+
+        $search->setState($this->getDoctrine()->getRepository(State::class)->findOneBy(["id" => $id]));
+
+        $pagination = $paginator->paginate(
+            $this->getDoctrine()->getManager()->getRepository(CompanyProcess::class)->getAllQuery($search),
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
+
+        return $this->render('allprocess/index.html.twig', [
+            'form' => $form->createView(),
+            'states' => $this->states,
+            'pagination' => $pagination,
+        ]);
+    }
+
 
     /**
      * @Route("/companyprocess/new", name="companyprocess_new", methods={"GET", "POST"})
@@ -58,7 +94,7 @@ class AllProcessController extends AbstractController
     public function new(Request $request): Response
     {
         $companyProcess = new CompanyProcess();
-        $form = $this->createForm(CompanyProcessType::class, $companyProcess);
+        $form = $this->createForm(ProcessSearchType::class, $companyProcess);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -137,7 +173,7 @@ class AllProcessController extends AbstractController
 
             $return = $form->get("Step")->getData();
 
-            if (count($companyProcess->getCompanyProcessSteps())+1 === count($companyProcess->getProcess()->getSteps())) {
+            if (count($companyProcess->getCompanyProcessSteps()) + 1 === count($companyProcess->getProcess()->getSteps())) {
                 $companyProcess->setUpdatedAt(new \DateTimeImmutable());
                 $companyProcessStep = new CompanyProcessStep();
                 $companyProcessStep

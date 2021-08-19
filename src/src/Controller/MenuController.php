@@ -16,7 +16,7 @@ class MenuController
 
 
         foreach ($companyProcesses as $companyProcess){
-            $states[$companyProcess->getState()->getId()] = [$companyProcess->getState()->getName(), 0, "/allprocess/?s.State.Id=".$companyProcess->getState()->getId()];
+            $states[$companyProcess->getState()->getId()] = [$companyProcess->getState()->getName(), 0, "?s.State.Id=".$companyProcess->getState()->getId()];
         }
         foreach ($companyProcesses as $companyProcess){
             $states[$companyProcess->getState()->getId()]['1'] += 1;

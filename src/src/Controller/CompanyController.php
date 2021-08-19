@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Company;
-use App\Form\CompanyType;
+use App\Form\ProcessSearchType;
+use App\Form\StateSearchType;
 use App\Repository\CompanyRepository;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,16 +26,18 @@ class CompanyController extends AbstractController
     {
         $this->em = $em;
         $this->states = MenuController::renderMenu($this->em);
-//        'states' => $this->states,
     }
 
 
     /**
-     * @Route("/", name="company_index", methods={"GET"})
+     * @Route("/", name="company_index", methods={"GET", "POST"})
      */
     public function index(CompanyRepository $companyRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $search = new Company();
+        $form = $this->createForm(ProcessSearchType::class, $search);
+        $form->handleRequest($request);
+
         $pagination = $paginator->paginate(
             $this->getDoctrine()->getManager()->getRepository(Company::class)->getAllQuery($search),
             $request->query->getInt('page', 1), /*page number*/
@@ -42,6 +45,7 @@ class CompanyController extends AbstractController
         );
 
         return $this->render('company/index.html.twig', [
+            'form' => $form->createView(),
             'states' => $this->states,
             'pagination' => $pagination,
         ]);
@@ -53,7 +57,7 @@ class CompanyController extends AbstractController
     public function new(Request $request): Response
     {
         $company = new Company();
-        $form = $this->createForm(CompanyType::class, $company);
+        $form = $this->createForm(StateSearchType::class, $company);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -97,7 +101,7 @@ class CompanyController extends AbstractController
      */
     public function edit(Request $request, Company $company): Response
     {
-        $form = $this->createForm(CompanyType::class, $company);
+        $form = $this->createForm(StateSearchType::class, $company);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

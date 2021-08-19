@@ -25,7 +25,7 @@ class StateRepository extends ServiceEntityRepository
 
         if ($search->getName() !== null) {
             $qb
-                ->andWhere($qb->expr()->like('s.name' , ':name'))
+                ->andWhere($qb->expr()->like('s.Name' , ':name'))
                 ->orWhere($qb->expr()->like('s.id' , ':name'))
                 ->setParameter('name', '%'.$search->getName().'%');
         }

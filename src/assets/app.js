@@ -30,6 +30,7 @@ a2lix_lib.sfCollection.init({
 //Custom JS
 import './sortable';
 import './menu';
+import './customSearchBtn';
 
 
 //Console.log Style

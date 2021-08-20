@@ -14,10 +14,10 @@ class StateFixtures extends Fixture implements OrderedFixtureInterface
     {
 
         $state1 = new State();
-        $state1->setName("En cours");
+        $state1->setName("In progress");
 
         $state2 = new State();
-        $state2->setName("Terminé");
+        $state2->setName("Finished");
         $state2->setIsFinalState(true);
 
         $states = [

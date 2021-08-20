@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\State;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,6 +14,10 @@ class StateType extends AbstractType
     {
         $builder
             ->add('Name')
+            ->add('IsFinalState', CheckboxType::class, [
+                'empty_data' => null,
+                'required' => false
+            ])
         ;
     }
 

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Process{% endblock %}
+
+{% block body %}
+    <section class="wrapper">
+        <div class="button-div">
+            {{ include('process/_delete_form.html.twig') }}
+            {{ include('process/_modal_delete.html.twig') }}
+            <a class="btn-top" href="{{ path('process_index') }}">back to list</a>
+        </div>
+        {{ include('process/_form.html.twig', {'button_label': 'Update'}) }}
+    </section>
+{% endblock %}

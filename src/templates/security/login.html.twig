@@ -16,44 +16,7 @@
 </head>
 <body id="bodyLogin">
 {% block body %}
-    {#<form method="post">#}
-    {#    {% if error %}#}
-    {#        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
-    {#    {% endif %}#}
-
-    {#    {% if app.user %}#}
-    {#        <div class="mb-3">#}
-    {#            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>#}
-    {#        </div>#}
-    {#    {% endif %}#}
-
-    {#    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>#}
-    {#    <label for="inputEmail">Email</label>#}
-    {#    <input type="email" value="{{ last_username }}" name="Email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>#}
-    {#    <label for="inputPassword">Password</label>#}
-    {#    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>#}
-
-    {#    <input type="hidden" name="_csrf_token"#}
-    {#           value="{{ csrf_token('authenticate') }}"#}
-    {#    >#}
-
-    {#    #}{##}
-    {#        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.#}
-    {#        See https://symfony.com/doc/current/security/remember_me.html#}
-
-    {#        <div class="checkbox mb-3">#}
-    {#            <label>#}
-    {#                <input type="checkbox" name="_remember_me"> Remember me#}
-    {#            </label>#}
-    {#        </div>#}
-    {#    #}
-
-    {#    <button class="btn btn-lg btn-primary" type="submit">#}
-    {#        Sign in#}
-    {#    </button>#}
-    {#</form>#}
-
-    <div id="login-page">
+        <div id="login-page">
         <div class="container">
             <form method="post" class="form-login">
                 <h2 class="form-login-heading">sign in now</h2>
@@ -71,16 +34,14 @@
                     <br>
                     <input type="password" name="password" id="inputPassword" placeholder="Password" class="form-control" autocomplete="current-password" required>
                     <div id="forgetPass">
-                        <a data-toggle="modal" href="#myModal"> Forgot Password?</a>
+                        <a data-toggle="modal" href="{{ path('app_forgot_password_request') }}"> Forgot Password?</a>
                     </div>
-                    <button class="btn btn-theme btn-block" href="index.html" type="submit">SIGN IN</button>
+                    <button class="btn btn-theme btn-block" type="submit">SIGN IN</button>
                     <hr>
 
                     <div class="registration">
                         Don't have an account yet?<br/>
-                        <a class="" href="#">
-                            Create an account
-                        </a>
+                        Please contact your Adminsitator.
                     </div>
                 </div>
                 <!-- Modal -->
@@ -111,7 +72,7 @@
     </div>
 {% endblock %}
 {% block javascripts %}{% endblock %}
-{{ encore_entry_script_tags('app') }}
+{#{{ encore_entry_script_tags('app') }}#}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </body>
 </html>

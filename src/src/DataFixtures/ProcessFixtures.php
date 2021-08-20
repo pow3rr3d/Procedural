@@ -17,7 +17,6 @@ class ProcessFixtures extends Fixture implements OrderedFixtureInterface
         $process
             ->setName("Process 1")
             ->setDescription("Descrpition form Process 1")
-            ->setState($manager->getRepository(State::class)->findOneBy(["Name" => "En cours"]))
             ->setCreatedAt(new \DateTimeImmutable())
             ->setUpdatedAt(null);
 

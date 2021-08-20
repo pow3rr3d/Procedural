@@ -3,35 +3,70 @@
 {% block title %}State index{% endblock %}
 
 {% block body %}
-<section class="wrapper">
-    <div class="button-div">
-        <a class="btn-top" href="{{ path('state_new') }}">Create new</a>
-    </div>
-    <table class="table table-responsive table-hover">
-        <thead>
-            <tr>
-                <th>#/th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for state in states %}
-            <tr>
-                <td>{{ state.id }}</td>
-                <td>{{ state.Name }}</td>
-                <td>
-                    <a href="{{ path('state_show', {'id': state.id}) }}"><i class="far fa-eye"></i></a>
-                    <a href="{{ path('state_edit', {'id': state.id}) }}"><i class="fas fa-pen"></i></a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <section class="wrapper">
+        <div class="button-div">
+            <a class="btn-top custom-search-btn" href="#"><i class="fas fa-search"></i></a>
+            <a class="btn-top" href="{{ path('state_new') }}">Create new</a>
+        </div>
 
-</section>
+        {{ form_start(form, {'attr': {'class': 'hidden'}}) }}
+        <div class="d-flex flex-row justify-content-start form-control">
+
+            <div class="p-2">
+                {{ form_widget(form.Name) }}
+            </div>
+            <div class="p-2">
+                <button class="btn btn-outline-secondary" type="submit" id="button-search">Search</button>
+            </div>
+
+        </div>
+        {{ form_end(form) }}
+
+        {% for message in app.flashes('sucess') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {% for message in app.flashes('alert') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th{% if pagination.isSorted('s.id') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, '#', 's.id') }}</th>
+                    <th{% if pagination.isSorted('s.Name') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Name', 's.Name') }}</th>
+                    <th{% if pagination.isSorted('s.IsFinalState') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Is Final State', 's.IsFinalState') }}</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for state in pagination %}
+                    <tr>
+                        <td>{{ state.id }}</td>
+                        <td>{{ state.Name }}</td>
+                        <td>{{ state.IsfinalState ? "True" : "False" }}</td>
+                        <td>
+                            <a href="{{ path('state_show', {'id': state.id}) }}"><i class="far fa-eye"></i></a>
+                            <a href="{{ path('state_edit', {'id': state.id}) }}"><i class="fas fa-pen"></i></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="navigation button-div">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </section>
 {% endblock %}

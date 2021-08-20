@@ -19,6 +19,20 @@ class StateRepository extends ServiceEntityRepository
         parent::__construct($registry, State::class);
     }
 
+    public function getAllQuery(State $search): \Doctrine\ORM\Query
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        if ($search->getName() !== null) {
+            $qb
+                ->andWhere($qb->expr()->like('s.Name' , ':name'))
+                ->orWhere($qb->expr()->like('s.id' , ':name'))
+                ->setParameter('name', '%'.$search->getName().'%');
+        }
+
+        return $qb->getQuery();
+    }
+
     // /**
     //  * @return State[] Returns an array of State objects
     //  */

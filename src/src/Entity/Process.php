@@ -30,7 +30,8 @@ class Process
     private $Description;
 
     /**
-     * @ORM\OneToMany(targetEntity=Step::class, mappedBy="process")
+     * @ORM\OneToMany(targetEntity=Step::class, mappedBy="process", cascade={"persist"})
+     * @ORM\OrderBy({"weight" = "ASC"})
      */
     private $Steps;
 
@@ -43,12 +44,6 @@ class Process
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $UpdatedAt;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=State::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $State;
 
     public function __construct()
     {
@@ -134,18 +129,6 @@ class Process
     public function setUpdatedAt(?\DateTimeImmutable $UpdatedAt): self
     {
         $this->UpdatedAt = $UpdatedAt;
-
-        return $this;
-    }
-
-    public function getState(): ?State
-    {
-        return $this->State;
-    }
-
-    public function setState(?State $State): self
-    {
-        $this->State = $State;
 
         return $this;
     }

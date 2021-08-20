@@ -19,6 +19,21 @@ class CompanyRepository extends ServiceEntityRepository
         parent::__construct($registry, Company::class);
     }
 
+
+    public function getAllQuery(Company $search): \Doctrine\ORM\Query
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        if ($search->getName() !== null) {
+            $qb
+                ->andWhere($qb->expr()->like('s.Name' , ':name'))
+                ->orWhere($qb->expr()->like('s.id' , ':name'))
+                ->setParameter('name', '%'.$search->getName().'%');
+        }
+
+        return $qb->getQuery();
+    }
+
     // /**
     //  * @return Company[] Returns an array of Company objects
     //  */

@@ -1,14 +1,17 @@
 //Import
-@import "to-do";
 @import "style";
-@import "style-responsive";
-@import "table-responsive";
+
+
 
 @media (min-width: 769px) {
   .body {
     position: relative;
     top: 80px;
     left: 210px;
+
+    &.col-11 {
+      left: 50px;
+    }
 
     a {
       color: black;
@@ -22,12 +25,8 @@
 }
 
 @media (max-width: 768px) {
-  .body {
-    margin-right: 10px;
-    margin-left: 10px;
-    margin-top: 40px;
-
-    a {
+  .container{
+       a {
       color: black !important;
 
       &:hover {
@@ -35,6 +34,25 @@
       }
 
     }
+  }
+  .dashboardIndex{
+    padding-top: 50px;
+    padding-bottom: 100px;
+  }
+  .button-div{
+    margin-right: -60px;
+  }
+
+  .sortable{
+    color: black;
+  }
+  .table{
+    a{
+      color: black;
+    }
+  }
+  .wrapper{
+    padding-left: 50px;
   }
 }
 
@@ -88,7 +106,7 @@ html {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  padding-bottom: 418px;
+  padding-bottom: 428px;
 
 }
 
@@ -165,4 +183,69 @@ h1 {
 
 form {
   margin-bottom: 80px;
+}
+
+.redtr {
+  background-color: rgba(255, 0, 0, 0.3);
+  color: red;
+
+  &:hover {
+    color: black !important;
+  }
+
+  a {
+    color: red;
+
+    &:hover {
+      color: black !important;
+    }
+  }
+}
+
+.page-item {
+  &.active {
+    .page-link {
+      background-color: #4ecdc4 !important;
+      border-color: #4ecdc4 !important;;
+    }
+  }
+}
+
+.dashboardIndex {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: flex !important;
+  flex-wrap: wrap;
+  margin-top: calc(var(--bs-gutter-y) * -1);
+  margin-right: calc(var(--bs-gutter-x) * -.5);
+  width: 100%;
+}
+
+body {
+  #modalSearch {
+    position: absolute;
+    left: -5%;
+    .modal-content {
+      margin-top: 25%;
+      width: 200%;
+    }
+  }
+
+  #searchResult {
+    color: #9e9da3;
+    padding: 25px 10px 25px 10px;
+
+    a {
+      text-decoration: none;
+      color: #9e9da3;
+    }
+
+    ul {
+      border-bottom: solid 1px #aaaaaa;
+
+      li:last-child {
+        padding-bottom: 25px;
+      }
+    }
+  }
 }

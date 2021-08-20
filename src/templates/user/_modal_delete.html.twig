@@ -11,12 +11,12 @@
                 <p class="text-left"><b>{{ user.Email }}</b></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn cancel-btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn cancel-btn btn-default" data-bs-dismiss="modal">Cancel</button>
                 <form method="post" action="{{ path("user_delete", {id: user.id}) }}"
                       style="display: inline-block">
                     <input type="hidden" name="_method" value="delete">
-                    <input type="hidden" name="_token" data-toggle="modal"
-                           data-target="#confirm-submit{{ user.id }}"
+                    <input type="hidden" name="_token" data-bs-toggle="modal"
+                           data-bs-target="#confirm-submit{{ user.id }}"
                            value="{{ csrf_token('delete' ~ user.id) }}">
                     <button class="btn btn-danger">Delete</button>
                 </form>

@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Company;
 use App\Entity\CompanyProcess;
 use App\Entity\CompanyProcessStep;
 use App\Entity\Step;
@@ -14,14 +15,14 @@ class CompanyProcessStepFixtures extends Fixture implements OrderedFixtureInterf
 {
     public function load(ObjectManager $manager)
     {
-//        $cps = new CompanyProcessStep();
-//        $cps
-//            ->setCompanyProcess($manager->getRepository(CompanyProcess::class)->findOneBy(["Company" => "Company"]))
-//            ->setStep($manager->getRepository(Step::class)->findOneBy(["name" => "Step 1"]))
-//            ->setValidatedAt(new \DateTimeImmutable())
-//            ->setValidatedBy($manager->getRepository(User::class)->findOneBy(["name" => "Admin"]));
-//
-//        $manager->persist($cps);
+        $cps = new CompanyProcessStep();
+        $cps
+            ->setCompanyProcess($manager->getRepository(CompanyProcess::class)->findOneBy(["Company" => $manager->getRepository(Company::class)->findOneBy(["Name" => "Company"])]))
+            ->setStep($manager->getRepository(Step::class)->findOneBy(["Title" => "Step 1"]))
+            ->setValidatedAt(new \DateTimeImmutable())
+            ->setValidatedBy($manager->getRepository(User::class)->findOneBy(["Name" => "Admin"]));
+
+        $manager->persist($cps);
 
         $manager->flush();
     }

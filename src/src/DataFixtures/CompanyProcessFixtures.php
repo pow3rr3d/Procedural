@@ -5,6 +5,7 @@ Namespace App\DataFixtures;
 use App\Entity\Company;
 use App\Entity\CompanyProcess;
 use App\Entity\Process;
+use App\Entity\State;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -20,7 +21,9 @@ class CompanyProcessFixtures extends Fixture implements OrderedFixtureInterface
             ->setProcess($manager->getRepository(Process::class)->findOneBy(["Name" => "Process 1"]))
             ->setCreatedAt(new \DateTimeImmutable())
             ->setUpdatedAt(new \DateTimeImmutable())
-            ->setIsFinished(false);
+            ->setIsFinished(false)
+            ->setState($manager->getRepository(State::class)->findOneBy(["Name" => "En cours"]))
+        ;
 
          $manager->persist($cp);
 

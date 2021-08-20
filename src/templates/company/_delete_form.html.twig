@@ -3,6 +3,6 @@
 {#    <button class="btn">Delete</button>#}
 {#</form>#}
 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ company.id) }}">
-<button class="btn-top" data-toggle="modal"
-        data-target="#modal_delete{{ company.id }}">Delete
+<button class="btn-top" data-bs-toggle="modal"
+        data-bs-target="#modal_delete{{ company.id }}">Delete
 </button>

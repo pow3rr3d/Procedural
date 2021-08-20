@@ -26,7 +26,7 @@ Encore
 
     //JS
     .addEntry('app', './assets/app.js')
-    // .enableSassLoader()
+    .enableSassLoader()
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

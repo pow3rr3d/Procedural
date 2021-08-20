@@ -17,12 +17,13 @@ User role credentials:\
 
 1- Download Procedural for this repository\
 2- Cd Procedural/src\
-3- Composer update \
-4- Npm install\
-4- Npm run build\
-5- Php bin/console app:install\
-6- Follow the instructions\
-7- Enjoy
+3 - Nano .env.local
+4- Composer update \
+5- Npm install\
+6- Npm run build\
+7- Php bin/console app:install\
+8- Follow the instructions\
+9- Enjoy
 
 ##Configuration
 

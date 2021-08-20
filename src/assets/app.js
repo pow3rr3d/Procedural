@@ -11,6 +11,7 @@ import './styles/app.scss';
 // start the Stimulus application
 import './bootstrap';
 
+
 //Import CookiesJS
 import Cookies from 'js-cookie';
 
@@ -31,6 +32,13 @@ a2lix_lib.sfCollection.init({
 import './sortable';
 import './menu';
 import './customSearchBtn';
+// import './search';
+
+//import modal search
+import {open as search} from './search';
+
+search();
+
 
 
 //Console.log Style

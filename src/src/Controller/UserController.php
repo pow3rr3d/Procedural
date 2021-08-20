@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\StateSearchType;
+use App\Form\UserSearchType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Exception;
@@ -36,7 +37,7 @@ class UserController extends AbstractController
     public function index(UserRepository $userRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $search = new User();
-        $form = $this->createForm(StateSearchType::class, $search);
+        $form = $this->createForm(UserSearchType::class, $search);
         $form->handleRequest($request);
 
         $pagination = $paginator->paginate(

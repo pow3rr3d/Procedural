@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Company;
+use App\Form\CompanySearchType;
+use App\Form\CompanyType;
 use App\Form\ProcessSearchType;
 use App\Form\StateSearchType;
 use App\Repository\CompanyRepository;
@@ -35,7 +37,7 @@ class CompanyController extends AbstractController
     public function index(CompanyRepository $companyRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $search = new Company();
-        $form = $this->createForm(ProcessSearchType::class, $search);
+        $form = $this->createForm(CompanySearchType::class, $search);
         $form->handleRequest($request);
 
         $pagination = $paginator->paginate(
@@ -57,7 +59,7 @@ class CompanyController extends AbstractController
     public function new(Request $request): Response
     {
         $company = new Company();
-        $form = $this->createForm(StateSearchType::class, $company);
+        $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -101,7 +103,7 @@ class CompanyController extends AbstractController
      */
     public function edit(Request $request, Company $company): Response
     {
-        $form = $this->createForm(StateSearchType::class, $company);
+        $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

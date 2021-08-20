@@ -206,3 +206,32 @@ form {
   margin-right: calc(var(--bs-gutter-x) * -.5);
   width: 100%;
 }
+
+body {
+  #modalSearch {
+    position: absolute;
+    left: -5%;
+    .modal-content {
+      margin-top: 25%;
+      width: 200%;
+    }
+  }
+
+  #searchResult {
+    color: #9e9da3;
+    padding: 25px 10px 25px 10px;
+
+    a {
+      text-decoration: none;
+      color: #9e9da3;
+    }
+
+    ul {
+      border-bottom: solid 1px #aaaaaa;
+
+      li:last-child {
+        padding-bottom: 25px;
+      }
+    }
+  }
+}

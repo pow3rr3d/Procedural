@@ -17,7 +17,7 @@ User role credentials:\
 
 1- Download Procedural for this repository\
 2- Cd Procedural/src\
-3 - Nano .env.local
+3 - Nano .env.local\
 4- Composer update \
 5- Npm install\
 6- Npm run build\

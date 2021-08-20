@@ -8,6 +8,7 @@ use App\Entity\State;
 use App\Entity\Step;
 use App\Form\CompanyProcessSearchType;
 use App\Form\CompanyProcessStepsType;
+use App\Form\CompanyProcessType;
 use App\Form\ProcessSearchType;
 use App\Repository\CompanyProcessRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -94,7 +95,7 @@ class AllProcessController extends AbstractController
     public function new(Request $request): Response
     {
         $companyProcess = new CompanyProcess();
-        $form = $this->createForm(ProcessSearchType::class, $companyProcess);
+        $form = $this->createForm(CompanyProcessType::class, $companyProcess);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -171,6 +172,8 @@ class AllProcessController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+
+
             $return = $form->get("Step")->getData();
 
             if (count($companyProcess->getCompanyProcessSteps()) + 1 === count($companyProcess->getProcess()->getSteps())) {
@@ -184,6 +187,13 @@ class AllProcessController extends AbstractController
 
                 $companyProcess->setIsFinished(true);
                 $companyProcess->setState($this->getDoctrine()->getManager()->getRepository(State::class)->findOneBy(["IsFinalState" => true]));
+                if($companyProcess->getState() === null){
+                    $this->addFlash(
+                        'alert',
+                        'You have\'nt create a final state. Procedural can\'t close a process without a final state.'
+                    );
+                    return $this->redirectToRoute("allprocess_index");
+                }
                 $this->getDoctrine()->getManager()->persist($companyProcess);
                 $this->getDoctrine()->getManager()->persist($companyProcessStep);
                 $this->getDoctrine()->getManager()->flush();

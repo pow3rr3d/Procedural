@@ -33,37 +33,38 @@
                 {{ message }}
             </div>
         {% endfor %}
-
-        <table class="table table-responsive table-hover">
-            <thead>
-            <tr>
-                <th{% if pagination.isSorted('s.id') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(pagination, '#', 's.id') }}</th>
-                <th{% if pagination.isSorted('s.Name') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(pagination, 'Name', 's.Name') }}</th>
-                <th{% if pagination.isSorted('s.IsFinalState') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(pagination, 'Is Final State', 's.IsFinalState') }}</th>
-                <th>actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for state in pagination  %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
                 <tr>
-                    <td>{{ state.id }}</td>
-                    <td>{{ state.Name }}</td>
-                    <td>{{ state.IsfinalState ? "True" : "False" }}</td>
-                    <td>
-                        <a href="{{ path('state_show', {'id': state.id}) }}"><i class="far fa-eye"></i></a>
-                        <a href="{{ path('state_edit', {'id': state.id}) }}"><i class="fas fa-pen"></i></a>
-                    </td>
+                    <th{% if pagination.isSorted('s.id') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, '#', 's.id') }}</th>
+                    <th{% if pagination.isSorted('s.Name') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Name', 's.Name') }}</th>
+                    <th{% if pagination.isSorted('s.IsFinalState') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Is Final State', 's.IsFinalState') }}</th>
+                    <th>actions</th>
                 </tr>
-            {% else %}
-                <tr>
-                    <td colspan="4">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for state in pagination %}
+                    <tr>
+                        <td>{{ state.id }}</td>
+                        <td>{{ state.Name }}</td>
+                        <td>{{ state.IsfinalState ? "True" : "False" }}</td>
+                        <td>
+                            <a href="{{ path('state_show', {'id': state.id}) }}"><i class="far fa-eye"></i></a>
+                            <a href="{{ path('state_edit', {'id': state.id}) }}"><i class="fas fa-pen"></i></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <div class="navigation button-div">
             {{ knp_pagination_render(pagination) }}
         </div>

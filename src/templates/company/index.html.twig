@@ -24,43 +24,44 @@
         {{ form_end(form) }}
 
         {% for message in app.flashes('alert') %}
-        <div class="alert alert-danger">
-            {{ message }}
-        </div>
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
         {% endfor %}
         {% for message in app.flashes('sucess') %}
             <div class="alert alert-success">
                 {{ message }}
             </div>
         {% endfor %}
-
-        <table class="table table-responsive table-hover">
-            <thead>
-            <tr>
-                <th{% if pagination.isSorted('s.id') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(pagination, '#', 's.id') }}</th>
-                <th{% if pagination.isSorted('s.Name') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(pagination, 'Name', 's.Name') }}</th>
-                <th>actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for company in pagination %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
                 <tr>
-                    <td>{{ company.id }}</td>
-                    <td>{{ company.Name }}</td>
-                    <td>
-                        <a href="{{ path('company_show', {'id': company.id}) }}"><i class="far fa-eye"></i></a>
-                        <a href="{{ path('company_edit', {'id': company.id}) }}"><i class="fas fa-pen"></i></a>
-                    </td>
+                    <th{% if pagination.isSorted('s.id') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, '#', 's.id') }}</th>
+                    <th{% if pagination.isSorted('s.Name') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Name', 's.Name') }}</th>
+                    <th>actions</th>
                 </tr>
-            {% else %}
-                <tr>
-                    <td colspan="3">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for company in pagination %}
+                    <tr>
+                        <td>{{ company.id }}</td>
+                        <td>{{ company.Name }}</td>
+                        <td>
+                            <a href="{{ path('company_show', {'id': company.id}) }}"><i class="far fa-eye"></i></a>
+                            <a href="{{ path('company_edit', {'id': company.id}) }}"><i class="fas fa-pen"></i></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <div class="navigation button-div">
             {{ knp_pagination_render(pagination) }}
         </div>

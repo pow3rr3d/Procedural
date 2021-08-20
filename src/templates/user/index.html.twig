@@ -34,44 +34,45 @@
             </div>
         {% endfor %}
 
-
-        <table class="table table-responsive table-hover">
-            <thead>
-            <tr>
-                <th{% if pagination.isSorted('s.id') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(pagination, '#', 's.id') }}</th>
-                <th{% if pagination.isSorted('s.Name') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(pagination, 'Name', 's.Name') }}</th>
-                <th{% if pagination.isSorted('s.Surname') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(pagination, 'Surname', 's.Surname') }}</th>
-                <th{% if pagination.isSorted('s.Email') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(pagination, 'Email', 's.Email') }}</th>
-                <th{% if pagination.isSorted('s.Roles') %} class="sorted"{% endif %}>
-                    {{ knp_pagination_sortable(pagination, 'Roles', 's.Roles') }}</th>
-                <th>actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for user in pagination %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
                 <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.Name }}</td>
-                    <td>{{ user.Surname }}</td>
-                    <td>{{ user.Email }}</td>
-                    <td>{% for role in user.Roles %}{{ role }}{% endfor %}</td>
-                    <td>
-                        <a href="{{ path('user_show', {'id': user.id}) }}"><i class="far fa-eye"></i></a>
-                        <a href="{{ path('user_edit', {'id': user.id}) }}"><i class="fas fa-pen"></i></a>
-                        <a href="/dashboard/?_switch_user={{ user.Email }}"><i class="fas fa-sign-in-alt"></i></a>
-                    </td>
+                    <th{% if pagination.isSorted('s.id') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, '#', 's.id') }}</th>
+                    <th{% if pagination.isSorted('s.Name') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Name', 's.Name') }}</th>
+                    <th{% if pagination.isSorted('s.Surname') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Surname', 's.Surname') }}</th>
+                    <th{% if pagination.isSorted('s.Email') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Email', 's.Email') }}</th>
+                    <th{% if pagination.isSorted('s.Roles') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Roles', 's.Roles') }}</th>
+                    <th>actions</th>
                 </tr>
-            {% else %}
-                <tr>
-                    <td colspan="6">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for user in pagination %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.Name }}</td>
+                        <td>{{ user.Surname }}</td>
+                        <td>{{ user.Email }}</td>
+                        <td>{% for role in user.Roles %}{{ role }}{% endfor %}</td>
+                        <td>
+                            <a href="{{ path('user_show', {'id': user.id}) }}"><i class="far fa-eye"></i></a>
+                            <a href="{{ path('user_edit', {'id': user.id}) }}"><i class="fas fa-pen"></i></a>
+                            <a href="/dashboard/?_switch_user={{ user.Email }}"><i class="fas fa-sign-in-alt"></i></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <div class="navigation button-div">
             {{ knp_pagination_render(pagination) }}
         </div>

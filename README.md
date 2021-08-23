@@ -3,7 +3,7 @@
 Welcome to Procedural. This app is a full-responsive & installable app for 
 managing your process. 
 
-##Demo
+## Demo
 
 A demo is available at [https://procedural.a-messagerdiaz.fr](https://procedural.a-messagerdiaz.fr)
 
@@ -13,7 +13,7 @@ Admin role credentials:\
 User role credentials:\
 &nbsp;&nbsp;&nbsp;user@demo.com/user
 
-##Installation
+## Installation
 
 1- Download Procedural for this repository\
 2- Cd Procedural/src\

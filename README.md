@@ -3,7 +3,7 @@
 Welcome to Procedural. This app is a full-responsive & installable app for 
 managing your process. 
 
-##Demo
+## Demo
 
 A demo is available at [https://procedural.a-messagerdiaz.fr](https://procedural.a-messagerdiaz.fr)
 
@@ -13,18 +13,19 @@ Admin role credentials:\
 User role credentials:\
 &nbsp;&nbsp;&nbsp;user@demo.com/user
 
-##Installation
+## Installation
 
 1- Download Procedural for this repository\
 2- Cd Procedural/src\
-3- Composer update \
-4- Npm install\
-4- Npm run build\
-5- Php bin/console app:install\
-6- Follow the instructions\
-7- Enjoy
+3 - Nano .env.local\
+4- Composer update \
+5- Npm install\
+6- Npm run build\
+7- Php bin/console app:install\
+8- Follow the instructions\
+9- Enjoy
 
-##Configuration
+## Configuration
 
 The installations command will create your first Administrator. In order to use 
 properly the app, you will need to create at lest one company, one process and 
@@ -33,13 +34,13 @@ two states.
 About the state, don't forget to set one of your state as 'Final State'. This variable
 is required to close a process. 
 
-##Future improvements
+## Future improvements
 
 * Create a documentation website
 * Improve UX/UI design
 * Add Recaptcha V3
 
-##Development
+## Development
 ### Bashrc
 In order to simplify the use of docker, please enter the following line in your bashrc (sudo nano ~/.bashrc):
 * alias dc='docker-compose --env-file .env $*'

@@ -25,7 +25,7 @@ User role credentials:\
 8- Follow the instructions\
 9- Enjoy
 
-##Configuration
+## Configuration
 
 The installations command will create your first Administrator. In order to use 
 properly the app, you will need to create at lest one company, one process and 
@@ -34,13 +34,13 @@ two states.
 About the state, don't forget to set one of your state as 'Final State'. This variable
 is required to close a process. 
 
-##Future improvements
+## Future improvements
 
 * Create a documentation website
 * Improve UX/UI design
 * Add Recaptcha V3
 
-##Development
+## Development
 ### Bashrc
 In order to simplify the use of docker, please enter the following line in your bashrc (sudo nano ~/.bashrc):
 * alias dc='docker-compose --env-file .env $*'

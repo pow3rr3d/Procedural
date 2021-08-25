@@ -68,7 +68,7 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    public function CompanyProcessChart(ChartBuilderInterface $chartBuilder)
+    public function companyProcessChart(ChartBuilderInterface $chartBuilder)
     {
         $companyProcesses = $this->getDoctrine()->getRepository(CompanyProcess::class)->findBy(['IsFinished' => true]);
 
@@ -131,15 +131,15 @@ class DashboardController extends AbstractController
         array_push($this->charts, $chart);
     }
 
-    public function ProcessStateChart(ChartBuilderInterface $chartBuilder)
+    public function processStateChart(ChartBuilderInterface $chartBuilder)
     {
         $companyProcesses = $this->getDoctrine()->getRepository(CompanyProcess::class)->findAll();
-        $AllStates = $this->getDoctrine()->getRepository(State::class)->findAll();
+        $allStates = $this->getDoctrine()->getRepository(State::class)->findAll();
         $states = [];
         $data = [];
 
 
-        foreach ($AllStates as $allState) {
+        foreach ($allStates as $allState) {
             $states[$allState->getId()] = $allState->getName();
             $data[$allState->getId()] = 0;
         }
@@ -181,7 +181,7 @@ class DashboardController extends AbstractController
     }
 
 
-    public function InlineStats(ChartBuilderInterface $chartBuilder)
+    public function inlineStats(ChartBuilderInterface $chartBuilder)
     {
         $companies = count($this->getDoctrine()->getRepository(Company::class)->findAll());
         $processes = count($this->getDoctrine()->getRepository(Process::class)->findAll());
@@ -241,7 +241,7 @@ class DashboardController extends AbstractController
         array_push($this->charts, $chart);
     }
 
-    public function ByUserStats(ChartBuilderInterface $chartBuilder)
+    public function byUserStats(ChartBuilderInterface $chartBuilder)
     {
 
         $allUsers = $this->getDoctrine()->getRepository(User::class)->findAll();
@@ -303,22 +303,22 @@ class DashboardController extends AbstractController
         array_push($this->charts, $chart);
     }
 
-    public function AverageTime(ChartBuilderInterface $chartBuilder)
+    public function averageTime(ChartBuilderInterface $chartBuilder)
     {
 
-        $Allprocesses = $this->getDoctrine()->getRepository(CompanyProcess::class)->findBy(["IsFinished" => true]);
+        $allprocesses = $this->getDoctrine()->getRepository(CompanyProcess::class)->findBy(["IsFinished" => true]);
         $processes = [];
         $data = [];
         $times = [];
         $modulo = [];
 
 
-        foreach ($Allprocesses as $process) {
+        foreach ($allprocesses as $process) {
             $data[$process->getProcess()->getId()] = 0;
             $times[$process->getProcess()->getId()] = 0;
             $modulo[$process->getProcess()->getId()] = 0;
         }
-        foreach ($Allprocesses as $process) {
+        foreach ($allprocesses as $process) {
             $processes[$process->getProcess()->getId()] = $process->getProcess()->getName();
             $interval = new \DateInterval('PT1H');
             $diff = iterator_count($periods = new \DatePeriod($process->getCreatedAt(), $interval, $process->getUpdatedAt()));

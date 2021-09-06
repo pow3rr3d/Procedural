@@ -22,7 +22,7 @@ class CompanyProcessFixtures extends Fixture implements OrderedFixtureInterface
             ->setCreatedAt(new \DateTimeImmutable())
             ->setUpdatedAt(new \DateTimeImmutable())
             ->setIsFinished(false)
-            ->setState($manager->getRepository(State::class)->findOneBy(["Name" => "En cours"]))
+            ->setState($manager->getRepository(State::class)->findOneBy(["Name" => "In Progress"]))
         ;
 
          $manager->persist($cp);

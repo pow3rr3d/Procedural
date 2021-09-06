@@ -6,10 +6,13 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use ApiPlatform\Core\Annotation\ApiResource;
+
 
 /**
  * @UniqueEntity("Email")
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ApiResource()
  */
 class User implements UserInterface
 {

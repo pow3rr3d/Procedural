@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\CompanyProcessStepRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+
 
 /**
  * @ORM\Entity(repositoryClass=CompanyProcessStepRepository::class)
+ * @ApiResource()
  */
 class CompanyProcessStep
 {

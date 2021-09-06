@@ -5,11 +5,14 @@ namespace App\Entity;
 use App\Repository\StateRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use ApiPlatform\Core\Annotation\ApiResource;
+
 
 
 /**
  * @UniqueEntity("IsFinalState")
  * @ORM\Entity(repositoryClass=StateRepository::class)
+ * @ApiResource()
  */
 class State
 {

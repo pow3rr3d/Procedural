@@ -5,21 +5,29 @@ security:
             entity:
                 class: App\Entity\User
                 property: Email
+        apiKey_user_provider:
+          entity:
+            class: App\Entity\User
+            property: apiToken
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        api:
+            pattern: ^/api/
+            stateless: true
+            lazy: true
+            provider: apiKey_user_provider
+            guard:
+                authenticator: App\Security\ApiKeyAuthenticator
         main:
             anonymous: true
             lazy: true
             provider: app_user_provider
             guard:
-                authenticators:
-                    - App\Security\LoginFormAuthenticator
+                authenticator: App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
             switch_user: {role: ROLE_ADMIN }
     encoders:
         App\Entity\User:
@@ -46,4 +54,5 @@ security:
          - { path: ^/companyprocess, roles: ROLE_USER }
          - { path: ^/allprocess, roles: ROLE_USER }
          - { path: ^/(login|register)$, role: IS_AUTHENTICATED_ANONYMOUSLY}
+
         # - { path: ^/profile, roles: ROLE_USER }

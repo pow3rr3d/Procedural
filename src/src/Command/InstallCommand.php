@@ -92,13 +92,15 @@ class InstallCommand extends Command
         $migrationArg = new ArrayInput($arguments);
         $migrationSubmit = $migration->run($migrationArg, $output);
 
+        $date = new \DateTime();
         $user = new User();
         $user
             ->setName($name)
             ->setSurname($surname)
             ->setEmail($email)
             ->setRoles("ROLE_ADMIN")
-            ->setPassword($this->encoder->encodePassword($user, $password));
+            ->setPassword($this->encoder->encodePassword($user, $password))
+            ->setApiToken(hash('sha256', ''.$user->getId().''.$date->format('Y-m-d H:i:s').''.$user->getEmail().''));
 
         $this->em
             ->persist($user);

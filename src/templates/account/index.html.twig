@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit My Account{% endblock %}
+
+{% block body %}
+    <section class="wrapper">
+        <div class="button-div">
+        </div>
+        {{ include('account/_form.html.twig', {'button_label': 'Update'}) }}
+    </section>
+    <section class="wrapper">
+        <h2>API TOKEN</h2>
+        <p>{{ user.apiToken }}</p>
+    </section>
+{% endblock %}

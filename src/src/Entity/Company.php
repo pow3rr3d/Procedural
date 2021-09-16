@@ -11,7 +11,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=CompanyRepository::class)
- * @ApiResource()
+ * @ApiResource(security="is_granted('ROLE_ADMIN')")
  */
 class Company
 {

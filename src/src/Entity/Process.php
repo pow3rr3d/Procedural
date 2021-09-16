@@ -10,7 +10,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=ProcessRepository::class)
- * @ApiResource()
+ * @ApiResource(security="is_granted('ROLE_ADMIN')")
  */
 class Process
 {

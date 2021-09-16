@@ -7,6 +7,7 @@ use App\Form\StateSearchType;
 use App\Form\UserSearchType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -59,6 +60,7 @@ class UserController extends AbstractController
      */
     public function new(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
+        $date = new DateTime();
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -72,6 +74,7 @@ class UserController extends AbstractController
                 $encoded = $encoder->encodePassword($user, $user->getPassword());
                 $user->setPassword($encoded);
                 $user->setRoles("ROLE_USER");
+                $user->setApiToken(hash('sha256', ''.$user->getId().''.$date->format('Y-m-d H:i:s').''.$user->getEmail().''));
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();

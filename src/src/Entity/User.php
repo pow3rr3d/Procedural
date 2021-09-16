@@ -12,7 +12,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @UniqueEntity("Email")
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ApiResource()
+ * @ApiResource(security="is_granted('ROLE_ADMIN')")
  */
 class User implements UserInterface
 {
@@ -49,6 +49,11 @@ class User implements UserInterface
     private $Roles;
 
     private $Username;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $apiToken;
 
     public function getId(): ?int
     {
@@ -129,6 +134,18 @@ class User implements UserInterface
 
     public function eraseCredentials()
     {
+    }
+
+    public function getApiToken(): ?string
+    {
+        return $this->apiToken;
+    }
+
+    public function setApiToken(string $apiToken): self
+    {
+        $this->apiToken = $apiToken;
+
+        return $this;
     }
 
 }

@@ -38,7 +38,7 @@
     <div>
         <div id="sidebar" class="nav-collapse col-4 notHidden">
             <ul class="sidebar-menu" id="nav-accordion">
-                <h5 class="centered">{{ app.user.Username }}</h5>
+                <h5 class="centered"><a class="accountlink" href="/account">{{ app.user.Username }}</a></h5>
                 <li class="mt">
                     <a class="" href="/dashboard">
                         <i class="fas fa-chart-line"></i>
@@ -54,7 +54,6 @@
                         <li><a href="/allprocess">All States </a></li>
                         {% for state in states %}
                             <li>
-{#                                <a href="{ path('companyprocess_new', {{ state['2'] }} }"> {{ state['0'] }}#}
                                 <a href="{{ path('allprocess_slug', {'slug': state['2']}) }}">{{ state['0'] }}({{ state['1'] }})</a>
                             </li>
                         {% endfor %}

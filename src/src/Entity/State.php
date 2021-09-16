@@ -12,7 +12,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @UniqueEntity("IsFinalState")
  * @ORM\Entity(repositoryClass=StateRepository::class)
- * @ApiResource()
+ * @ApiResource(security="is_granted('ROLE_ADMIN')")
  */
 class State
 {

@@ -18,13 +18,15 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
     }
     public function load(ObjectManager $manager)
     {
+        $date = new \DateTime();
         $admin = new User();
         $admin
             ->setName("Admin")
             ->setSurname("Admin")
             ->setEmail("admin@demo.com")
             ->setRoles("ROLE_ADMIN")
-            ->setPassword($this->passwordEncoder->encodePassword($admin, 'admin'));
+            ->setPassword($this->passwordEncoder->encodePassword($admin, 'admin'))
+            ->setApiToken(hash('sha256', ''.$admin->getId().''.$date->format('Y-m-d H:i:s').''.$admin->getEmail().''));
 
         $user = new User();
         $user
@@ -32,7 +34,8 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             ->setSurname("User")
             ->setEmail("user@demo.com")
             ->setRoles("ROLE_USER")
-            ->setPassword($this->passwordEncoder->encodePassword($user, 'user'));
+            ->setPassword($this->passwordEncoder->encodePassword($user, 'user'))
+            ->setApiToken(hash('sha256', ''.$user->getId().''.$date->format('Y-m-d H:i:s').''.$user->getEmail().''));
 
         $manager->persist($admin);
         $manager->persist($user);

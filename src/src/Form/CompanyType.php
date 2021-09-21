@@ -13,8 +13,8 @@ class CompanyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Name')
-            ->add('Contacts', CollectionType::class, [
+            ->add('name')
+            ->add('contacts', CollectionType::class, [
                 'entry_type' => ContactType::class,
                 'entry_options' => [
                     'label' => false,

@@ -16,19 +16,19 @@
             </tr>
             <tr>
                 <th>Name</th>
-                <td>{{ process.Name }}</td>
+                <td>{{ process.name }}</td>
             </tr>
             <tr>
                 <th>Description</th>
-                <td>{{ process.Description }}</td>
+                <td>{{ process.description }}</td>
             </tr>
             <tr>
                 <th>CreatedAt</th>
-                <td>{{ process.CreatedAt ? process.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ process.createdAt ? process.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th>UpdatedAt</th>
-                <td>{{ process.UpdatedAt ? process.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ process.updatedAt ? process.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th>Steps</th>
@@ -36,9 +36,9 @@
                     <ul>
                     {% for step in process.steps %}
                         <li>
-                        <b>{{ step.Title }}</b><br>
-                        {{ step.Description }}<br><br>
-                        {{ step.IsRequired ? "Required" : "Not Required"}}<br>
+                        <b>{{ step.title }}</b><br>
+                        {{ step.description }}<br><br>
+                        {{ step.isRequired ? "Required" : "Not Required"}}<br>
                         </li>
                         <br>
                     {% endfor %}

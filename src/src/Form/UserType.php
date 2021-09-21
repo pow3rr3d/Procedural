@@ -38,24 +38,24 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Name')
-            ->add('Surname')
-            ->add('Email')
-            ->add('Password', PasswordType::class, [
+            ->add('name')
+            ->add('surname')
+            ->add('email')
+            ->add('password', PasswordType::class, [
         "required" => false,
     ]);
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
             $user = $event->getData();
-            $current = $this->em->getRepository(User::class)->findOneBy(["Email" => $user['Email']]);
+            $current = $this->em->getRepository(User::class)->findOneBy(["email" => $user['email']]);
 
 
             if ($current !== null){
-                if (empty($user["Password"])) {
-                    $user["Password"] = $this->em->getRepository(User::class)->findOneBy(["Email" => $user['Email']])->getPassword();
+                if (empty($user["password"])) {
+                    $user["password"] = $this->em->getRepository(User::class)->findOneBy(["email" => $user['email']])->getPassword();
                 }
                 else{
-                    $user["Password"] = $this->encoder->encodePassword($this->em->getRepository(User::class)->findOneBy(["Email" => $user['Email']]), $user["Password"]);
+                    $user["password"] = $this->encoder->encodePassword($this->em->getRepository(User::class)->findOneBy(["email" => $user['email']]), $user["password"]);
                 }
             }
 

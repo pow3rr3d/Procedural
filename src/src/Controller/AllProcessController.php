@@ -174,7 +174,7 @@ class AllProcessController extends AbstractController
 
 
 
-            $return = $form->get("Step")->getData();
+            $return = $form->get("step")->getData();
 
             if (count($companyProcess->getCompanyProcessSteps()) + 1 === count($companyProcess->getProcess()->getSteps())) {
                 $companyProcess->setUpdatedAt(new \DateTimeImmutable());
@@ -186,7 +186,7 @@ class AllProcessController extends AbstractController
                     ->setValidatedBy($this->getUser());
 
                 $companyProcess->setIsFinished(true);
-                $companyProcess->setState($this->getDoctrine()->getManager()->getRepository(State::class)->findOneBy(["IsFinalState" => true]));
+                $companyProcess->setState($this->getDoctrine()->getManager()->getRepository(State::class)->findOneBy(["isFinalState" => true]));
                 if($companyProcess->getState() === null){
                     $this->addFlash(
                         'alert',
@@ -244,7 +244,7 @@ class AllProcessController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $companyProcess->getId(), $request->request->get('_token'))) {
             if ($this->getUser()->getRoles()['0'] === "ROLE_ADMIN") {
                 if ($companyProcess->getIsSoftDeleted() === true) {
-                    $companyProcessSteps = $entityManager->getRepository(CompanyProcessStep::class)->findBy(["CompanyProcess" => $companyProcess]);
+                    $companyProcessSteps = $entityManager->getRepository(CompanyProcessStep::class)->findBy(["companyProcess" => $companyProcess]);
                     foreach ($companyProcessSteps as $companyProcessStep) {
                         $entityManager->remove($companyProcessStep);
                     }

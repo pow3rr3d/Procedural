@@ -17,7 +17,7 @@ class ContactFixtures extends Fixture implements OrderedFixtureInterface
             ->setName("Contact")
             ->setSurname("Contact")
             ->setEmail("contact@contact.fr")
-            ->setCompany($manager->getRepository(Company::class)->findOneBy(["Name" => "Company"]))
+            ->setCompany($manager->getRepository(Company::class)->findOneBy(["name" => "Company"]))
             ->setMobile("06 51 51 51 51")
             ->setTel(null);
 

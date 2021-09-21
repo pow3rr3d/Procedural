@@ -17,10 +17,10 @@ class CompanyProcessStepFixtures extends Fixture implements OrderedFixtureInterf
     {
         $cps = new CompanyProcessStep();
         $cps
-            ->setCompanyProcess($manager->getRepository(CompanyProcess::class)->findOneBy(["Company" => $manager->getRepository(Company::class)->findOneBy(["Name" => "Company"])]))
-            ->setStep($manager->getRepository(Step::class)->findOneBy(["Title" => "Step 1"]))
+            ->setCompanyProcess($manager->getRepository(CompanyProcess::class)->findOneBy(["company" => $manager->getRepository(Company::class)->findOneBy(["name" => "Company"])]))
+            ->setStep($manager->getRepository(Step::class)->findOneBy(["title" => "Step 1"]))
             ->setValidatedAt(new \DateTimeImmutable())
-            ->setValidatedBy($manager->getRepository(User::class)->findOneBy(["Name" => "Admin"]));
+            ->setValidatedBy($manager->getRepository(User::class)->findOneBy(["name" => "Admin"]));
 
         $manager->persist($cps);
 

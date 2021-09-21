@@ -15,19 +15,19 @@ class StepType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Title')
-            ->add('Description', TextareaType::class, [
+            ->add('title')
+            ->add('description', TextareaType::class, [
                 "attr" => [
                     "maxlength" => "255"
                 ]
             ])
-            ->add('Helper', TextareaType::class, [
+            ->add('helper', TextareaType::class, [
                 "attr" => [
                     "maxlength" => "255"
                 ]
             ])
-            ->add('IsRequired')
-            ->add('Weight', NumberType::class, [
+            ->add('isRequired')
+            ->add('weight', NumberType::class, [
                 'label'=> false,
                 'attr' => [
                     'class' => 'weight',

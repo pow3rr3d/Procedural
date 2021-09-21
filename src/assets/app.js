@@ -42,7 +42,7 @@ search();
 
 
 //Console.log Style
-console.log('%c Welcome to Procedural v0.1', 'color:#4ECDC4; background: #222; font-size: 40px; text-align: center; padding: 20px')
+console.log('%c Welcome to Procedural v0.2', 'color:#4ECDC4; background: #222; font-size: 25px; text-align: center; padding: 10px')
 
 
 

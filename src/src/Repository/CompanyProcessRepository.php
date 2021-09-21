@@ -28,18 +28,18 @@ class CompanyProcessRepository extends ServiceEntityRepository
 
         if ($search->getCompany() !== null) {
             $qb
-                ->orWhere($qb->expr()->eq('s.Company', ':company'))
+                ->orWhere($qb->expr()->eq('s.company', ':company'))
                 ->setParameter('company', $search->getCompany());
 
         }
         if ($search->getProcess() !== null) {
             $qb
-                ->orWhere($qb->expr()->eq('s.Process', ':process'))
+                ->orWhere($qb->expr()->eq('s.process', ':process'))
                 ->setParameter('process', $search->getProcess());
         }
         if ($search->getState() !== null) {
             $qb
-                ->orWhere($qb->expr()->eq('s.State' , ':state'))
+                ->orWhere($qb->expr()->eq('s.state' , ':state'))
                 ->setParameter('state', $search->getState());
         }
 

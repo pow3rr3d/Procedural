@@ -23,23 +23,23 @@ class CompanyProcessStep
     /**
      * @ORM\ManyToOne(targetEntity=CompanyProcess::class, inversedBy="companyProcessSteps")
      */
-    private $CompanyProcess;
+    private $companyProcess;
 
     /**
      * @ORM\ManyToOne(targetEntity=Step::class)
      */
-    private $Step;
+    private $step;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $ValidatedAt;
+    private $validatedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $ValidatedBy;
+    private $validatedBy;
 
     public function getId(): ?int
     {
@@ -48,48 +48,48 @@ class CompanyProcessStep
 
     public function getCompanyProcess(): ?CompanyProcess
     {
-        return $this->CompanyProcess;
+        return $this->companyProcess;
     }
 
-    public function setCompanyProcess(?CompanyProcess $CompanyProcess): self
+    public function setCompanyProcess(?CompanyProcess $companyProcess): self
     {
-        $this->CompanyProcess = $CompanyProcess;
+        $this->companyProcess = $companyProcess;
 
         return $this;
     }
 
     public function getStep(): ?Step
     {
-        return $this->Step;
+        return $this->step;
     }
 
-    public function setStep(?Step $Step): self
+    public function setStep(?Step $step): self
     {
-        $this->Step = $Step;
+        $this->step = $step;
 
         return $this;
     }
 
     public function getValidatedAt(): ?\DateTimeImmutable
     {
-        return $this->ValidatedAt;
+        return $this->validatedAt;
     }
 
-    public function setValidatedAt(\DateTimeImmutable $ValidatedAt): self
+    public function setValidatedAt(\DateTimeImmutable $validatedAt): self
     {
-        $this->ValidatedAt = $ValidatedAt;
+        $this->validatedAt = $validatedAt;
 
         return $this;
     }
 
     public function getValidatedBy(): ?User
     {
-        return $this->ValidatedBy;
+        return $this->validatedBy;
     }
 
-    public function setValidatedBy(?User $ValidatedBy): self
+    public function setValidatedBy(?User $validatedBy): self
     {
-        $this->ValidatedBy = $ValidatedBy;
+        $this->validatedBy = $validatedBy;
 
         return $this;
     }

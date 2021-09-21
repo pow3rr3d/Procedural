@@ -16,19 +16,19 @@
             </tr>
             <tr>
                 <th>Name</th>
-                <td>{{ user.Name }}</td>
+                <td>{{ user.name }}</td>
             </tr>
             <tr>
                 <th>Surname</th>
-                <td>{{ user.Surname }}</td>
+                <td>{{ user.surname }}</td>
             </tr>
             <tr>
                 <th>Email</th>
-                <td>{{ user.Email }}</td>
+                <td>{{ user.email }}</td>
             </tr>
             <tr>
                 <th>Roles</th>
-                <td>{% for role in user.Roles %}{{ role }}{% endfor %}</td>
+                <td>{% for role in user.roles %}{{ role }}{% endfor %}</td>
             </tr>
             </tbody>
         </table>

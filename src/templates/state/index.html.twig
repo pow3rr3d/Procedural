@@ -13,7 +13,7 @@
         <div class="d-flex flex-row justify-content-start form-control">
 
             <div class="p-2">
-                {{ form_widget(form.Name) }}
+                {{ form_widget(form.name) }}
             </div>
             <div class="p-2">
                 <button class="btn btn-outline-secondary" type="submit" id="button-search">Search</button>
@@ -39,10 +39,10 @@
                 <tr>
                     <th{% if pagination.isSorted('s.id') %} class="sorted"{% endif %}>
                         {{ knp_pagination_sortable(pagination, '#', 's.id') }}</th>
-                    <th{% if pagination.isSorted('s.Name') %} class="sorted"{% endif %}>
-                        {{ knp_pagination_sortable(pagination, 'Name', 's.Name') }}</th>
-                    <th{% if pagination.isSorted('s.IsFinalState') %} class="sorted"{% endif %}>
-                        {{ knp_pagination_sortable(pagination, 'Is Final State', 's.IsFinalState') }}</th>
+                    <th{% if pagination.isSorted('s.name') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Name', 's.name') }}</th>
+                    <th{% if pagination.isSorted('s.isFinalState') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Is Final State', 's.isFinalState') }}</th>
                     <th>actions</th>
                 </tr>
                 </thead>
@@ -50,8 +50,8 @@
                 {% for state in pagination %}
                     <tr>
                         <td>{{ state.id }}</td>
-                        <td>{{ state.Name }}</td>
-                        <td>{{ state.IsfinalState ? "True" : "False" }}</td>
+                        <td>{{ state.name }}</td>
+                        <td>{{ state.isfinalState ? "True" : "False" }}</td>
                         <td>
                             <a href="{{ path('state_show', {'id': state.id}) }}"><i class="far fa-eye"></i></a>
                             <a href="{{ path('state_edit', {'id': state.id}) }}"><i class="fas fa-pen"></i></a>

@@ -24,32 +24,32 @@ class Process
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Description;
+    private $description;
 
     /**
      * @ORM\OneToMany(targetEntity=Step::class, mappedBy="process", cascade={"persist"})
      * @ORM\OrderBy({"weight" = "ASC"})
      */
-    private $Steps;
+    private $steps;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $CreatedAt;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
-    private $UpdatedAt;
+    private $updatedAt;
 
     public function __construct()
     {
-        $this->Steps = new ArrayCollection();
+        $this->steps = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -59,24 +59,24 @@ class Process
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
-    public function setDescription(string $Description): self
+    public function setDescription(string $description): self
     {
-        $this->Description = $Description;
+        $this->description = $description;
 
         return $this;
     }
@@ -86,13 +86,13 @@ class Process
      */
     public function getSteps(): Collection
     {
-        return $this->Steps;
+        return $this->steps;
     }
 
     public function addStep(Step $step): self
     {
-        if (!$this->Steps->contains($step)) {
-            $this->Steps[] = $step;
+        if (!$this->steps->contains($step)) {
+            $this->steps[] = $step;
             $step->setProcess($this);
         }
 
@@ -101,7 +101,7 @@ class Process
 
     public function removeStep(Step $step): self
     {
-        if ($this->Steps->removeElement($step)) {
+        if ($this->steps->removeElement($step)) {
             // set the owning side to null (unless already changed)
             if ($step->getProcess() === $this) {
                 $step->setProcess(null);
@@ -113,24 +113,24 @@ class Process
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->CreatedAt;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $CreatedAt): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
-        $this->CreatedAt = $CreatedAt;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->UpdatedAt;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $UpdatedAt): self
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
     {
-        $this->UpdatedAt = $UpdatedAt;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

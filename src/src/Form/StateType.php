@@ -13,8 +13,8 @@ class StateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Name')
-            ->add('IsFinalState', CheckboxType::class, [
+            ->add('name')
+            ->add('isFinalState', CheckboxType::class, [
                 'empty_data' => null,
                 'required' => false
             ])

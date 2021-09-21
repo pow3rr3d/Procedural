@@ -23,22 +23,22 @@ class Step
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Title;
+    private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Description;
+    private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Helper;
+    private $helper;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $IsRequired;
+    private $isRequired;
 
     /**
      * @ORM\ManyToOne(targetEntity=Process::class, inversedBy="Steps")
@@ -58,48 +58,48 @@ class Step
 
     public function getTitle(): ?string
     {
-        return $this->Title;
+        return $this->title;
     }
 
-    public function setTitle(string $Title): self
+    public function setTitle(string $title): self
     {
-        $this->Title = $Title;
+        $this->title = $title;
 
         return $this;
     }
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
-    public function setDescription(string $Description): self
+    public function setDescription(string $description): self
     {
-        $this->Description = $Description;
+        $this->description = $description;
 
         return $this;
     }
 
     public function getHelper(): ?string
     {
-        return $this->Helper;
+        return $this->helper;
     }
 
-    public function setHelper(string $Helper): self
+    public function setHelper(string $helper): self
     {
-        $this->Helper = $Helper;
+        $this->helper = $helper;
 
         return $this;
     }
 
     public function getIsRequired(): ?bool
     {
-        return $this->IsRequired;
+        return $this->isRequired;
     }
 
-    public function setIsRequired(bool $IsRequired): self
+    public function setIsRequired(bool $isRequired): self
     {
-        $this->IsRequired = $IsRequired;
+        $this->isRequired = $isRequired;
 
         return $this;
     }

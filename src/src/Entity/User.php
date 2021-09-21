@@ -10,7 +10,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 
 /**
- * @UniqueEntity("Email")
+ * @UniqueEntity("email")
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ApiResource(security="is_granted('ROLE_ADMIN')")
  */
@@ -26,29 +26,29 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Surname;
+    private $surname;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Email;
+    private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Password;
+    private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Roles;
+    private $roles;
 
-    private $Username;
+    private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -62,60 +62,60 @@ class User implements UserInterface
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getSurname(): ?string
     {
-        return $this->Surname;
+        return $this->surname;
     }
 
-    public function setSurname(string $Surname): self
+    public function setSurname(string $surname): self
     {
-        $this->Surname = $Surname;
+        $this->surname = $surname;
 
         return $this;
     }
 
     public function getEmail(): ?string
     {
-        return $this->Email;
+        return $this->email;
     }
 
-    public function setEmail(string $Email): self
+    public function setEmail(string $email): self
     {
-        $this->Email = $Email;
+        $this->email = $email;
 
         return $this;
     }
 
     public function getPassword(): ?string
     {
-        return $this->Password;
+        return $this->password;
     }
 
-    public function setPassword(string $Password): self
+    public function setPassword(string $password): self
     {
-        $this->Password = $Password;
+        $this->password = $password;
 
         return $this;
     }
 
     public function getRoles(): ?array
     {
-        return [$this->Roles];
+        return [$this->roles];
     }
 
     public function setRoles(string $roles): self
     {
-        $this->Roles = $roles;
+        $this->roles = $roles;
 
         return $this;
     }
@@ -129,7 +129,7 @@ class User implements UserInterface
 
     public function getUsername()
     {
-        return $this->Name . ' ' . $this->Surname;
+        return $this->name . ' ' . $this->surname;
     }
 
     public function eraseCredentials()

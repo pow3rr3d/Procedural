@@ -27,17 +27,17 @@ class CompanyProcessType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Company', EntityType::class, [
+            ->add('company', EntityType::class, [
                 'class' => Company::class,
                 'choice_label' => 'Name',
                 'multiple' => false,
             ])
-            ->add('Process', EntityType::class, [
+            ->add('process', EntityType::class, [
                 'class' => Process::class,
                 'choice_label' => 'Name',
                 'multiple' => false,
             ])
-            ->add('State', EntityType::class, [
+            ->add('state', EntityType::class, [
                 'class' => State::class,
                 'choice_label' => 'Name',
                 'multiple' => false,

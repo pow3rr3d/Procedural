@@ -14,7 +14,7 @@ class ProcessSearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Name', TextType::class, [
+            ->add('name', TextType::class, [
                 'required' => false
             ]);
     }

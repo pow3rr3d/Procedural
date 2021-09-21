@@ -70,7 +70,7 @@ class DashboardController extends AbstractController
 
     public function companyProcessChart(ChartBuilderInterface $chartBuilder)
     {
-        $companyProcesses = $this->getDoctrine()->getRepository(CompanyProcess::class)->findBy(['IsFinished' => true]);
+        $companyProcesses = $this->getDoctrine()->getRepository(CompanyProcess::class)->findBy(['isFinished' => true]);
 
         $data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,];
         $currentYears = (new \DateTimeImmutable())->format('Y');
@@ -306,7 +306,7 @@ class DashboardController extends AbstractController
     public function averageTime(ChartBuilderInterface $chartBuilder)
     {
 
-        $allprocesses = $this->getDoctrine()->getRepository(CompanyProcess::class)->findBy(["IsFinished" => true]);
+        $allprocesses = $this->getDoctrine()->getRepository(CompanyProcess::class)->findBy(["isFinished" => true]);
         $processes = [];
         $data = [];
         $times = [];

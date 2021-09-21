@@ -17,14 +17,14 @@
             <tr>
                 <th>Process</th>
                 <td>
-                    {{ companyProcess.process.Name }}<br>
-                    {{ companyProcess.process.Description }}<br>
+                    {{ companyProcess.process.name }}<br>
+                    {{ companyProcess.process.description }}<br>
                 </td>
             </tr>
             <tr>
                 <th>Company</th>
                 <td>
-                    {{ companyProcess.company.Name }}<br><br>
+                    {{ companyProcess.company.name }}<br><br>
                 </td>
             </tr>
             <tr>
@@ -34,10 +34,10 @@
                         {% for contact in companyProcess.company.contacts %}
                             <li>
                                 <p>
-                                    <b>Name:</b> {{ contact.Name|upper }} {{ contact.Surname|capitalize }}<br>
-                                    <b>Email:</b> {{ contact.Email }}<br>
-                                    <b>Mobile:</b> {{ contact.Mobile }}<br>
-                                    <b>Tel:</b> {{ contact.Tel }}<br>
+                                    <b>Name:</b> {{ contact.name|upper }} {{ contact.surname|capitalize }}<br>
+                                    <b>Email:</b> {{ contact.email }}<br>
+                                    <b>Mobile:</b> {{ contact.mobile }}<br>
+                                    <b>Tel:</b> {{ contact.tel }}<br>
                                 </p>
                             </li>
                         {% endfor %}
@@ -46,7 +46,7 @@
             </tr>
             <tr>
                 <th>State</th>
-                <td>{{ companyProcess.company.Name }}</td>
+                <td>{{ companyProcess.company.name }}</td>
             </tr>
             <tr>
                 <th>Advancement</th>

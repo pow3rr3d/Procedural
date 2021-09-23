@@ -10,6 +10,7 @@
     </section>
     <section class="wrapper">
         <h2>API TOKEN</h2>
-        <p>{{ user.apiToken }}</p>
+        <p>{{ user.apiToken }} <a class="btn-top" href="{{ path("refresh_token", {id: app.user.id}) }}"> Refresh API token </a></p>
+
     </section>
 {% endblock %}

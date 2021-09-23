@@ -57,6 +57,19 @@ class AccountController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @Route("/{id}", name="refresh_token", methods={"GET", "POST"})
+     */
+    public function refreshToken(Request $request, User $user): Response
+    {
+        $date = new \DateTime();
+        $user->setApiToken(hash('sha256', ''.$user->getId().''.$date->format('Y-m-d H:i:s').''.$user->getEmail().''));
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return $this->redirectToRoute("account_index");
+    }
 }
 
 

@@ -10,7 +10,13 @@
     </section>
     <section class="wrapper">
         <h2>API TOKEN</h2>
-        <p>{{ user.apiToken }} <a class="btn-top" href="{{ path("refresh_token", {id: app.user.id}) }}"> Refresh API token </a></p>
+        <p>{{ user.apiToken }}
+            <button class="btn-top" data-bs-toggle="modal"
+                    data-bs-target="#modal_delete{{ app.user.id }}">Refresh API token
+            </button>
+        </p>
 
     </section>
+    {{ include('account/_modal_token.html.twig') }}
+
 {% endblock %}

@@ -43,7 +43,14 @@ class UserType extends AbstractType
             ->add('email')
             ->add('password', PasswordType::class, [
         "required" => false,
-    ]);
+    ])
+            ->add('language', ChoiceType::class, [
+                "required" => true,
+                "choices" => [
+                    "Français" => "fr",
+                    "English" => "en"
+                ]
+            ]);
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
             $user = $event->getData();

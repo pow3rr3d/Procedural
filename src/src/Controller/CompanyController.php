@@ -36,6 +36,7 @@ class CompanyController extends AbstractController
      */
     public function index(CompanyRepository $companyRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        dump($request);
         $search = new Company();
         $form = $this->createForm(CompanySearchType::class, $search);
         $form->handleRequest($request);
@@ -50,6 +51,7 @@ class CompanyController extends AbstractController
             'form' => $form->createView(),
             'states' => $this->states,
             'pagination' => $pagination,
+            '_locale'=> $this->getUser()->getLanguage(),
         ]);
     }
 
@@ -84,6 +86,8 @@ class CompanyController extends AbstractController
             'states' => $this->states,
             'company' => $company,
             'form' => $form,
+            '_locale'=> $this->getUser()->getLanguage(),
+
         ]);
     }
 
@@ -95,6 +99,8 @@ class CompanyController extends AbstractController
         return $this->render('company/show.html.twig', [
             'states' => $this->states,
             'company' => $company,
+            '_locale'=> $this->getUser()->getLanguage(),
+
         ]);
     }
 
@@ -119,13 +125,17 @@ class CompanyController extends AbstractController
                 'Company updated with success'
             );
 
-            return $this->redirectToRoute('company_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('company_index', [
+                '_locale'=> $this->getUser()->getLanguage(),
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('company/edit.html.twig', [
             'states' => $this->states,
             'company' => $company,
             'form' => $form,
+//            '_locale'=> $this->getUser()->getLanguage(),
+
         ]);
     }
 

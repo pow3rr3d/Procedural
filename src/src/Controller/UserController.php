@@ -185,4 +185,14 @@ class UserController extends AbstractController
         }
         return $this->redirectToRoute('user_show', ["id" => $user->getId()]);
     }
+
+    /**
+     * @Route("/language/{id}", name="user_language", methods={"GET"})
+     * @return Response
+     */
+    public function language(User $user)
+    {
+        return new Response(json_encode($user->getLanguage(), JSON_UNESCAPED_UNICODE));
+    }
+
 }

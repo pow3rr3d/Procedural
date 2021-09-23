@@ -6,9 +6,8 @@
     <section class="wrapper">
         <div class="button-div">
             <a class="btn-top custom-search-btn" href="#"><i class="fas fa-search"></i></a>
-            <a class="btn-top" href="{{ path('company_new') }}">Create new</a>
+            <a class="btn-top" href="{{ path('company_new') }}">{% trans from "btn" %}Create new{% endtrans %}</a>
         </div>
-
 
         {{ form_start(form, {'attr': {'class': 'hidden'}}) }}
         <div class="d-flex flex-row justify-content-start form-control">
@@ -33,6 +32,7 @@
                 {{ message }}
             </div>
         {% endfor %}
+
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
@@ -40,8 +40,8 @@
                     <th{% if pagination.isSorted('s.id') %} class="sorted"{% endif %}>
                         {{ knp_pagination_sortable(pagination, '#', 's.id') }}</th>
                     <th{% if pagination.isSorted('s.name') %} class="sorted"{% endif %}>
-                        {{ knp_pagination_sortable(pagination, 'name', 's.name') }}</th>
-                    <th>actions</th>
+                        {{ knp_pagination_sortable(pagination, 'Company Name'|trans({}, 'KnpPaginatorBundle'), 's.name') }}</th>
+                    <th>{% trans from "KnpPaginatorBundle"  %}Actions{% endtrans %}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -56,7 +56,7 @@
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="3">no records found</td>
+                        <td colspan="3">{% trans from "table" %}no records found{% endtrans %}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

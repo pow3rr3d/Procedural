@@ -96,7 +96,9 @@ class InstallCommand extends Command
             ->setEmail($email)
             ->setRoles("ROLE_ADMIN")
             ->setPassword($this->encoder->encodePassword($user, $password))
-            ->setApiToken(hash('sha256', ''.$user->getId().''.$date->format('Y-m-d H:i:s').''.$user->getEmail().''));
+            ->setApiToken(hash('sha256', ''.$user->getId().''.$date->format('Y-m-d H:i:s').''.$user->getEmail().''))
+            ->setLanguage('en')
+        ;
 
         $this->em
             ->persist($user);

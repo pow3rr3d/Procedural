@@ -38,7 +38,10 @@
     <div>
         <div id="sidebar" class="nav-collapse col-4 notHidden">
             <ul class="sidebar-menu" id="nav-accordion">
-                <h5 class="centered"><a class="accountlink" href="/account">{{ app.user.Username }}</a></h5>
+                <h5 class="centered">
+                    <a class="accountlink" href="/account">{{ app.user.Username }}</a>
+                    <input class='userid' type="hidden" value="{{ app.user.id }}">
+                </h5>
                 <li class="mt">
                     <a class="" href="/dashboard">
                         <i class="fas fa-chart-line"></i>

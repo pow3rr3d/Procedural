@@ -7,16 +7,23 @@
         <div class="button-div">
         </div>
         {{ include('account/_form.html.twig', {'button_label': 'Update'}) }}
-    </section>
-    <section class="wrapper">
         <h2>API TOKEN</h2>
-        <p>{{ user.apiToken }}
-            <button class="btn-top" data-bs-toggle="modal"
-                    data-bs-target="#modal_delete{{ app.user.id }}">Refresh API token
-            </button>
-        </p>
+        <div class="tokenP">
+            <span class="token">{{ user.apiToken }}</span>
+            <a class="btn copyBtn">
+                <i class="far fa-copy"></i>
+            </a>
+        </div>
+
+        <a class="btn-top" data-bs-toggle="modal"
+                data-bs-target="#modal_delete{{ app.user.id }}">Refresh API token
+        </a>
+
 
     </section>
     {{ include('account/_modal_token.html.twig') }}
 
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('copy') }}
 {% endblock %}

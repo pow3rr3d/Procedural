@@ -35,10 +35,6 @@ class InstallCommand extends Command
         $this
             ->setDescription("Procedural Installer")
             ->setHelp("This command will install your Procedural App")
-//            ->addArgument('User name', InputArgument::REQUIRED, 'Please enter your name')
-//            ->addArgument('User surname', InputArgument::REQUIRED, 'Please enter your surname')
-//            ->addArgument('User email', InputArgument::REQUIRED, 'Please enter your email')
-//            ->addArgument('User password', InputArgument::REQUIRED, 'Please enter your password')
         ;
 
     }

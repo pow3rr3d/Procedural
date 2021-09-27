@@ -84,18 +84,18 @@ class DashboardController extends AbstractController
         $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
         $chart->setData([
             'labels' => [
-                'January ' . $currentYears,
-                'February ' . $currentYears,
-                'March ' . $currentYears,
-                'April ' . $currentYears,
-                'May ' . $currentYears,
-                'June ' . $currentYears,
-                'July ' . $currentYears,
-                'August ' . $currentYears,
-                'September ' . $currentYears,
-                'October ' . $currentYears,
-                'November ' . $currentYears,
-                'December ' . $currentYears
+                $translator->trans('January' , [], 'dashboard') .' '. $currentYears,
+                $translator->trans('February', [], 'dashboard') .' '. $currentYears,
+                $translator->trans('March', [], 'dashboard') .' '. $currentYears,
+                $translator->trans('April', [], 'dashboard') .' '. $currentYears,
+                $translator->trans('May' , [], 'dashboard') .' '. $currentYears,
+                $translator->trans('June', [], 'dashboard') .' '. $currentYears,
+                $translator->trans('July', [], 'dashboard') .' '. $currentYears,
+                $translator->trans('August', [], 'dashboard') .' '. $currentYears,
+                $translator->trans('September', [], 'dashboard') .' '. $currentYears,
+                $translator->trans('October', [], 'dashboard') .' '. $currentYears,
+                $translator->trans('November', [], 'dashboard') .' '. $currentYears,
+                $translator->trans('December', [], 'dashboard') .' '. $currentYears
             ],
             'datasets' => [
                 [
@@ -189,9 +189,9 @@ class DashboardController extends AbstractController
         $companyProcesses = count($this->getDoctrine()->getRepository(CompanyProcess::class)->findAll());
 
         $states = [
-            'Companies',
-            'Processes',
-            'Company-Processes'
+            $translator->trans('Companies', [], 'dashboard'),
+            $translator->trans('Processes', [], 'dashboard'),
+            $translator->trans('Company-Processes', [], 'dashboard')
         ];
         $data = [
             $companies,
@@ -336,7 +336,7 @@ class DashboardController extends AbstractController
             'labels' => $processes,
             'datasets' => [
                 [
-                    'label' => 'Hours',
+                    'label' =>  $translator->trans('Hours', [], 'dashboard'),
                     'backgroundColor' => 'rgba(78, 205, 196,0.7)',
                     'borderColor' => '#4ecdc4',
                     'data' => $data,

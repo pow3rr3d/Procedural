@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New State{% endblock %}
+{% block title %}{% trans from "title" %}New State{% endtrans %}{% endblock %}
 
 {% block body %}
     <section class="wrapper">
         <div class="button-div">
-            <a class="btn-top" href="{{ path('state_index') }}">back to list</a>
+            <a class="btn-top" href="{{ path('state_index') }}">{% trans from "btn" %}Back to list{% endtrans %}</a>
         </div>
 
         {% for flashMessage in app.session.flashbag.get('string') %}

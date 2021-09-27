@@ -25,6 +25,7 @@ class StateType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => State::class,
+            'translation_domain' => 'state',
         ]);
     }
 }

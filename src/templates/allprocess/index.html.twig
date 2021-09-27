@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}All Processes{% endblock %}
+{% block title %}{% trans from "title" %}All Processes{% endtrans %}{% endblock %}
 
 {% block body %}
     <section class="wrapper">
         <div class="button-div">
             <a class="btn-top custom-search-btn" href="#"><i class="fas fa-search"></i></a>
-            <a class="btn-top" href="{{ path('companyprocess_new') }}">Create new</a>
+            <a class="btn-top" href="{{ path('companyprocess_new') }}">{% trans from "btn" %}Create new{% endtrans %}</a>
 
         </div>
 
@@ -23,7 +23,7 @@
                 {{ form_widget(form.process) }}
             </div>
             <div class="p-2">
-                <button class="btn btn-outline-secondary" type="submit" id="button-search">Search</button>
+                <button class="btn btn-outline-secondary" type="submit" id="button-search">{% trans from "btn" %}Search{% endtrans %}</button>
             </div>
 
         </div>
@@ -46,15 +46,15 @@
                 <tr>
                     <th{% if pagination.isSorted('s.id') %} class="sorted"{% endif %}>
                         {{ knp_pagination_sortable(pagination, '#', 's.id') }}</th>
-                    <th>Process</th>
-                    <th>Company</th>
-                    <th>State</th>
-                    <th>Advancement</th>
+                    <th>{% trans from "companyProcesses" %}Process{% endtrans %}</th>
+                    <th>{% trans from "companyProcesses" %}Company{% endtrans %}</th>
+                    <th>{% trans from "companyProcesses" %}State{% endtrans %}</th>
+                    <th>{% trans from "companyProcesses" %}Advancement{% endtrans %}</th>
                     <th{% if pagination.isSorted('s.createdAt') %} class="sorted"{% endif %}>
-                        {{ knp_pagination_sortable(pagination, 'Created At', 's.createdAt') }}</th>
+                        {{ knp_pagination_sortable(pagination, 'Created At'|trans({}, 'companyProcesses'), 's.createdAt') }}</th>
                     <th{% if pagination.isSorted('s.updatedAt') %} class="sorted"{% endif %}>
-                        {{ knp_pagination_sortable(pagination, 'Updated At', 's.updatedAt') }}</th>
-                    <th>actions</th>
+                        {{ knp_pagination_sortable(pagination, 'Updated At'|trans({}, 'companyProcesses'), 's.updatedAt') }}</th>
+                    <th>{% trans from "companyProcesses" %}Actions{% endtrans %}</th>
                 </tr>
                 </thead>
                 <tbody>

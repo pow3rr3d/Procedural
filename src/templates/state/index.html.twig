@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}State index{% endblock %}
+{% block title %}{% trans from "title" %}State index{% endtrans %}{% endblock %}
 
 {% block body %}
     <section class="wrapper">
         <div class="button-div">
             <a class="btn-top custom-search-btn" href="#"><i class="fas fa-search"></i></a>
-            <a class="btn-top" href="{{ path('state_new') }}">Create new</a>
+            <a class="btn-top" href="{{ path('state_new') }}">{% trans from "btn" %}Create new{% endtrans %}</a>
         </div>
 
         {{ form_start(form, {'attr': {'class': 'hidden'}}) }}
@@ -16,7 +16,7 @@
                 {{ form_widget(form.name) }}
             </div>
             <div class="p-2">
-                <button class="btn btn-outline-secondary" type="submit" id="button-search">Search</button>
+                <button class="btn btn-outline-secondary" type="submit" id="button-search">{% trans from "btn" %}Search{% endtrans %}</button>
             </div>
 
         </div>
@@ -40,10 +40,10 @@
                     <th{% if pagination.isSorted('s.id') %} class="sorted"{% endif %}>
                         {{ knp_pagination_sortable(pagination, '#', 's.id') }}</th>
                     <th{% if pagination.isSorted('s.name') %} class="sorted"{% endif %}>
-                        {{ knp_pagination_sortable(pagination, 'Name', 's.name') }}</th>
+                        {{ knp_pagination_sortable(pagination, 'Name'|trans({}, 'KnpPaginatorBundle'), 's.name') }}</th>
                     <th{% if pagination.isSorted('s.isFinalState') %} class="sorted"{% endif %}>
-                        {{ knp_pagination_sortable(pagination, 'Is Final State', 's.isFinalState') }}</th>
-                    <th>actions</th>
+                        {{ knp_pagination_sortable(pagination, 'Is Final State'|trans({}, 'KnpPaginatorBundle'), 's.isFinalState') }}</th>
+                    <th>{% trans from "KnpPaginatorBundle" %}Actions{% endtrans %}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -51,7 +51,7 @@
                     <tr>
                         <td>{{ state.id }}</td>
                         <td>{{ state.name }}</td>
-                        <td>{{ state.isfinalState ? "True" : "False" }}</td>
+                        <td>{{ state.isfinalState ? "Yes"|trans({}, 'state') : "No"|trans({}, 'state') }}</td>
                         <td>
                             <a href="{{ path('state_show', {'id': state.id}) }}"><i class="far fa-eye"></i></a>
                             <a href="{{ path('state_edit', {'id': state.id}) }}"><i class="fas fa-pen"></i></a>
@@ -59,7 +59,7 @@
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="4">no records found</td>
+                        <td colspan="4">{% trans from "table" %}no records found{% endtrans %}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

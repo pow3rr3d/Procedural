@@ -51,6 +51,7 @@ class CompanyProcessStepsType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Step::class,
+                'translation_domain' => 'companyProcesses',
             ]
         );
     }

@@ -4,5 +4,5 @@
 {#</form>#}
 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ state.id) }}">
 <button class="btn-top" data-bs-toggle="modal"
-        data-bs-target="#modal_delete{{ state.id }}">Delete
+        data-bs-target="#modal_delete{{ state.id }}">{% trans from "btn" %}Delete{% endtrans %}
 </button>

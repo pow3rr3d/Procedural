@@ -30,7 +30,6 @@ class RequestSubscriber implements EventSubscriberInterface
         } else {
             // if no explicit locale has been set on this request, use one from the session
             $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
-            $request->setDefaultLocale($request->getSession()->get('_locale', $this->defaultLocale));
         }
     }
 
@@ -38,7 +37,7 @@ class RequestSubscriber implements EventSubscriberInterface
     {
 
         return [
-            RequestEvent::class => 'onKernelRequest',
+            RequestEvent::class => ['onKernelRequest', 17]
         ];
     }
 }

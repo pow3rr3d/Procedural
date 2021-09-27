@@ -44,7 +44,7 @@ class UserType extends AbstractType
             ->add('password', PasswordType::class, [
         "required" => false,
     ])
-            ->add('language', ChoiceType::class, [
+            ->add('locale', ChoiceType::class, [
                 "required" => true,
                 "choices" => [
                     "Français" => "fr",
@@ -75,6 +75,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'translation_domain' => 'user',
         ]);
     }
 }

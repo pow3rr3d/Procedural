@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit My Account{% endblock %}
+{% block title %}{% trans from "title" %}Edit My Account{% endtrans %}{% endblock %}
 
 {% block body %}
     <section class="wrapper">
         <div class="button-div">
         </div>
-        {{ include('account/_form.html.twig', {'button_label': 'Update'}) }}
-        <h2>API TOKEN</h2>
+        {{ include('account/_form.html.twig', {'button_label': 'Update'|trans({}, 'btn')}) }}
+        <h2>{% trans from 'user' %}API TOKEN{% endtrans %}</h2>
         <div class="tokenP">
             <span class="token">{{ user.apiToken }}</span>
             <a class="btn copyBtn">
@@ -16,10 +16,8 @@
         </div>
 
         <a class="btn-top" data-bs-toggle="modal"
-                data-bs-target="#modal_delete{{ app.user.id }}">Refresh API token
+           data-bs-target="#modal_delete{{ app.user.id }}">{% trans from 'btn' %}Refresh API token{% endtrans %}
         </a>
-
-
     </section>
     {{ include('account/_modal_token.html.twig') }}
 

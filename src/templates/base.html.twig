@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Procedural - {% block title %}Welcome!{% endblock %}</title>
+    <title>Procedural - {% block title %}{% trans from "title" %}Welcome!{% endtrans %}{% endblock %}</title>
 
     {% block stylesheets %}
         {{ encore_entry_link_tags('styles') }}
@@ -24,9 +24,9 @@
         <ul class="nav pull-right top-menu">
             <li>
                 {% if is_granted('IS_IMPERSONATOR') %}
-                    <a class="logout" href="?_switch_user=_exit">Exit impersonation</a>
+                    <a class="logout" href="?_switch_user=_exit">{% trans from "btn" %}Exit impersonation{% endtrans %}</a>
                 {% else %}
-                    <a class="logout" href="/logout">Logout</a>
+                    <a class="logout" href="/logout">{% trans from "btn" %}Logout{% endtrans %}</a>
                 {% endif %}
             </li>
         </ul>
@@ -45,16 +45,16 @@
                 <li class="mt">
                     <a class="" href="/dashboard">
                         <i class="fas fa-chart-line"></i>
-                        <span>Dashboard</span>
+                        <span>{% trans from "base" %}Dashboard{% endtrans %}</span>
                     </a>
                 </li>
                 <li class="sub-menu">
                     <a href="#">
                         <i class="fas fa-list-ol"></i>
-                        <span>Actions</span>
+                        <span>{% trans from "base" %}Actions{% endtrans %}</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="/allprocess">All States </a></li>
+                        <li><a href="/allprocess">{% trans from "base" %}All States{% endtrans %}</a></li>
                         {% for state in states %}
                             <li>
                                 <a href="{{ path('allprocess_slug', {'slug': state['2']}) }}">{{ state['0'] }}({{ state['1'] }})</a>
@@ -67,13 +67,13 @@
                         <li class="sub-menu">
                             <a href="#">
                                 <i class="fas fa-cogs"></i>
-                                <span>Management</span>
+                                <span>{% trans from "base" %}Management{% endtrans %}</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="/companies">Companies </a></li>
-                                <li><a href="/processes">Processes</a></li>
-                                <li><a href="/user">Users</a></li>
-                                <li><a href="/state">States</a></li>
+                                <li><a href="/companies">{% trans from "base" %}Companies{% endtrans %}</a></li>
+                                <li><a href="/processes">{% trans from "base" %}Processes{% endtrans %}</a></li>
+                                <li><a href="/user">{% trans from "base" %}Users{% endtrans %}</a></li>
+                                <li><a href="/state">{% trans from "base" %}States{% endtrans %}</a></li>
                             </ul>
                         </li>
                     {% endif %}
@@ -105,7 +105,7 @@
 <footer class="site-footer">
     <div class="text-center">
         <div class="credits">
-            Created By <a id="linkFooter" href="https://github.com/pow3rr3d">Pow3rr3d</a> & based on Symfony 5
+            {% trans from "base" %}Created By{% endtrans %} <a id="linkFooter" href="https://github.com/pow3rr3d">Pow3rr3d</a> & {% trans from "base" %}based on Symfony 5{% endtrans %}
         </div>
     </div>
 </footer>

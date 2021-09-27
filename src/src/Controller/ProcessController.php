@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/processes")
@@ -22,12 +23,15 @@ class ProcessController extends AbstractController
 {
     private $em;
     private $states;
+    private $translator;
 
-    public function __construct( EntityManagerInterface $em)
+
+    public function __construct( EntityManagerInterface $em, TranslatorInterface $translator)
     {
         $this->em = $em;
         $this->states = MenuController::renderMenu($this->em);
-//        'states' => $this->states,
+        $this->translator = $translator;
+
     }
 
     /**
@@ -73,7 +77,7 @@ class ProcessController extends AbstractController
 
             $this->addFlash(
                 'sucess',
-                'Process created with success'
+                $this->translator->trans('Process created with success', [], 'flashes')
             );
 
             return $this->redirectToRoute('process_index', [], Response::HTTP_SEE_OTHER);
@@ -114,7 +118,7 @@ class ProcessController extends AbstractController
 
             $this->addFlash(
                 'sucess',
-                'Process updated with success'
+                $this->translator->trans('Process updated with success', [], 'flashes')
             );
 
             return $this->redirectToRoute('process_index', [], Response::HTTP_SEE_OTHER);
@@ -143,7 +147,7 @@ class ProcessController extends AbstractController
                 $entityManager->flush();
                 $this->addFlash(
                     'sucess',
-                    'Process deleted with success'
+                    $this->translator->trans('Process deleted with success', [], 'flashes')
                 );
             }
             catch (Exception $exception){

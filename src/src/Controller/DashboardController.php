@@ -13,6 +13,7 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
@@ -53,13 +54,13 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard", name="app_dashboard")
      */
-    public function index(ChartBuilderInterface $chartBuilder)
+    public function index(ChartBuilderInterface $chartBuilder, TranslatorInterface $translator)
     {
-        $this->CompanyProcessChart($chartBuilder);
-        $this->ProcessStateChart($chartBuilder);
-        $this->InlineStats($chartBuilder);
-        $this->ByUserStats($chartBuilder);
-        $this->AverageTime($chartBuilder);
+        $this->CompanyProcessChart($chartBuilder, $translator);
+        $this->ProcessStateChart($chartBuilder, $translator);
+        $this->InlineStats($chartBuilder, $translator);
+        $this->ByUserStats($chartBuilder, $translator);
+        $this->AverageTime($chartBuilder, $translator);
 
 
         return $this->render("dashboard/index.html.twig", [
@@ -68,7 +69,7 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    public function companyProcessChart(ChartBuilderInterface $chartBuilder)
+    public function companyProcessChart(ChartBuilderInterface $chartBuilder, TranslatorInterface $translator)
     {
         $companyProcesses = $this->getDoctrine()->getRepository(CompanyProcess::class)->findBy(['isFinished' => true]);
 
@@ -113,7 +114,7 @@ class DashboardController extends AbstractController
             'legend' => ['display' => false],
             'title' => [
                 'display' => true,
-                'text' => 'Company-Process Finished for ' . $currentYears,
+                'text' => $translator->trans('Company-Process Finished for', [], 'dashboard') .' '. $currentYears,
                 'fontSize' => 16
             ],
             'scales' => [
@@ -131,7 +132,7 @@ class DashboardController extends AbstractController
         array_push($this->charts, $chart);
     }
 
-    public function processStateChart(ChartBuilderInterface $chartBuilder)
+    public function processStateChart(ChartBuilderInterface $chartBuilder, TranslatorInterface $translator)
     {
         $companyProcesses = $this->getDoctrine()->getRepository(CompanyProcess::class)->findAll();
         $allStates = $this->getDoctrine()->getRepository(State::class)->findAll();
@@ -172,7 +173,7 @@ class DashboardController extends AbstractController
             ],
             'title' => [
                 'display' => true,
-                'text' => "Company-Process by State",
+                'text' => $translator->trans('Company-Process by State', [], 'dashboard') ,
                 'fontSize' => 16
             ],
         ]);
@@ -181,7 +182,7 @@ class DashboardController extends AbstractController
     }
 
 
-    public function inlineStats(ChartBuilderInterface $chartBuilder)
+    public function inlineStats(ChartBuilderInterface $chartBuilder, TranslatorInterface $translator)
     {
         $companies = count($this->getDoctrine()->getRepository(Company::class)->findAll());
         $processes = count($this->getDoctrine()->getRepository(Process::class)->findAll());
@@ -222,7 +223,7 @@ class DashboardController extends AbstractController
             ],
             'title' => [
                 'display' => true,
-                'text' => "App Data",
+                'text' => $translator->trans('App Data', [], 'dashboard'),
                 'fontSize' => 16
             ],
             'scales' => [
@@ -241,7 +242,7 @@ class DashboardController extends AbstractController
         array_push($this->charts, $chart);
     }
 
-    public function byUserStats(ChartBuilderInterface $chartBuilder)
+    public function byUserStats(ChartBuilderInterface $chartBuilder, TranslatorInterface $translator)
     {
 
         $allUsers = $this->getDoctrine()->getRepository(User::class)->findAll();
@@ -284,7 +285,7 @@ class DashboardController extends AbstractController
             ],
             'title' => [
                 'display' => true,
-                'text' => "Validated Steps by User",
+                'text' =>  $translator->trans('Validated Steps by User', [], 'dashboard'),
                 'fontSize' => 16
             ],
             'scales' => [
@@ -303,7 +304,7 @@ class DashboardController extends AbstractController
         array_push($this->charts, $chart);
     }
 
-    public function averageTime(ChartBuilderInterface $chartBuilder)
+    public function averageTime(ChartBuilderInterface $chartBuilder, TranslatorInterface $translator)
     {
 
         $allprocesses = $this->getDoctrine()->getRepository(CompanyProcess::class)->findBy(["isFinished" => true]);
@@ -353,7 +354,7 @@ class DashboardController extends AbstractController
             ],
             'title' => [
                 'display' => true,
-                'text' => "Exection Time Average by Process",
+                'text' => $translator->trans('Exection Time Average by Process', [], 'dashboard'),
                 'fontSize' => 16
             ],
             'scales' => [

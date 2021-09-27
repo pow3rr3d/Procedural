@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Company{% endblock %}
+{% block title %}{% trans from "title" %}Company{% endtrans %}{% endblock %}
 
 {% block body %}
     <section class="wrapper">
         <div class="button-div">
-            <a class="btn-top" href="{{ path('company_edit', {'id': company.id}) }}">{% trans from "btn" %}Edit{% endtrans %}</a>
             <a class="btn-top" href="{{ path('company_index') }}">{% trans from "btn" %}Back to list{% endtrans %}</a>
+            <a class="btn-top" href="{{ path('company_edit', {'id': company.id}) }}">{% trans from "btn" %}Edit{% endtrans %}</a>
         </div>
         <table class="table">
             <tbody>
@@ -24,10 +24,10 @@
                     <ul>
                         {% for contact in company.contacts %}
                             <li>
-                                <b>{% trans from "company" into ( _locale ) %}Name{% endtrans %}:</b> {{ contact.name|upper }} {{ contact.surname|capitalize }}<br>
-                                <b>{% trans from "company" into ( _locale ) %}Email{% endtrans %}:</b> {{ contact.email }}<br>
-                                <b>{% trans from "company" into ( _locale ) %}Mobile{% endtrans %}:</b> {{ contact.mobile }}<br>
-                                <b>{% trans from "company" into ( _locale ) %}Tel{% endtrans %}:</b> {{ contact.tel }}<br>
+                                <b>{% trans from "company" %}Name{% endtrans %}:</b> {{ contact.name|upper }} {{ contact.surname|capitalize }}<br>
+                                <b>{% trans from "company" %}Email{% endtrans %}:</b> {{ contact.email }}<br>
+                                <b>{% trans from "company" %}Mobile{% endtrans %}:</b> {{ contact.mobile }}<br>
+                                <b>{% trans from "company" %}Tel{% endtrans %}:</b> {{ contact.tel }}<br>
                                 <br>
                             </li>
                         {% endfor %}

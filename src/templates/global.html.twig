@@ -2,7 +2,7 @@
 <html id="html">
 <head>
     <meta charset="UTF-8">
-    <title>Procedural -{% block title %} global!{% endblock %}</title>
+    <title>Procedural -{% block title %}{% trans from "title" %}Welcome!{% endtrans %}{% endblock %}</title>
 
     {% block stylesheets %}
         {{ encore_entry_link_tags('styles') }}

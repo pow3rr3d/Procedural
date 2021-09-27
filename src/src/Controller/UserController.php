@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/user")
@@ -24,12 +25,14 @@ class UserController extends AbstractController
 {
     private $em;
     private $states;
+    private $translator;
 
-    public function __construct( EntityManagerInterface $em)
+
+    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator)
     {
         $this->em = $em;
         $this->states = MenuController::renderMenu($this->em);
-//        'states' => $this->states,
+        $this->translator = $translator;
     }
 
     /**
@@ -66,22 +69,24 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($user->getPassword() === null){
-                $this->addFlash("string", "Password required!");
+            if ($user->getPassword() === null) {
+                $this->addFlash(
+                    "string",
+                    $this->translator->trans('Password required!', [], 'flashes')
+                );
                 $this->redirectToRoute("user_new");
-            }
-            else{
+            } else {
                 $encoded = $encoder->encodePassword($user, $user->getPassword());
                 $user->setPassword($encoded);
                 $user->setRoles("ROLE_USER");
-                $user->setApiToken(hash('sha256', ''.$user->getId().''.$date->format('Y-m-d H:i:s').''.$user->getEmail().''));
+                $user->setApiToken(hash('sha256', '' . $user->getId() . '' . $date->format('Y-m-d H:i:s') . '' . $user->getEmail() . ''));
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();
 
                 $this->addFlash(
                     'sucess',
-                    'User created with success'
+                    $this->translator->trans('User created with success', [], 'flashes')
                 );
 
                 return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
@@ -119,8 +124,10 @@ class UserController extends AbstractController
 
             $this->addFlash(
                 'sucess',
-                'User updated with success'
+                $this->translator->trans('User updated with success', [], 'flashes')
             );
+
+            $request->getSession()->replace(['_locale' => $this->getUser()->getLocale() ]);
 
             return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -137,17 +144,16 @@ class UserController extends AbstractController
      */
     public function delete(Request $request, User $user): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-            try{
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+            try {
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->remove($user);
                 $entityManager->flush();
                 $this->addFlash(
                     'sucess',
-                    'User deleted with success'
+                    $this->translator->trans('User deleted with success', [], 'flashes')
                 );
-            }
-            catch (Exception $exception){
+            } catch (Exception $exception) {
                 $this->addFlash('alert', $exception->getMessage());
             }
         }
@@ -192,7 +198,7 @@ class UserController extends AbstractController
      */
     public function language(User $user)
     {
-        return new Response(json_encode($user->getLanguage(), JSON_UNESCAPED_UNICODE));
+        return new Response(json_encode($user->getLocale(), JSON_UNESCAPED_UNICODE));
     }
 
 }

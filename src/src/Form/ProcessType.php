@@ -37,6 +37,8 @@ class ProcessType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Process::class,
+            'translation_domain' => 'process',
+
         ]);
     }
 }

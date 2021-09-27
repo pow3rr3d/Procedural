@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 
 /**
@@ -22,12 +23,14 @@ class StateController extends AbstractController
 {
     private $em;
     private $states;
+    private $translator;
 
-    public function __construct( EntityManagerInterface $em)
+
+    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator)
     {
         $this->em = $em;
         $this->states = MenuController::renderMenu($this->em);
-//        'states' => $this->states,
+        $this->translator = $translator;
     }
 
     /**
@@ -71,7 +74,7 @@ class StateController extends AbstractController
 
             $this->addFlash(
                 'sucess',
-                'State created with success'
+                $this->translator->trans('State created with success', [], 'flashes')
             );
 
             return $this->redirectToRoute('state_index', [], Response::HTTP_SEE_OTHER);
@@ -111,7 +114,7 @@ class StateController extends AbstractController
 
             $this->addFlash(
                 'sucess',
-                'State updated with success'
+                $this->translator->trans('State updated with success', [], 'flashes')
             );
 
 
@@ -137,7 +140,7 @@ class StateController extends AbstractController
                 $entityManager->flush();
                 $this->addFlash(
                     'sucess',
-                    'State deleted with success'
+                    $this->translator->trans('State deleted with success', [], 'flashes')
                 );
             } catch (Exception $exception) {
                 $this->addFlash('alert', $exception->getMessage());

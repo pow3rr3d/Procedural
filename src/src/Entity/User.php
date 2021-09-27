@@ -58,7 +58,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $language;
+    private $locale;
 
     public function getId(): ?int
     {
@@ -153,14 +153,14 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getLanguage(): ?string
+    public function getLocale(): ?string
     {
-        return $this->language;
+        return $this->locale;
     }
 
-    public function setLanguage(string $language): self
+    public function setLocale(string $locale): self
     {
-        $this->language = $language;
+        $this->locale = $locale;
 
         return $this;
     }

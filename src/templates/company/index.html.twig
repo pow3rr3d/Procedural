@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Company index{% endblock %}
+{% block title %}{% trans from "title" %}Company index{% endtrans %}{% endblock %}
 
 {% block body %}
     <section class="wrapper">
@@ -16,7 +16,7 @@
                 {{ form_widget(form.name) }}
             </div>
             <div class="p-2">
-                <button class="btn btn-outline-secondary" type="submit" id="button-search">Search</button>
+                <button class="btn btn-outline-secondary" type="submit" id="button-search">{% trans from "btn" %}Search{% endtrans %}</button>
             </div>
 
         </div>

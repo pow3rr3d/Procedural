@@ -26,7 +26,8 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             ->setEmail("admin@demo.com")
             ->setRoles("ROLE_ADMIN")
             ->setPassword($this->passwordEncoder->encodePassword($admin, 'admin'))
-            ->setApiToken(hash('sha256', ''.$admin->getId().''.$date->format('Y-m-d H:i:s').''.$admin->getEmail().''));
+            ->setApiToken(hash('sha256', ''.$admin->getId().''.$date->format('Y-m-d H:i:s').''.$admin->getEmail().''))
+            ->setLocale('fr');
 
         $user = new User();
         $user
@@ -35,7 +36,9 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             ->setEmail("user@demo.com")
             ->setRoles("ROLE_USER")
             ->setPassword($this->passwordEncoder->encodePassword($user, 'user'))
-            ->setApiToken(hash('sha256', ''.$user->getId().''.$date->format('Y-m-d H:i:s').''.$user->getEmail().''));
+            ->setApiToken(hash('sha256', ''.$user->getId().''.$date->format('Y-m-d H:i:s').''.$user->getEmail().''))
+            ->setLocale('en');
+
 
         $manager->persist($admin);
         $manager->persist($user);

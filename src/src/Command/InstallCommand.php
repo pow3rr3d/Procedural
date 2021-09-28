@@ -97,7 +97,7 @@ class InstallCommand extends Command
             ->setRoles("ROLE_ADMIN")
             ->setPassword($this->encoder->encodePassword($user, $password))
             ->setApiToken(hash('sha256', ''.$user->getId().''.$date->format('Y-m-d H:i:s').''.$user->getEmail().''))
-            ->setLanguage('en')
+            ->setLocale('en')
         ;
 
         $this->em

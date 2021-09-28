@@ -1,8 +1,8 @@
 {% form_theme form _self %}
 
 {{ form_start(form) }}
-    {{ form_row(form.Name) }}
-    {{ form_row(form.Description) }}
-    {{ form_row(form.Steps) }}
-    <button class="btn-top">{{ button_label|default('Save') }}</button>
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.steps) }}
+<button class="btn-top">{{ button_label|default('Save'|trans({}, 'btn')) }}</button>
 {{ form_end(form) }}

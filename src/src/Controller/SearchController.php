@@ -32,9 +32,9 @@ class SearchController extends AbstractController
         $qb = $em->createQueryBuilder();
         $qb->select('u')
             ->from('App\Entity\User', 'u')
-            ->orwhere($qb->expr()->like('u.Name', ':data'))
-            ->orWhere($qb->expr()->like('u.Surname', ':data'))
-            ->orWhere($qb->expr()->like('u.Email', ':data'))
+            ->orwhere($qb->expr()->like('u.name', ':data'))
+            ->orWhere($qb->expr()->like('u.surname', ':data'))
+            ->orWhere($qb->expr()->like('u.email', ':data'))
             ->setParameter('data', '%' . $json["search"] . '%')
             ->orderBy('u.id', 'ASC');
 
@@ -56,7 +56,7 @@ class SearchController extends AbstractController
             $qb = $em->createQueryBuilder();
             $qb->select('c')
                 ->from('App\Entity\Company', 'c')
-                ->orwhere($qb->expr()->like('c.Name', ':data'))
+                ->orwhere($qb->expr()->like('c.name', ':data'))
                 ->setParameter('data', '%' . $json["search"] . '%')
                 ->orderBy('c.id', 'ASC');
 
@@ -77,7 +77,7 @@ class SearchController extends AbstractController
             $qb = $em->createQueryBuilder();
             $qb->select('p')
                 ->from('App\Entity\Process', 'p')
-                ->orwhere($qb->expr()->like('p.Name', ':data'))
+                ->orwhere($qb->expr()->like('p.name', ':data'))
                 ->setParameter('data', '%' . $json["search"] . '%')
                 ->orderBy('p.id', 'ASC');
 
@@ -97,7 +97,7 @@ class SearchController extends AbstractController
             $qb = $em->createQueryBuilder();
             $qb->select('s')
                 ->from('App\Entity\State', 's')
-                ->orwhere($qb->expr()->like('s.Name', ':data'))
+                ->orwhere($qb->expr()->like('s.name', ':data'))
                 ->setParameter('data', '%' . $json["search"] . '%')
                 ->orderBy('s.id', 'ASC');
 
@@ -113,58 +113,6 @@ class SearchController extends AbstractController
                 ];
             }
         }
-//
-//        $qb = $em->createQueryBuilder();
-//        $qb->select('p')
-//            ->from('App\Entity\Process', 'p')
-//            ->orwhere($qb->expr()->like('p.name', ':data'))
-//            ->setParameter('data', '%' . $json["search"]. '%')
-//            ->orderBy('p.id', 'ASC');
-//        if ($this->getUser()->getRoles() === ["ROLE_USER"]){
-//            $qb->andWhere($qb->expr()->eq('c.user', ":id"))
-//                ->setParameter("id", $this->getUser()->getId());
-//        }
-//
-//        $processes = $qb->getQuery()->getResult();
-//
-//        foreach ($processes as $process){
-//            $results[] = [
-//                "process" => [
-//                    "id" => $process->getId(),
-//                    "name" => $process->getName(),
-//                    "description" => $process->getDescription(),
-//                ]
-//            ];
-//        }
-//
-//        $qb = $em->createQueryBuilder();
-//        $qb->select('c')
-//            ->from('App\Entity\State', 's')
-//            ->where($qb->expr()->like('s.name', ':data'))
-//            ->setParameter('data', '%' . $json["search"]. '%'
-//            )
-//            ->orderBy('c.id', 'ASC');
-//
-//        $categories = $qb->getQuery()->getResult();
-//
-//        foreach ($categories as $category){
-//            $results[] = [
-//                "state" => [
-//                    "id" => $category->getId(),
-//                    "name" => $category->getName(),
-//                ]
-//            ];
-//        }
-//
-//        if ($categories === [] && $users === [] && $companies === []){
-//            $results[] = [
-//                "message" => [
-//                    'No record find for '.$json["search"].''
-//                ]
-//            ];
-//        }
-
-//        dump($results);
 
         $response = new Response(json_encode($results, JSON_UNESCAPED_UNICODE));
 

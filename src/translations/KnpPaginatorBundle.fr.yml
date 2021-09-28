@@ -1,2 +1,16 @@
-label_next: Next
-label_previous: Previous
+label_next: Suivant
+label_previous: Précédent
+name: Nom
+Name: Nom
+Description: Description
+Created At: Date de création
+Updated At: Date de mise à jour
+Actions: Actions
+actions: Actions
+Company Name: Nom de l'entreprise
+Surname: Prénom
+Email: Email
+Roles: Role
+Locale: Langue
+Password: Mot de passe
+Is Final State: Dernière étape

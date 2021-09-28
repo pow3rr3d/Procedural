@@ -14,13 +14,13 @@ class ProcessType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Name')
-            ->add('Description', TextareaType::class, [
+            ->add('name')
+            ->add('description', TextareaType::class, [
                 "attr" => [
                     "maxlength" => "255"
                 ]
             ])
-            ->add('Steps', CollectionType::class, [
+            ->add('steps', CollectionType::class, [
                 'entry_type' => StepType::class,
                 'entry_options' => [
                     'label' => false,
@@ -37,6 +37,8 @@ class ProcessType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Process::class,
+            'translation_domain' => 'process',
+
         ]);
     }
 }

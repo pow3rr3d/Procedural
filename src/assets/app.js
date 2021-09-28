@@ -11,21 +11,33 @@ import './styles/app.scss';
 // start the Stimulus application
 import './bootstrap';
 
-
 //Import CookiesJS
 import Cookies from 'js-cookie';
 
 //A2lix SF collection
 import a2lix_lib from '@a2lix/symfony-collection/src/a2lix_sf_collection';
 
-a2lix_lib.sfCollection.init({
-    collectionsSelector: 'form div[data-prototype]',
-    manageRemoveEntry: true,
-    lang: {
-        add: 'Add',
-        remove: 'Remove'
+let id = document.querySelector('.userid').value
+let route = "/user/language/".concat(' ', id)
+let language = 'en'
+var xhr = new XMLHttpRequest()
+xhr.open("Get", route)
+xhr.responseType = 'text'
+xhr.send()
+xhr.onreadystatechange = function () {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+        let language = $.parseJSON(xhr.responseText)
+        a2lix_lib.sfCollection.init({
+            collectionsSelector: 'form div[data-prototype]',
+            manageRemoveEntry: true,
+            lang: {
+                add: (language !== 'fr' ? 'Add' : 'Ajouter'),
+                remove: (language !== 'fr' ? 'Remove' : 'Supprimer')
+            }
+        })
     }
-})
+}
+
 
 
 //Custom JS
@@ -39,10 +51,8 @@ import {open as search} from './search';
 
 search();
 
-
-
 //Console.log Style
-console.log('%c Welcome to Procedural v0.1', 'color:#4ECDC4; background: #222; font-size: 40px; text-align: center; padding: 20px')
+console.log('%c Welcome to Procedural v0.3', 'color:#4ECDC4; background: #222; font-size: 25px; text-align: center; padding: 10px')
 
 
 

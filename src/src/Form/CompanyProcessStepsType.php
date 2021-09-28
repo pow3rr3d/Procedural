@@ -21,7 +21,7 @@ class CompanyProcessStepsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Step', CheckboxType::class, [
+            ->add('step', CheckboxType::class, [
                 'required' => false,
                 'label' => "<p> <b>" . $builder->getData()->getTitle() . "</b> <br> " . $builder->getData()->getDescription() . "</p>",
                 'label_html' => true,
@@ -32,7 +32,7 @@ class CompanyProcessStepsType extends AbstractType
 
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
             if ($event->getData()->getIsRequired() === true) {
-                $event->getForm()->add("Step", CheckboxType::class, [
+                $event->getForm()->add("step", CheckboxType::class, [
                     'required' => true,
                     'label' => "<p> <b>" . $event->getData()->getTitle() . "</b> <br> " . $event->getData()->getDescription() . "</p>",
                     'label_html' => true,
@@ -51,6 +51,7 @@ class CompanyProcessStepsType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Step::class,
+                'translation_domain' => 'companyProcesses',
             ]
         );
     }

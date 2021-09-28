@@ -1,5 +1,7 @@
 
 // vars
+import a2lix_lib from "@a2lix/symfony-collection";
+
 var xhr = new XMLHttpRequest()
 var input = document.querySelector("#searchInput")
 var div = document.querySelector("#searchResult")
@@ -39,23 +41,36 @@ export function open() {
 
 
 input.addEventListener("change", function (event) {
-    div.innerHTML = "                        " +
-        "<h3 id=\"userTitle\" class=\"hidden\">User</h3>\n" +
-        "                        <ul id=\"user\">\n" +
-        "\n" +
-        "                        </ul>\n" +
-        "                        <h3 id=\"companyTitle\" class=\"hidden\">Company</h3>\n" +
-        "                        <ul id=\"company\">\n" +
-        "\n" +
-        "                        </ul>\n" +
-        "                        <h3 id=\"processTitle\" class=\"hidden\">Process</h3>\n" +
-        "                        <ul id=\"process\">\n" +
-        "\n" +
-        "                        </ul>\n" +
-        "                        <h3 id=\"stateTitle\" class=\"hidden\">State</h3>\n" +
-        "                        <ul id=\"state\">\n" +
-        "\n" +
-        "                        </ul>"
+    let id = document.querySelector('.userid').value
+    let route = "/user/language/".concat(' ', id)
+    let language = 'en'
+    var xhr = new XMLHttpRequest()
+    xhr.open("Get", route)
+    xhr.responseType = 'text'
+    xhr.send()
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            let language = $.parseJSON(xhr.responseText)
+            div.innerHTML = "                        " +
+                "<h3 id=\"userTitle\" class=\"s\">(language !== 'fr' ? 'Users' : 'Utilisateurs')</h3>\n" +
+                "                        <ul id=\"user\">\n" +
+                "\n" +
+                "                        </ul>\n" +
+                "                        <h3 id=\"companyTitle\" class=\"hidden\">(language !== 'fr' ? 'Companies' : 'Société')</h3>\n" +
+                "                        <ul id=\"company\">\n" +
+                "\n" +
+                "                        </ul>\n" +
+                "                        <h3 id=\"processTitle\" class=\"hidden\">(language !== 'fr' ? 'Processes' : 'Prodédures')</h3>\n" +
+                "                        <ul id=\"process\">\n" +
+                "\n" +
+                "                        </ul>\n" +
+                "                        <h3 id=\"stateTitle\" class=\"hidden\">(language !== 'fr' ? 'States' : 'États')</h3>\n" +
+                "                        <ul id=\"state\">\n" +
+                "\n" +
+                "                        </ul>"
+        }
+    }
+
     div.classList.add("hidden")
     clearner()
     xhr.open("POST", "/search/index")

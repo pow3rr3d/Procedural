@@ -1,9 +1,13 @@
 //Import
 @import "style";
-
+.tokenP{
+  word-wrap:break-word;
+  max-width: 100%;
+}
 
 
 @media (min-width: 769px) {
+
   .body {
     position: relative;
     top: 80px;
@@ -20,6 +24,13 @@
         color: #4ecdc4 !important;
       }
 
+    }
+  }
+  .accountlink {
+    text-decoration: none;
+    color: #9e9da3;
+    &:hover{
+      color: #4ecdc4 !important;
     }
   }
 }

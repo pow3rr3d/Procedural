@@ -5,11 +5,14 @@ namespace App\Entity;
 use App\Repository\StateRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use ApiPlatform\Core\Annotation\ApiResource;
+
 
 
 /**
- * @UniqueEntity("IsFinalState")
+ * @UniqueEntity("isFinalState")
  * @ORM\Entity(repositoryClass=StateRepository::class)
+ * @ApiResource(security="is_granted('ROLE_ADMIN')")
  */
 class State
 {
@@ -23,12 +26,12 @@ class State
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $IsFinalState;
+    private $isFinalState;
 
     public function getId(): ?int
     {
@@ -37,12 +40,12 @@ class State
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
@@ -52,14 +55,14 @@ class State
      */
     public function getIsFinalState()
     {
-        return $this->IsFinalState;
+        return $this->isFinalState;
     }
 
     /**
-     * @param mixed $IsFinalState
+     * @param mixed $isFinalState
      */
-    public function setIsFinalState($IsFinalState): void
+    public function setIsFinalState($isFinalState): void
     {
-        $this->IsFinalState = $IsFinalState;
+        $this->isFinalState = $isFinalState;
     }
 }

@@ -23,7 +23,7 @@ class StepFixtures extends Fixture implements OrderedFixtureInterface
             ->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor leo in libero venenatis venenatis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam vestibulum lectus ut nunc consequat, at tincidunt. ")
             ->setHelper("Helper form step 1")
             ->setIsRequired(true)
-            ->setProcess($manager->getRepository(Process::class)->findOneBy(["Name" => "Process 1"]))
+            ->setProcess($manager->getRepository(Process::class)->findOneBy(["name" => "Process 1"]))
             ->setWeight(1);
 
         $step2
@@ -31,7 +31,7 @@ class StepFixtures extends Fixture implements OrderedFixtureInterface
             ->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor leo in libero venenatis venenatis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam vestibulum lectus ut nunc consequat, at tincidunt. ")
             ->setHelper("Helper form step 2")
             ->setIsRequired(false)
-            ->setProcess($manager->getRepository(Process::class)->findOneBy(["Name" => "Process 1"]))
+            ->setProcess($manager->getRepository(Process::class)->findOneBy(["name" => "Process 1"]))
             ->setWeight(2);
 
         $step3
@@ -39,7 +39,7 @@ class StepFixtures extends Fixture implements OrderedFixtureInterface
             ->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor leo in libero venenatis venenatis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam vestibulum lectus ut nunc consequat, at tincidunt. ")
             ->setHelper("Helper form step 3")
             ->setIsRequired(true)
-            ->setProcess($manager->getRepository(Process::class)->findOneBy(["Name" => "Process 1"]))
+            ->setProcess($manager->getRepository(Process::class)->findOneBy(["name" => "Process 1"]))
             ->setWeight(3);
 
         $steps = [

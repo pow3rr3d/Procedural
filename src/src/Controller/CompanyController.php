@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/companies")
@@ -23,11 +24,15 @@ class CompanyController extends AbstractController
 {
     private $em;
     private $states;
+    private $translator;
 
-    public function __construct( EntityManagerInterface $em)
+
+    public function __construct( EntityManagerInterface $em, TranslatorInterface $translator)
     {
         $this->em = $em;
         $this->states = MenuController::renderMenu($this->em);
+        $this->translator = $translator;
+
     }
 
 
@@ -49,7 +54,7 @@ class CompanyController extends AbstractController
         return $this->render('company/index.html.twig', [
             'form' => $form->createView(),
             'states' => $this->states,
-            'pagination' => $pagination,
+            'pagination' => $pagination
         ]);
     }
 
@@ -74,7 +79,7 @@ class CompanyController extends AbstractController
 
             $this->addFlash(
                 'sucess',
-                'Company created with success'
+                $this->translator->trans('Company created with success', [], 'flashes')
             );
 
             return $this->redirectToRoute('company_index', [], Response::HTTP_SEE_OTHER);
@@ -84,6 +89,7 @@ class CompanyController extends AbstractController
             'states' => $this->states,
             'company' => $company,
             'form' => $form,
+
         ]);
     }
 
@@ -95,6 +101,7 @@ class CompanyController extends AbstractController
         return $this->render('company/show.html.twig', [
             'states' => $this->states,
             'company' => $company,
+
         ]);
     }
 
@@ -116,16 +123,19 @@ class CompanyController extends AbstractController
 
             $this->addFlash(
                 'sucess',
-                'Company updated with success'
+                $this->translator->trans('Company updated with success', [], 'flashes')
             );
 
-            return $this->redirectToRoute('company_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('company_index', [
+                '_locale'=> $this->getUser()->getLanguage(),
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('company/edit.html.twig', [
             'states' => $this->states,
             'company' => $company,
             'form' => $form,
+
         ]);
     }
 
@@ -141,7 +151,7 @@ class CompanyController extends AbstractController
                 $entityManager->flush();
                 $this->addFlash(
                     'sucess',
-                    'Company updated with success'
+                    $this->translator->trans('Company deleted with success', [], 'flashes')
                 );
             }
             catch (Exception $exception){

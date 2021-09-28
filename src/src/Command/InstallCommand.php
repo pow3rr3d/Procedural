@@ -35,10 +35,6 @@ class InstallCommand extends Command
         $this
             ->setDescription("Procedural Installer")
             ->setHelp("This command will install your Procedural App")
-//            ->addArgument('User name', InputArgument::REQUIRED, 'Please enter your name')
-//            ->addArgument('User surname', InputArgument::REQUIRED, 'Please enter your surname')
-//            ->addArgument('User email', InputArgument::REQUIRED, 'Please enter your email')
-//            ->addArgument('User password', InputArgument::REQUIRED, 'Please enter your password')
         ;
 
     }
@@ -92,13 +88,17 @@ class InstallCommand extends Command
         $migrationArg = new ArrayInput($arguments);
         $migrationSubmit = $migration->run($migrationArg, $output);
 
+        $date = new \DateTime();
         $user = new User();
         $user
             ->setName($name)
             ->setSurname($surname)
             ->setEmail($email)
             ->setRoles("ROLE_ADMIN")
-            ->setPassword($this->encoder->encodePassword($user, $password));
+            ->setPassword($this->encoder->encodePassword($user, $password))
+            ->setApiToken(hash('sha256', ''.$user->getId().''.$date->format('Y-m-d H:i:s').''.$user->getEmail().''))
+            ->setLanguage('en')
+        ;
 
         $this->em
             ->persist($user);

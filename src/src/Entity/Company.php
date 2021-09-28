@@ -6,9 +6,12 @@ use App\Repository\CompanyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+
 
 /**
  * @ORM\Entity(repositoryClass=CompanyRepository::class)
+ * @ApiResource(security="is_granted('ROLE_ADMIN')")
  */
 class Company
 {
@@ -22,12 +25,12 @@ class Company
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Contact::class, mappedBy="company", cascade={"persist"}, orphanRemoval=true)
      */
-    private $Contacts;
+    private $contacts;
 
     /**
      * @ORM\OneToMany(targetEntity=CompanyProcess::class, mappedBy="Company")
@@ -36,7 +39,7 @@ class Company
 
     public function __construct()
     {
-        $this->Contacts = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
         $this->companyProcesses = new ArrayCollection();
     }
 
@@ -47,12 +50,12 @@ class Company
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
@@ -62,13 +65,13 @@ class Company
      */
     public function getContacts(): Collection
     {
-        return $this->Contacts;
+        return $this->contacts;
     }
 
     public function addContact(Contact $contact): self
     {
-        if (!$this->Contacts->contains($contact)) {
-            $this->Contacts[] = $contact;
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts[] = $contact;
             $contact->setCompany($this);
         }
 
@@ -77,7 +80,7 @@ class Company
 
     public function removeContact(Contact $contact): self
     {
-        if ($this->Contacts->removeElement($contact)) {
+        if ($this->contacts->removeElement($contact)) {
             // set the owning side to null (unless already changed)
             if ($contact->getCompany() === $this) {
                 $contact->setCompany(null);

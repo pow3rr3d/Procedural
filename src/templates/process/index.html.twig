@@ -1,22 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Process index{% endblock %}
+{% block title %}{% trans from "title" %}Process index{% endtrans %}{% endblock %}
 
 {% block body %}
     <section class="wrapper">
         <div class="button-div">
             <a class="btn-top custom-search-btn" href="#"><i class="fas fa-search"></i></a>
-            <a class="btn-top" href="{{ path('process_new') }}">Create new</a>
+            <a class="btn-top" href="{{ path('process_new') }}">{% trans from "btn" %}Create new{% endtrans %}</a>
         </div>
 
         {{ form_start(form, {'attr': {'class': 'hidden'}}) }}
         <div class="d-flex flex-row justify-content-start form-control">
 
             <div class="p-2">
-                {{ form_widget(form.Name) }}
+                {{ form_widget(form.name) }}
             </div>
             <div class="p-2">
-                <button class="btn btn-outline-secondary" type="submit" id="button-search">Search</button>
+                <button class="btn btn-outline-secondary" type="submit" id="button-search">{% trans from "btn" %}Search{% endtrans %}</button>
             </div>
 
         </div>
@@ -38,25 +38,25 @@
                 <tr>
                     <th{% if pagination.isSorted('s.id') %} class="sorted"{% endif %}>
                         {{ knp_pagination_sortable(pagination, '#', 's.id') }}</th>
-                    <th{% if pagination.isSorted('s.Name') %} class="sorted"{% endif %}>
-                        {{ knp_pagination_sortable(pagination, 'Name', 's.Name') }}</th>
-                    <th{% if pagination.isSorted('s.Description') %} class="sorted"{% endif %}>
-                        {{ knp_pagination_sortable(pagination, 'Description', 's.Description') }}</th>
-                    <th{% if pagination.isSorted('s.CreatedAt') %} class="sorted"{% endif %}>
-                        {{ knp_pagination_sortable(pagination, 'Created At', 's.CreatedAt') }}</th>
-                    <th{% if pagination.isSorted('s.UpdatedAt') %} class="sorted"{% endif %}>
-                        {{ knp_pagination_sortable(pagination, 'Updated At', 's.UpdatedAt') }}</th>
-                    <th>actions</th>
+                    <th{% if pagination.isSorted('s.name') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Name'|trans({}, 'KnpPaginatorBundle'), 's.name') }}</th>
+                    <th{% if pagination.isSorted('s.description') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Description'|trans({}, 'KnpPaginatorBundle'), 's.description') }}</th>
+                    <th{% if pagination.isSorted('s.createdAt') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Created At'|trans({}, 'KnpPaginatorBundle'), 's.createdAt') }}</th>
+                    <th{% if pagination.isSorted('s.updatedAt') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Updated At'|trans({}, 'KnpPaginatorBundle'), 's.updatedAt') }}</th>
+                    <th>{% trans from "KnpPaginatorBundle" %}Actions{% endtrans %}</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for process in pagination %}
                     <tr>
                         <td>{{ process.id }}</td>
-                        <td>{{ process.Name }}</td>
-                        <td>{{ process.Description | u.truncate(50, '...') }}</td>
-                        <td>{{ process.CreatedAt ? process.CreatedAt|date('d-m-Y H:i:s') : '' }}</td>
-                        <td>{{ process.UpdatedAt ? process.UpdatedAt|date('d-m-Y H:i:s') : '' }}</td>
+                        <td>{{ process.name }}</td>
+                        <td>{{ process.description | u.truncate(50, '...') }}</td>
+                        <td>{{ process.createdAt ? process.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                        <td>{{ process.updatedAt ? process.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
                         <td>
                             <a href="{{ path('process_show', {'id': process.id}) }}"><i class="far fa-eye"></i></a>
                             <a href="{{ path('process_edit', {'id': process.id}) }}"><i class="fas fa-pen"></i></a>
@@ -64,7 +64,7 @@
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="6">no records found</td>
+                        <td colspan="6">{% trans from "table" %}no records found{% endtrans %}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

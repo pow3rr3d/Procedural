@@ -6,9 +6,11 @@ use App\Repository\CompanyProcessRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=CompanyProcessRepository::class)
+ * @ApiResource()
  */
 class CompanyProcess
 {
@@ -23,44 +25,44 @@ class CompanyProcess
      * @ORM\ManyToOne(targetEntity=Company::class, inversedBy="companyProcesses")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Company;
+    private $company;
 
     /**
      * @ORM\ManyToOne(targetEntity=Process::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Process;
+    private $process;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $CreatedAt;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $UpdatedAt;
+    private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=CompanyProcessStep::class, mappedBy="CompanyProcess")
+     * @ORM\OneToMany(targetEntity=CompanyProcessStep::class, mappedBy="companyProcess")
      */
     private $companyProcessSteps;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $IsFinished;
+    private $isFinished;
 
     /**
      * @ORM\ManyToOne(targetEntity=State::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $State;
+    private $state;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $IsSoftDeleted;
+    private $isSoftDeleted;
 
 
     public function __construct()
@@ -75,48 +77,48 @@ class CompanyProcess
 
     public function getCompany(): ?Company
     {
-        return $this->Company;
+        return $this->company;
     }
 
-    public function setCompany(?Company $Company): self
+    public function setCompany(?Company $company): self
     {
-        $this->Company = $Company;
+        $this->company = $company;
 
         return $this;
     }
 
     public function getProcess(): ?Process
     {
-        return $this->Process;
+        return $this->process;
     }
 
-    public function setProcess(?Process $Process): self
+    public function setProcess(?Process $process): self
     {
-        $this->Process = $Process;
+        $this->process = $process;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->CreatedAt;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $CreatedAt): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
-        $this->CreatedAt = $CreatedAt;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->UpdatedAt;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $UpdatedAt): self
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
-        $this->UpdatedAt = $UpdatedAt;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -153,12 +155,12 @@ class CompanyProcess
 
     public function getIsFinished(): ?bool
     {
-        return $this->IsFinished;
+        return $this->isFinished;
     }
 
-    public function setIsFinished(?bool $IsFinished): self
+    public function setIsFinished(?bool $isFinished): self
     {
-        $this->IsFinished = $IsFinished;
+        $this->isFinished = $isFinished;
 
         return $this;
     }
@@ -168,15 +170,15 @@ class CompanyProcess
      */
     public function getState()
     {
-        return $this->State;
+        return $this->state;
     }
 
     /**
-     * @param mixed $State
+     * @param mixed $state
      */
-    public function setState($State): void
+    public function setState($state): void
     {
-        $this->State = $State;
+        $this->state = $state;
     }
 
     /**
@@ -184,15 +186,15 @@ class CompanyProcess
      */
     public function getIsSoftDeleted()
     {
-        return $this->IsSoftDeleted;
+        return $this->isSoftDeleted;
     }
 
     /**
-     * @param mixed $IsSoftDeleted
+     * @param mixed $isSoftDeleted
      */
-    public function setIsSoftDeleted($IsSoftDeleted): void
+    public function setIsSoftDeleted($isSoftDeleted): void
     {
-        $this->IsSoftDeleted = $IsSoftDeleted;
+        $this->isSoftDeleted = $isSoftDeleted;
     }
 
 }

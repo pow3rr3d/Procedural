@@ -17,17 +17,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AllProcessController extends AbstractController
 {
     private $em;
     private $states;
+    private $translator;
 
-    public function __construct(EntityManagerInterface $em)
+
+    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator)
     {
         $this->em = $em;
         $this->states = MenuController::renderMenu($this->em);
-//        'states' => $this->states,
+        $this->translator = $translator;
+
     }
 
     /**
@@ -108,7 +112,9 @@ class AllProcessController extends AbstractController
 
             $this->addFlash(
                 'sucess',
-                'Process created with success'
+                $this->translator->trans( 'Process created with success', [], 'flashes')
+
+
             );
             return $this->redirectToRoute('allprocess_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -144,7 +150,7 @@ class AllProcessController extends AbstractController
         if ($companyProcess->getState()->getIsFinalState() === true) {
             $this->addFlash(
                 'sucess',
-                'Process already finished'
+                $this->translator->trans( 'Process already finished', [], 'flashes')
             );
             return $this->redirectToRoute("allprocess_index");
         }
@@ -174,7 +180,7 @@ class AllProcessController extends AbstractController
 
 
 
-            $return = $form->get("Step")->getData();
+            $return = $form->get("step")->getData();
 
             if (count($companyProcess->getCompanyProcessSteps()) + 1 === count($companyProcess->getProcess()->getSteps())) {
                 $companyProcess->setUpdatedAt(new \DateTimeImmutable());
@@ -186,11 +192,11 @@ class AllProcessController extends AbstractController
                     ->setValidatedBy($this->getUser());
 
                 $companyProcess->setIsFinished(true);
-                $companyProcess->setState($this->getDoctrine()->getManager()->getRepository(State::class)->findOneBy(["IsFinalState" => true]));
+                $companyProcess->setState($this->getDoctrine()->getManager()->getRepository(State::class)->findOneBy(["isFinalState" => true]));
                 if($companyProcess->getState() === null){
                     $this->addFlash(
                         'alert',
-                        'You have\'nt create a final state. Procedural can\'t close a process without a final state.'
+                        $this->translator->trans( 'You have\'nt create a final state. Procedural can\'t close a process without a final state.', [], 'flashes')
                     );
                     return $this->redirectToRoute("allprocess_index");
                 }
@@ -199,7 +205,9 @@ class AllProcessController extends AbstractController
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash(
                     'sucess',
-                    'Process fishined with success'
+                    $this->translator->trans( 'Process fishined with success', [], 'flashes')
+
+
                 );
                 return $this->redirectToRoute("allprocess_index");
             }
@@ -244,28 +252,26 @@ class AllProcessController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $companyProcess->getId(), $request->request->get('_token'))) {
             if ($this->getUser()->getRoles()['0'] === "ROLE_ADMIN") {
                 if ($companyProcess->getIsSoftDeleted() === true) {
-                    $companyProcessSteps = $entityManager->getRepository(CompanyProcessStep::class)->findBy(["CompanyProcess" => $companyProcess]);
+                    $companyProcessSteps = $entityManager->getRepository(CompanyProcessStep::class)->findBy(["companyProcess" => $companyProcess]);
                     foreach ($companyProcessSteps as $companyProcessStep) {
                         $entityManager->remove($companyProcessStep);
                     }
                     $entityManager->remove($companyProcess);
                     $this->addFlash(
                         'sucess',
-                        'Process deleted with success'
+                        $this->translator->trans( 'Process deleted with success', [], 'flashes')
+
+
                     );
                 } else {
                     $companyProcess->setIsSoftDeleted(true);
                     $this->addFlash(
                         'sucess',
-                        'Process soft-deleted with success'
+                        $this->translator->trans( 'Process soft-deleted with success', [], 'flashes')
+
+
                     );
                 }
-            } else {
-                $companyProcess->setIsSoftDeleted(true);
-                $this->addFlash(
-                    'sucess',
-                    'Process soft-deleted with success'
-                );
             }
         }
 
@@ -287,7 +293,7 @@ class AllProcessController extends AbstractController
 
             $this->addFlash(
                 'sucess',
-                'Process restore with success'
+                $this->translator->trans( 'Process restore with success', [], 'flashes')
             );
         }
 

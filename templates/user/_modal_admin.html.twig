@@ -1,0 +1,33 @@
+<div class="modal fade" id="modal_admin{{ user.id }}" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                {% trans from "modal" %}Make this user Admin?{% endtrans %}
+
+            </div>
+            <div class="modal-body">
+                <p class="text-left ">
+                    {% trans from "modal" %}Are you sure you want to make the following user as Admin?{% endtrans %}
+
+                </p>
+
+                <p class="text-left">#: <b>{{ user.id }}</b></p>
+                <p class="text-left"><b>{{ user.name }}</b></p>
+                <p class="text-left"><b>{{ user.surname }}</b></p>
+                <p class="text-left"><b>{{ user.email }}</b></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">{% trans from "btn" %}Cancel{% endtrans %}</button>
+                <form method="post" action="{{ path("user_admin", {id: user.id}) }}"
+                      style="display: inline-block">
+                    <input type="hidden" name="_method" value="put">
+                    <input type="hidden" name="_token" data-toggle="modal"
+                           data-bs-target="#confirm-submit{{ user.id }}"
+                           value="{{ csrf_token('update' ~ user.id) }}">
+                    <button class="btn btn-danger role-btn">{% trans from "user" %}Make Admin{% endtrans %}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

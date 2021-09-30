@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans from "title" %}Company index{% endtrans %}{% endblock %}
+
+{% block body %}
+    <section class="wrapper">
+        <div class="button-div">
+            <a class="btn-top custom-search-btn" href="#"><i class="fas fa-search"></i></a>
+            <a class="btn-top" href="{{ path('company_new') }}">{% trans from "btn" %}Create new{% endtrans %}</a>
+        </div>
+
+        {{ form_start(form, {'attr': {'class': 'hidden'}}) }}
+        <div class="d-flex flex-row justify-content-start form-control">
+
+            <div class="p-2">
+                {{ form_widget(form.name) }}
+            </div>
+            <div class="p-2">
+                <button class="btn btn-outline-secondary" type="submit" id="button-search">{% trans from "btn" %}Search{% endtrans %}</button>
+            </div>
+
+        </div>
+        {{ form_end(form) }}
+
+        {% for message in app.flashes('alert') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('sucess') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th{% if pagination.isSorted('s.id') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, '#', 's.id') }}</th>
+                    <th{% if pagination.isSorted('s.name') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Company Name'|trans({}, 'KnpPaginatorBundle'), 's.name') }}</th>
+                    <th>{% trans from "KnpPaginatorBundle"  %}Actions{% endtrans %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for company in pagination %}
+                    <tr>
+                        <td>{{ company.id }}</td>
+                        <td>{{ company.name }}</td>
+                        <td>
+                            <a href="{{ path('company_show', {'id': company.id}) }}"><i class="far fa-eye"></i></a>
+                            <a href="{{ path('company_edit', {'id': company.id}) }}"><i class="fas fa-pen"></i></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">{% trans from "table" %}no records found{% endtrans %}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="navigation button-div">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </section>
+
+{% endblock %}

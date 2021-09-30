@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans from "title" %}Company Process{% endtrans %}{% endblock %}
+
+{% block body %}
+    <section class="wrapper">
+        <div class="button-div">
+            <a class="btn-top" href="{{ path('allprocess_index') }}">{% trans from "btn" %}Back to list{% endtrans %}</a>
+            <a class="btn-top" href="{{ path('companyprocess_edit', {'id': companyProcess.id}) }}">{% trans from "btn" %}Edit{% endtrans %}</a>
+        </div>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>#</th>
+                <td>{{ companyProcess.id }}</td>
+            </tr>
+            <tr>
+                <th>{% trans from "process" %}Process{% endtrans %}</th>
+                <td>
+                    {{ companyProcess.process.name }}<br>
+                    {{ companyProcess.process.description }}<br>
+                </td>
+            </tr>
+            <tr>
+                <th>{% trans from "company" %}Company{% endtrans %}</th>
+                <td>
+                    {{ companyProcess.company.name }}<br><br>
+                </td>
+            </tr>
+            <tr>
+                <th>{% trans from "company" %}Contacts{% endtrans %}</th>
+                <td>
+                    <ul>
+                        {% for contact in companyProcess.company.contacts %}
+                            <li>
+                                <p>
+                                    <b>{% trans from "company" %}Name{% endtrans %}:</b> {{ contact.name|upper }} {{ contact.surname|capitalize }}<br>
+                                    <b>{% trans from "company" %}Email{% endtrans %}:</b> {{ contact.email }}<br>
+                                    <b>{% trans from "company" %}Mobile{% endtrans %}:</b> {{ contact.mobile }}<br>
+                                    <b>{% trans from "company" %}Tel{% endtrans %}:</b> {{ contact.tel }}<br>
+                                </p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>State</th>
+                <td>{{ companyProcess.company.name }}</td>
+            </tr>
+            <tr>
+                <th>{% trans from "companyProcesses" %}Advancement{% endtrans %}</th>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                             style="width: {{ (companyProcess.companyProcessSteps|length / companyProcess.process.Steps|length * 100) | round(2, "floor") }}%"
+                             aria-valuenow="{{ (companyProcess.companyProcessSteps|length / companyProcess.process.Steps|length * 100) | round(2, "floor") }}"
+                             aria-valuemin="0"
+                             aria-valuemax="100">{{ (companyProcess.companyProcessSteps|length / companyProcess.process.Steps|length * 100) | round(2, "floor") }}
+                            %
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>{% trans from "companyProcesses" %}Created At{% endtrans %}</th>
+                <td>{{ companyProcess.CreatedAt ? companyProcess.CreatedAt|date('d-m-Y H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>{% trans from "companyProcesses" %}Updated At{% endtrans %}</th>
+                <td>{{ companyProcess.UpdatedAt ? companyProcess.UpdatedAt|date('d-m-Y H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>{% trans from "process" %}Steps{% endtrans %}</th>
+                <td>
+                    {% for step in companyProcess.Process.Steps %}
+                        <b>{{ step.Title }}</b><br>
+                        <p>{{ step.Description }}</p>
+                        {{ step.IsRequired ? "This field is required"|trans({}, 'process') : "This field is not required"|trans({}, 'process') }}<br>
+                        {% for cps in companyProcess.companyProcessSteps %}
+                            {% if step.id is same as cps.step.id %}
+                                Validated By {{ cps.ValidatedBy.Name }} {{ cps.ValidatedBy.Surname }}<br>
+                                Validated At {{ cps.ValidatedAt ? cps.ValidatedAt|date('d-m-Y H:i:s') : '' }}
+                            {% endif %}
+                        {% endfor %}
+                        <br><br>
+                    {% endfor %}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="button-div">
+            {% if companyProcess.IsSoftDeleted is not same as true %}
+                {{ include('companyprocess/_delete_form.html.twig') }}
+                {{ include('companyprocess/_modal_delete.html.twig') }}
+            {% else %}
+                <a class="btn-top" href="{{ path('companyprocess_rollback', {'id': companyProcess.id}) }}">Restore</a>
+                {% if app.user.roles['0'] is same as "ROLE_ADMIN" %}
+                    {{ include('companyprocess/_delete_form.html.twig') }}
+                    {{ include('companyprocess/_modal_delete.html.twig') }}
+                {% endif %}
+            {% endif %}
+        </div>
+
+    </section>
+{% endblock %}

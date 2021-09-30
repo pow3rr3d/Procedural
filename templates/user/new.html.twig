@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans from "title" %}New User{% endtrans %}{% endblock %}
+
+{% block body %}
+    <section class="wrapper">
+        <div class="button-div">
+            <a class="btn-top" href="{{ path('user_index') }}">{% trans from "btn" %}Back to list{% endtrans %}</a>
+        </div>
+
+        {% for flashMessage in app.session.flashbag.get('string') %}
+
+            <b style="color: red">{{ flashMessage }}</b>
+
+        {% endfor %}
+
+        {{ include('user/_form.html.twig') }}
+    </section>
+
+
+
+{% endblock %}

@@ -1,0 +1,28 @@
+<div class="modal fade" id="modal_delete{{ companyProcess.id }}" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                {% trans from "modal" %}
+                    Are you sure you want to delete this company-process?
+                {% endtrans %}
+            </div>
+            <div class="modal-body">
+                <p class="text-left">#<b>{{ companyProcess.id }}</b></p>
+                <p class="text-left">{% trans from "company" %}Company{% endtrans %}: <b>{{ companyProcess.company.name }}</b></p>
+                <p class="text-left">{% trans from "process" %}Process{% endtrans %}: <b>{{ companyProcess.process.name }}</b></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn cancel-btn btn-default" data-bs-dismiss="modal">{% trans from "btn" %}Cancel{% endtrans %}</button>
+                <form method="post" action="{{ path("companyprocess_delete", {id: companyProcess.id}) }}"
+                      style="display: inline-block">
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" name="_token" data-bs-toggle="modal"
+                           data-bs-target="#confirm-submit{{ companyProcess.id }}"
+                           value="{{ csrf_token('delete' ~ companyProcess.id) }}">
+                    <button class="btn btn-danger">{% trans from "btn" %}Delete{% endtrans %}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

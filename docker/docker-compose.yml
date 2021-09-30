@@ -24,13 +24,13 @@ services:
       - APP_SECRET=${APP_SECRET}
       - DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME}?serverVersion=mariadb-10.5.5
     volumes:
-      - ../src:/var/www
+      - ../:/var/www
 
   nginx:
     build:
       context: ./nginx
     volumes:
-      - ../src:/var/www
+      - ../:/var/www
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/sites/:/etc/nginx/sites-available
       - ./nginx/conf.d/:/etc/nginx/conf.d

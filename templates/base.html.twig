@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Procedural - {% block title %}{% trans from "title" %}Welcome!{% endtrans %}{% endblock %}</title>
+
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('styles') }}
+    {% endblock %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+          integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+          crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<header class="header black-bg">
+    <div class="sidebar-toggle-box">
+        <div data-placement="right" data-original-title="Toggle Navigation"><i class="fas fa-bars"></i></div>
+    </div>
+    <a href="/dashboard" class="logo">PROCEDURAL</a>
+    <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+            <li>
+                {% if is_granted('IS_IMPERSONATOR') %}
+                    <a class="logout" href="?_switch_user=_exit">{% trans from "btn" %}Exit impersonation{% endtrans %}</a>
+                {% else %}
+                    <a class="logout" href="/logout">{% trans from "btn" %}Logout{% endtrans %}</a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</header>
+<body>
+<div id="container">
+    {# <div class="row"> #}
+    <div>
+        <div id="sidebar" class="nav-collapse col-4 notHidden">
+            <ul class="sidebar-menu" id="nav-accordion">
+                <h5 class="centered">
+                    <a class="accountlink" href="/account">{{ app.user.Username }}</a>
+                    <input class='userid' type="hidden" value="{{ app.user.id }}">
+                </h5>
+                <li class="mt">
+                    <a class="" href="/dashboard">
+                        <i class="fas fa-chart-line"></i>
+                        <span>{% trans from "base" %}Dashboard{% endtrans %}</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="#">
+                        <i class="fas fa-list-ol"></i>
+                        <span>{% trans from "base" %}Actions{% endtrans %}</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="/allprocess">{% trans from "base" %}All States{% endtrans %}</a></li>
+                        {% for state in states %}
+                            <li>
+                                <a href="{{ path('allprocess_slug', {'slug': state['2']}) }}">{{ state['0'] }}({{ state['1'] }})</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% for role in app.user.Roles %}
+                    {% if role is same as "ROLE_ADMIN" %}
+                        <li class="sub-menu">
+                            <a href="#">
+                                <i class="fas fa-cogs"></i>
+                                <span>{% trans from "base" %}Management{% endtrans %}</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="/companies">{% trans from "base" %}Companies{% endtrans %}</a></li>
+                                <li><a href="/processes">{% trans from "base" %}Processes{% endtrans %}</a></li>
+                                <li><a href="/user">{% trans from "base" %}Users{% endtrans %}</a></li>
+                                <li><a href="/state">{% trans from "base" %}States{% endtrans %}</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-10 body">
+            {% block body %} {% endblock %}
+        </div>
+    </div>
+
+
+</div>
+{% include '_modal_search.html.twig' %}
+
+{% block javascripts %}{% endblock %}
+{{ encore_entry_script_tags('app') }}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+</body>
+<footer class="site-footer">
+    <div class="text-center">
+        <div class="credits">
+            {% trans from "base" %}Created By{% endtrans %} <a id="linkFooter" href="https://github.com/pow3rr3d">Pow3rr3d</a> & {% trans from "base" %}based on Symfony 5{% endtrans %}
+        </div>
+    </div>
+</footer>
+</html>

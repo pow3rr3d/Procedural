@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans from "title" %}Company{% endtrans %}{% endblock %}
+
+{% block body %}
+    <section class="wrapper">
+        <div class="button-div">
+            <a class="btn-top" href="{{ path('company_index') }}">{% trans from "btn" %}Back to list{% endtrans %}</a>
+            <a class="btn-top" href="{{ path('company_edit', {'id': company.id}) }}">{% trans from "btn" %}Edit{% endtrans %}</a>
+        </div>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>{% trans from "company" %}Id{% endtrans %}</th>
+                <td>{{ company.id }}</td>
+            </tr>
+            <tr>
+                <th>{% trans from "company" %}Name{% endtrans %}</th>
+                <td>{{ company.name }}</td>
+            </tr>
+            <tr>
+                <th>Contacts</th>
+                <td>
+                    <ul>
+                        {% for contact in company.contacts %}
+                            <li>
+                                <b>{% trans from "company" %}Name{% endtrans %}:</b> {{ contact.name|upper }} {{ contact.surname|capitalize }}<br>
+                                <b>{% trans from "company" %}Email{% endtrans %}:</b> {{ contact.email }}<br>
+                                <b>{% trans from "company" %}Mobile{% endtrans %}:</b> {{ contact.mobile }}<br>
+                                <b>{% trans from "company" %}Tel{% endtrans %}:</b> {{ contact.tel }}<br>
+                                <br>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="button-div">
+            {{ include('company/_delete_form.html.twig') }}
+            {{ include('company/_modal_delete.html.twig') }}
+        </div>
+
+    </section>
+{% endblock %}

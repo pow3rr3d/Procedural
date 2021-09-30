@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans from "title" %}User index{% endtrans %}{% endblock %}
+
+{% block body %}
+    <section class="wrapper">
+        <div class="button-div">
+            <a class="btn-top custom-search-btn" href="#"><i class="fas fa-search"></i></a>
+            <a class="btn-top" href="{{ path('user_new') }}">{% trans from "btn" %}Create new{% endtrans %}</a>
+        </div>
+
+        {{ form_start(form, {'attr': {'class': 'hidden'}}) }}
+        <div class="d-flex flex-row justify-content-start form-control">
+
+            <div class="p-2">
+                {{ form_widget(form.name) }}
+            </div>
+            <div class="p-2">
+                <button class="btn btn-outline-secondary" type="submit" id="button-search">{% trans from "btn" %}Search{% endtrans %}</button>
+            </div>
+
+        </div>
+        {{ form_end(form) }}
+
+        {% for message in app.flashes('sucess') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {% for message in app.flashes('alert') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th{% if pagination.isSorted('s.id') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, '#', 's.id') }}</th>
+                    <th{% if pagination.isSorted('s.name') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Name'|trans({}, 'KnpPaginatorBundle'), 's.name') }}</th>
+                    <th{% if pagination.isSorted('s.surname') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Surname'|trans({}, 'KnpPaginatorBundle'), 's.surname') }}</th>
+                    <th{% if pagination.isSorted('s.email') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Email'|trans({}, 'KnpPaginatorBundle'), 's.email') }}</th>
+                    <th{% if pagination.isSorted('s.roles') %} class="sorted"{% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Roles'|trans({}, 'KnpPaginatorBundle'), 's.roles') }}</th>
+                    <th>{% trans from "KnpPaginatorBundle" %}Actions{% endtrans %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in pagination %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.surname }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{% for role in user.Roles %}{{ role }}{% endfor %}</td>
+                        <td>
+                            <a href="{{ path('user_show', {'id': user.id}) }}"><i class="far fa-eye"></i></a>
+                            <a href="{{ path('user_edit', {'id': user.id}) }}"><i class="fas fa-pen"></i></a>
+                            <a href="/dashboard/?_switch_user={{ user.email }}"><i class="fas fa-sign-in-alt"></i></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">{% trans from "table" %}no records found{% endtrans %}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="navigation button-div">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </section>
+{% endblock %}

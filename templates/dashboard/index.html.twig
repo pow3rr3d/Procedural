@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans from "title" %}Dashboard{% endtrans %}{% endblock %}
+
+{% block body %}
+        <div class="dashboardIndex">
+            {% for chart in charts %}
+            <div class="col-xl-4 mt-5 chart">
+                {{ render_chart(chart) }}
+            </div>
+            {% endfor %}
+        </div>
+
+{% endblock %}
